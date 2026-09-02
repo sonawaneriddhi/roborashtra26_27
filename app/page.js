@@ -30,7 +30,9 @@ export default function Home() {
           <Hero />
           <Countdown targetDate={new Date('2027-02-01T00:00:00+05:30')} />
           <Gallery />
+          <div className="h-6 bg-[#f6f1e7]" aria-hidden="true" />
           <RoadmapSection />
+          <div className="h-6 bg-[#f6f1e7]" aria-hidden="true" />
           <EventsStory />
           <Sponsors />
           <Faculty />

@@ -1,11 +1,21 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion'
+import { AnimatePresence, motion, useScroll, useMotionValueEvent } from 'framer-motion'
+import RoadmapRobot3D from './RoadmapRobot3D'
 
-// Fullscreen centered path: traverses safely across the middle band of the viewport (Y: 200px - 470px out of 720px)
-const PATH_D =
-  'M 80 230 C 240 150, 360 210, 520 280 S 740 470, 920 440 S 1080 390, 1180 410'
+// ── Straight horizontal ground rail in a 1200×700 SVG viewBox
+// Ground sits at Y=580 (82.9% from top), leaving ample sky for floating cards
+const GROUND_Y = 580          // SVG units
+const TRACK_START_X = 80
+const TRACK_END_X = 1120
+const TRACK_LENGTH = TRACK_END_X - TRACK_START_X  // 1040 SVG units
+const GROUND_Y_PCT = (GROUND_Y / 700) * 100        // ≈ 82.9 %
+
+// Node X positions evenly spaced along the rail
+const NODE_XS = [250, 600, 950]
+// Where each card's bottom connector anchors (SVG Y above node)
+const CARD_ANCHOR_Y = 120  // SVG units above ground = Y ≈ 460, i.e. 65.7%
 
 const years = [
   {
@@ -16,13 +26,11 @@ const years = [
     tagline: 'From zero-knowledge to combat-ready autonomous prototypes.',
     at: 0.15,
     badge: 'CORE RECRUITS',
-    stats: '15kg Class · PID Tuning · Line Follower',
-    // Position beside Checkpoint 1 (Top-Left)
-    cardPosition: 'top-[34%] left-[4%] lg:left-[8%]',
+    shortBadge: 'GENESIS',
     details: [
       'Comprehensive rookie induction workshops & PCB fabrication',
       'Autonomous line-followers & ultrasonic obstacle rovers',
-      'Design of first-generation 15kg featherweight combat chassis',
+      'First-generation 15 kg featherweight combat chassis',
     ],
   },
   {
@@ -31,11 +39,9 @@ const years = [
     phase: 'FLEET SCALE & SPEED',
     title: 'FPV Fleet PAVAN & Pneumatics',
     tagline: 'High-speed dynamics, custom telemetries, and arena combat.',
-    at: 0.52,
+    at: 0.50,
     badge: 'ADVANCED DYNAMICS',
-    stats: '6-Rotor FPV · 120km/h · Pneumatic Flippers',
-    // Position beside Checkpoint 2 (Top-Center above the path)
-    cardPosition: 'top-[12%] left-[36%] lg:left-[42%]',
+    shortBadge: 'FLEET',
     details: [
       'Fleet PAVAN: carbon-fiber 6-rotor high-speed FPV racing drones',
       'High-pressure pneumatic flipper & high-torque kinetic spinners',
@@ -47,459 +53,649 @@ const years = [
     year: 'YEAR 03',
     phase: 'AUTONOMY & CONQUEST',
     title: 'LiDAR SLAM & National Conquest',
-    tagline: 'Full ROS 2 integration, edge-AI vision, and national championship titles.',
-    at: 0.88,
+    tagline: 'Full ROS 2 integration, edge-AI vision, and national championship.',
+    at: 0.85,
     badge: 'NATIONAL PODIUM',
-    stats: 'ROS 2 · 3D LiDAR · 1st Place National',
-    // Position beside Checkpoint 3 (Right / Lower-Right)
-    cardPosition: 'top-[44%] right-[4%] lg:right-[6%]',
+    shortBadge: 'CONQUEST',
     details: [
       'Onboard 3D LiDAR & real-time SLAM mapping for autonomous rovers',
       'Edge-AI computer vision for real-time target recognition',
-      'National Robotics Championship 15kg Combat 1st Place Victory',
+      'National Robotics Championship 15 kg Combat — 1st Place',
     ],
   },
 ]
 
-// High-Detail HD Space Exploration Rover SVG
-function SpaceRover() {
-  return (
-    <g id="space-rover-unit">
-      <defs>
-        <linearGradient id="headlightGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#ffb347" stopOpacity="0.85" />
-          <stop offset="40%" stopColor="#ff9f1c" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="#ff9f1c" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-
-      {/* Forward Headlight Light Cone */}
-      <polygon
-        points="14,-10 95,-34 95,34 14,10"
-        fill="url(#headlightGlow)"
-        className="pointer-events-none"
-      />
-
-      {/* Ground Shadow */}
-      <ellipse cx="-2" cy="1" rx="28" ry="18" fill="#000000" opacity="0.65" />
-
-      {/* Rocker-Bogie Suspension Struts */}
-      <path
-        d="M -16 -12 L 0 -10 L 16 -12 M -16 12 L 0 10 L 16 12"
-        stroke="#4a5568"
-        strokeWidth="3.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-
-      {/* 6 All-Terrain Treaded Heavy Wheels */}
-      <g>
-        <rect x="-24" y="-17" width="10" height="5" rx="1.5" fill="#0f172a" stroke="#d97706" strokeWidth="0.8" />
-        <rect x="-5" y="-17" width="10" height="5" rx="1.5" fill="#0f172a" stroke="#d97706" strokeWidth="0.8" />
-        <rect x="14" y="-17" width="10" height="5" rx="1.5" fill="#0f172a" stroke="#d97706" strokeWidth="0.8" />
-        <rect x="-24" y="12" width="10" height="5" rx="1.5" fill="#0f172a" stroke="#d97706" strokeWidth="0.8" />
-        <rect x="-5" y="12" width="10" height="5" rx="1.5" fill="#0f172a" stroke="#d97706" strokeWidth="0.8" />
-        <rect x="14" y="12" width="10" height="5" rx="1.5" fill="#0f172a" stroke="#d97706" strokeWidth="0.8" />
-      </g>
-
-      {/* Main Metallic Chassis Body */}
-      <rect
-        x="-18"
-        y="-11"
-        width="34"
-        height="22"
-        rx="3.5"
-        fill="#1e293b"
-        stroke="#e2e8f0"
-        strokeWidth="1.2"
-      />
-
-      {/* Gold Foil Heat Insulation Core */}
-      <rect
-        x="-14"
-        y="-8"
-        width="22"
-        height="16"
-        rx="2"
-        fill="#b45309"
-        stroke="#f59e0b"
-        strokeWidth="0.8"
-      />
-
-      {/* Solar Panel Array Grid (High-Tech Blue) */}
-      <rect
-        x="-12"
-        y="-6"
-        width="18"
-        height="12"
-        rx="1"
-        fill="#0369a1"
-        stroke="#38bdf8"
-        strokeWidth="0.6"
-      />
-      <line x1="-12" y1="0" x2="6" y2="0" stroke="#38bdf8" strokeWidth="0.5" />
-      <line x1="-6" y1="-6" x2="-6" y2="6" stroke="#38bdf8" strokeWidth="0.5" />
-      <line x1="0" y1="-6" x2="0" y2="6" stroke="#38bdf8" strokeWidth="0.5" />
-
-      {/* High-Gain Satellite Parabolic Dish Antenna */}
-      <ellipse cx="-13" cy="-4" rx="4" ry="3" fill="#f8fafc" stroke="#64748b" strokeWidth="0.8" />
-      <line x1="-13" y1="-4" x2="-16" y2="-9" stroke="#94a3b8" strokeWidth="1" />
-      <circle cx="-16" cy="-9" r="1.2" fill="#ef4444" />
-
-      {/* Robotic Arm Mount */}
-      <path
-        d="M 12 5 L 20 8 L 24 5"
-        stroke="#cbd5e1"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <circle cx="24" cy="5" r="1.5" fill="#f59e0b" />
-
-      {/* Panoramic Mastcam / Lidar Turret */}
-      <rect x="6" y="-7" width="6" height="5" rx="1" fill="#0f172a" stroke="#cbd5e1" strokeWidth="0.8" />
-      <circle cx="9" cy="-4.5" r="1.8" fill="#06b6d4" />
-      <circle cx="9" cy="-4.5" r="0.7" fill="#ffffff" />
-
-      {/* Front Glowing LED Navigation Beacons */}
-      <circle cx="16" cy="-7" r="1.5" fill="#f59e0b" />
-      <circle cx="16" cy="7" r="1.5" fill="#f59e0b" />
-      <circle cx="-16" cy="7" r="1.2" fill="#22c55e" />
-    </g>
-  )
-}
+// Pre-computed node SVG coordinates
+const NODE_POINTS = NODE_XS.map((x, i) => ({ ...years[i], x, y: GROUND_Y }))
 
 export default function RoadmapSection() {
   const sectionRef = useRef(null)
-  const pathRef = useRef(null)
-  const roverRef = useRef(null)
-  const trackRef = useRef(null)
-  const tireTrackRef = useRef(null)
+  const routeFillRef = useRef(null)
+  const robotOverlayRef = useRef(null)
+  const progressRef = useRef(0)
 
-  const [pathLength, setPathLength] = useState(0)
   const [activeStep, setActiveStep] = useState(0)
-  const [nodePoints, setNodePoints] = useState([])
+  const [reducedMotion, setReducedMotion] = useState(false)
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end end'],
   })
 
-  // Measure path geometry on mount
   useEffect(() => {
-    if (pathRef.current) {
-      const len = pathRef.current.getTotalLength()
-      setPathLength(len)
-      setNodePoints(
-        years.map((y) => {
-          const pt = pathRef.current.getPointAtLength(len * y.at)
-          return { ...y, x: pt.x, y: pt.y }
-        })
-      )
-    }
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const upd = () => setReducedMotion(mq.matches)
+    upd()
+    mq.addEventListener('change', upd)
+    return () => mq.removeEventListener('change', upd)
   }, [])
 
-  // Sync Rover & Track precisely to scroll progress
-  useMotionValueEvent(scrollYProgress, 'change', (progress) => {
-    if (!pathRef.current || !pathLength) return
-    const clamped = Math.min(Math.max(progress, 0), 1)
-    const currentDist = pathLength * clamped
+  // ── Pure linear mapping: scroll → rover X, Y is locked to ground
+  useMotionValueEvent(scrollYProgress, 'change', (value) => {
+    const progress = Math.min(Math.max(value, 0), 1)
+    progressRef.current = progress
 
-    const p = pathRef.current.getPointAtLength(currentDist)
-    const pAhead = pathRef.current.getPointAtLength(Math.min(currentDist + 2, pathLength))
-    const angle = (Math.atan2(pAhead.y - p.y, pAhead.x - p.x) * 180) / Math.PI
+    const svgX = TRACK_START_X + TRACK_LENGTH * progress
 
-    if (roverRef.current) {
-      roverRef.current.setAttribute(
-        'transform',
-        `translate(${p.x}, ${p.y}) rotate(${angle}) scale(1.2)`
-      )
+    if (robotOverlayRef.current) {
+      robotOverlayRef.current.style.left = `${(svgX / 1200) * 100}%`
+      robotOverlayRef.current.style.top = `${GROUND_Y_PCT}%`
     }
 
-    if (trackRef.current) {
-      trackRef.current.setAttribute('stroke-dashoffset', String(pathLength - currentDist))
+    if (routeFillRef.current) {
+      routeFillRef.current.style.strokeDashoffset = String(TRACK_LENGTH * (1 - progress))
     }
 
-    if (tireTrackRef.current) {
-      tireTrackRef.current.setAttribute('stroke-dashoffset', String(pathLength - currentDist))
-    }
-
-    // Active milestone determination
-    if (clamped < 0.36) {
-      setActiveStep(0)
-    } else if (clamped < 0.72) {
-      setActiveStep(1)
-    } else {
-      setActiveStep(2)
-    }
+    const nextStep = progress < 0.33 ? 0 : progress < 0.67 ? 1 : 2
+    setActiveStep((cur) => (cur === nextStep ? cur : nextStep))
   })
+
+  const scrollToPhase = (index) => {
+    if (!sectionRef.current) return
+    const top = sectionRef.current.offsetTop
+    const height = sectionRef.current.offsetHeight
+    const target = top + (height - window.innerHeight) * years[index].at
+    window.scrollTo({ top: target, behavior: reducedMotion ? 'auto' : 'smooth' })
+  }
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); scrollToPhase(index) }
+  }
 
   return (
     <section
       id="roadmap"
       ref={sectionRef}
-      className="relative w-full bg-black text-ivory"
-      style={{ height: '240vh' }}
+      role="region"
+      aria-label="Mission Trajectory Roadmap"
+      className="relative h-[320vh] sm:h-[380vh] lg:h-[420vh] bg-black"
     >
-      {/* Fullscreen Sticky Mars Exploration Experience */}
-      <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex flex-col justify-center items-center">
-        {/* Fullscreen Mars Landscape Background */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
+
+        {/* ════════════════════════════════════════
+            BACKGROUND — cinematic Mars photography
+        ════════════════════════════════════════ */}
+        <div className="absolute inset-0 z-0">
+          {/* Full-bleed Mars surface photo */}
           <img
             src="/mars_surface.jpg"
-            alt="Mars surface terrain"
-            className="w-full h-full object-cover scale-100"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover object-center select-none pointer-events-none"
+            style={{ filter: 'saturate(1.25) contrast(1.10) brightness(0.72)' }}
           />
-          {/* Subtle contrast gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/80" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-black/70" />
-        </div>
 
-        {/* TOP COMPACT HEADER HUD (Floating) */}
-        <div className="absolute top-6 left-6 md:left-12 right-6 md:right-12 z-30 flex items-center justify-between pointer-events-none">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="w-2 h-2 rounded-full bg-rust animate-pulse" />
-              <p className="font-mono text-[10px] tracking-widest2 uppercase text-ivory/80">
-                MARS TRAVERSE · 3-YEAR TIMELINE
-              </p>
-            </div>
-            <h2 className="font-serifEd text-3xl sm:text-4xl md:text-5xl leading-none text-ivory tracking-tight">
-              The Martian Route
-            </h2>
-          </div>
+          {/* Sky darkening gradient — upper 55% becomes deep dusk */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[rgba(8,4,2,0.78)] via-[rgba(18,8,4,0.40)] to-[rgba(60,24,8,0.25)]" />
 
-          <div className="hidden sm:flex items-center gap-4 font-mono text-[10px] tracking-widest2 uppercase text-ivory/70 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-white/10">
-            <span><strong className="text-rust">EXPEDITION:</strong> ACTIVE</span>
-            <span><strong className="text-amber">TERRAIN:</strong> OLYMPUS MONS</span>
-          </div>
-        </div>
+          {/* Warm sun glow from upper-left */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_40%_at_18%_8%,rgba(255,180,60,0.18),transparent_65%)]" />
 
-        {/* FULLSCREEN MARS MAP SVG CANVAS */}
-        <div className="relative z-10 w-full h-full flex items-center justify-center">
-          <svg
-            viewBox="0 0 1200 700"
-            className="w-full h-full block"
-            preserveAspectRatio="xMidYMid slice"
+          {/* Horizon haze band at ground level */}
+          <div
+            className="absolute left-0 right-0 pointer-events-none"
+            style={{ top: `${GROUND_Y_PCT - 4}%` }}
+            aria-hidden="true"
           >
-            <defs>
-              <pattern id="hudGrid" width="60" height="60" patternUnits="userSpaceOnUse">
-                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
-              </pattern>
-              <filter id="glowEffect" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-                <feMerge>
-                  <feMergeNode in="coloredBlur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
-
-            <rect width="1200" height="700" fill="url(#hudGrid)" />
-
-            {/* Base Path Guide Line */}
-            <path
-              d={PATH_D}
-              fill="none"
-              stroke="rgba(255, 255, 255, 0.2)"
-              strokeWidth="2.5"
-              strokeDasharray="6 6"
-              ref={pathRef}
-            />
-
-            {/* Tire Tread Markings on Mars Dirt */}
-            <path
-              ref={tireTrackRef}
-              d={PATH_D}
-              fill="none"
-              stroke="rgba(180, 83, 9, 0.65)"
-              strokeWidth="14"
-              strokeDasharray={pathLength}
-              strokeDashoffset={pathLength}
-              strokeLinecap="round"
-              opacity="0.8"
-            />
-
-            {/* Glowing Traversed Route */}
-            <path
-              ref={trackRef}
-              d={PATH_D}
-              fill="none"
-              stroke="#ff9f1c"
-              strokeWidth="3.5"
-              strokeDasharray={pathLength}
-              strokeDashoffset={pathLength}
-              filter="url(#glowEffect)"
-              strokeLinecap="round"
-            />
-
-            {/* 3 Checkpoint Markers along the Path */}
-            {nodePoints.map((node, i) => {
-              const isActive = activeStep === i
-              const isReached = activeStep >= i
-
-              return (
-                <g key={node.step} transform={`translate(${node.x}, ${node.y})`}>
-                  {/* Active Pulsing Ring */}
-                  {isActive && (
-                    <circle r="26" fill="none" stroke="#ff9f1c" strokeWidth="1.5" opacity="0.65" className="animate-ping" />
-                  )}
-
-                  {/* Checkpoint Target Rings */}
-                  <circle
-                    r="15"
-                    fill={isReached ? '#0f172a' : '#1e293b'}
-                    stroke={isReached ? '#ff9f1c' : 'rgba(255,255,255,0.3)'}
-                    strokeWidth="2"
-                  />
-                  <circle
-                    r="6"
-                    fill={isReached ? (isActive ? '#e4572e' : '#ff9f1c') : '#475569'}
-                  />
-
-                  {/* Milestone Badge Label on Map */}
-                  <g transform="translate(0, -22)">
-                    <rect
-                      x="-32"
-                      y="-12"
-                      width="64"
-                      height="17"
-                      rx="3"
-                      fill="rgba(0,0,0,0.85)"
-                      stroke={isActive ? '#ff9f1c' : 'rgba(255,255,255,0.2)'}
-                      strokeWidth="1"
-                    />
-                    <text
-                      x="0"
-                      y="1"
-                      textAnchor="middle"
-                      fill={isActive ? '#ff9f1c' : '#f1ede3'}
-                      fontSize="9"
-                      fontFamily="monospace"
-                      fontWeight="bold"
-                      letterSpacing="1"
-                    >
-                      {node.year}
-                    </text>
-                  </g>
-                </g>
-              )
-            })}
-
-            {/* Dynamic HD Space Exploration Rover */}
-            <g ref={roverRef} transform="translate(80, 230) rotate(0) scale(1.2)">
-              <SpaceRover />
-            </g>
-          </svg>
-
-          {/* CHECKPOINT INFO CARDS (Positioned Directly Beside Each Checkpoint) */}
-          <div className="hidden md:block absolute inset-0 pointer-events-none z-20">
-            {years.map((item, idx) => {
-              const isActive = activeStep === idx
-
-              return (
-                <div
-                  key={item.step}
-                  className={`absolute ${item.cardPosition} w-[320px] lg:w-[350px] transition-all duration-500 pointer-events-auto`}
-                >
-                  <div
-                    className={`rounded-xl p-5 transition-all duration-500 border ${
-                      isActive
-                        ? 'bg-[#FAF8F5] text-textDark border-rust shadow-2xl scale-[1.04] ring-2 ring-rust/30'
-                        : 'bg-black/70 text-ivory/70 border-white/10 backdrop-blur-md hover:bg-black/85 opacity-75'
-                    }`}
-                  >
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={`font-mono text-xs font-bold tracking-widest2 ${
-                            isActive ? 'text-rust' : 'text-amber'
-                          }`}
-                        >
-                          {item.year}
-                        </span>
-                        <span className="font-mono text-[10px] text-textMuted/70">· STEP {item.step}</span>
-                      </div>
-                      <span
-                        className={`font-mono text-[9px] tracking-widest2 uppercase px-2 py-0.5 rounded ${
-                          isActive
-                            ? 'bg-rust/10 text-rust font-semibold'
-                            : 'bg-white/10 text-ivory/80'
-                        }`}
-                      >
-                        {item.badge}
-                      </span>
-                    </div>
-
-                    {/* Title & Tagline */}
-                    <h3
-                      className={`font-serifEd text-xl leading-tight mb-1.5 ${
-                        isActive ? 'text-textDark font-medium' : 'text-ivory'
-                      }`}
-                    >
-                      {item.title}
-                    </h3>
-
-                    <p
-                      className={`text-xs leading-relaxed mb-2.5 ${
-                        isActive ? 'text-textDark/85' : 'text-ivory/60'
-                      }`}
-                    >
-                      {item.tagline}
-                    </p>
-
-                    {/* Active Details */}
-                    {isActive ? (
-                      <div className="space-y-1.5 pt-2.5 border-t border-black/10">
-                        {item.details.map((d, i) => (
-                          <div key={i} className="flex items-start gap-2 text-[11px] text-textDark/90">
-                            <span className="text-rust font-bold shrink-0">›</span>
-                            <span className="leading-snug">{d}</span>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="font-mono text-[10px] tracking-widest2 text-ivory/50 truncate pt-2 border-t border-white/5">
-                        {item.stats}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              )
-            })}
+            <div className="w-full h-[3px] bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
+            <div className="w-full h-16 bg-gradient-to-b from-amber-900/20 to-transparent" />
           </div>
 
-          {/* MOBILE RESPONSIVE FLOATING ACTIVE CARD HUD */}
-          <div className="md:hidden absolute bottom-6 left-4 right-4 z-20 pointer-events-auto">
-            <div className="bg-[#FAF8F5] text-textDark border border-rust rounded-xl p-4 shadow-2xl ring-1 ring-rust/30">
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="font-mono text-xs font-bold text-rust">
-                  {years[activeStep].year} · STEP {years[activeStep].step}
-                </span>
-                <span className="font-mono text-[9px] tracking-widest2 uppercase bg-rust/10 text-rust px-2 py-0.5 rounded font-semibold">
-                  {years[activeStep].badge}
-                </span>
+          {/* Subtle tactical grid — very faint */}
+          <div
+            className="absolute inset-0 opacity-[0.06]"
+            style={{
+              backgroundImage: 'linear-gradient(rgba(255,200,120,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(255,200,120,.2) 1px,transparent 1px)',
+              backgroundSize: '72px 72px',
+            }}
+          />
+        </div>
+
+        {/* Top edge fade */}
+        <div className="absolute top-0 left-0 right-0 h-8 z-40 pointer-events-none bg-gradient-to-b from-black/60 to-transparent" />
+        {/* Bottom edge fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-10 z-40 pointer-events-none bg-gradient-to-t from-black/50 to-transparent" />
+
+        {/* ════════════════════════════════════════
+            AMBIENT STEP WATERMARK
+        ════════════════════════════════════════ */}
+        <div
+          className="pointer-events-none absolute inset-x-0 top-[8%] z-[1] flex flex-col items-center select-none overflow-hidden"
+          aria-hidden="true"
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeStep}
+              initial={{ opacity: 0, scale: 0.92, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 1.06, y: -16 }}
+              transition={{ duration: reducedMotion ? 0 : 0.38, ease: 'easeOut' }}
+              className="text-center"
+            >
+              <div
+                className="font-mono font-black leading-none tracking-[0.01em]"
+                style={{
+                  fontSize: 'clamp(5rem,14vw,12rem)',
+                  color: 'transparent',
+                  WebkitTextStroke: '1px rgba(255,180,60,0.06)',
+                  textShadow: 'none',
+                }}
+              >
+                0{activeStep + 1}
               </div>
-              <h3 className="font-serifEd text-lg font-medium text-textDark leading-tight mb-1">
-                {years[activeStep].title}
-              </h3>
-              <p className="text-xs text-textDark/80 leading-relaxed mb-2">
-                {years[activeStep].tagline}
+              <p className="mt-1 font-mono text-[9px] sm:text-[11px] font-bold tracking-[0.32em] uppercase"
+                style={{ color: 'rgba(255,159,28,0.38)' }}>
+                {years[activeStep].phase}
               </p>
-              <div className="pt-2 border-t border-black/10 text-[11px] text-textDark/90">
-                › {years[activeStep].details[0]}
-              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* ════════════════════════════════════════
+            TOP HEADER — right-aligned
+        ════════════════════════════════════════ */}
+        <header className="absolute left-4 right-4 top-4 z-30 flex items-start justify-between sm:left-8 sm:right-8 sm:top-6 lg:left-12 lg:right-12 lg:top-8 xl:left-16 xl:right-16">
+          {/* Left: step indicator pill */}
+          <div className="hidden lg:flex items-center gap-3 pt-1">
+            <div
+              className="flex items-center gap-2 rounded-full px-3 py-1.5"
+              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)' }}
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]" />
+              <span className="font-mono text-[9px] tracking-[0.24em] text-white/55 uppercase font-semibold">
+                Phase&ensp;{String(activeStep + 1).padStart(2, '0')}&ensp;/&ensp;03
+              </span>
             </div>
           </div>
+
+          {/* Right: title block */}
+          <div className="text-right ml-auto">
+            <div className="mb-1 sm:mb-2 flex items-center justify-end gap-2">
+              <span className="font-mono text-[8px] sm:text-[9.5px] tracking-[0.22em] text-amber-400/70 uppercase font-semibold">
+                Surface Expedition&nbsp;&nbsp;·&nbsp;&nbsp;03 Phases&nbsp;&nbsp;·&nbsp;&nbsp;Live
+              </span>
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b]" />
+            </div>
+            <h2
+              className="font-serifEd leading-[0.90] tracking-tight"
+              style={{ fontSize: 'clamp(1.6rem,5.5vw,5.5rem)' }}
+            >
+              <span className="text-white/95 block">MISSION</span>
+              <span className="text-amber-400 italic block">TRAJECTORY</span>
+            </h2>
+            {/* Mobile nav pills */}
+            <nav
+              aria-label="Phase navigation"
+              className="mt-2 flex items-center justify-end gap-1.5 lg:hidden"
+            >
+              {years.map((item, idx) => {
+                const active = activeStep === idx
+                return (
+                  <button
+                    key={item.step}
+                    onClick={() => scrollToPhase(idx)}
+                    onKeyDown={(e) => handleKeyDown(e, idx)}
+                    aria-pressed={active}
+                    className="shrink-0 rounded-full border px-2.5 py-1 font-mono text-[8px] tracking-wider transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                    style={{
+                      borderColor: active ? '#f59e0b' : 'rgba(255,255,255,0.18)',
+                      background: active ? 'rgba(245,158,11,0.15)' : 'rgba(255,255,255,0.05)',
+                      color: active ? '#f59e0b' : 'rgba(255,255,255,0.55)',
+                      fontWeight: active ? 700 : 400,
+                    }}
+                  >
+                    {item.step}&nbsp;·&nbsp;{item.shortBadge}
+                  </button>
+                )
+              })}
+            </nav>
+          </div>
+        </header>
+
+        {/* ════════════════════════════════════════
+            BOTTOM STATUS BAR (Desktop)
+        ════════════════════════════════════════ */}
+        <footer className="absolute bottom-3 left-4 right-4 sm:left-8 sm:right-8 lg:left-12 lg:right-12 xl:left-16 xl:right-16 z-30 hidden lg:flex items-center justify-between pointer-events-none">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[9px] font-bold text-amber-400/80 tracking-widest">
+              {String(activeStep + 1).padStart(2, '0')} / 03
+            </span>
+            <span className="h-px w-6 bg-white/20" />
+            <span className="font-mono text-[8px] tracking-[0.2em] text-white/35 uppercase">
+              Scroll to advance trajectory
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-mono text-[8px] tracking-[0.2em] text-white/30 uppercase">
+              Mission active
+            </span>
+          </div>
+        </footer>
+
+        {/* ════════════════════════════════════════
+            TRAJECTORY SVG — straight ground rail
+        ════════════════════════════════════════ */}
+        <svg
+          viewBox="0 0 1200 700"
+          preserveAspectRatio="xMidYMid meet"
+          className="absolute inset-0 z-10 h-full w-full pointer-events-none"
+          aria-hidden="true"
+        >
+          <defs>
+            {/* Horizontal gradient for the fill track */}
+            <linearGradient id="rm-route-grad" x1="0" x2="1" y1="0" y2="0"
+              gradientUnits="objectBoundingBox">
+              <stop offset="0" stopColor="#fde68a" stopOpacity="0.85" />
+              <stop offset="0.5" stopColor="#f59e0b" stopOpacity="1" />
+              <stop offset="1" stopColor="#b84a32" stopOpacity="1" />
+            </linearGradient>
+
+            {/* Tight glow — bounds tightly constrained to avoid diagonal bleed */}
+            <filter id="rm-glow" x="-5%" y="-800%" width="110%" height="1700%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+
+            {/* Connector line gradient — vertical, from amber to transparent */}
+            <linearGradient id="rm-conn-grad" x1="0" x2="0" y1="0" y2="1"
+              gradientUnits="objectBoundingBox">
+              <stop offset="0" stopColor="#f59e0b" stopOpacity="0.0" />
+              <stop offset="1" stopColor="#f59e0b" stopOpacity="0.55" />
+            </linearGradient>
+          </defs>
+
+          {/* ── Track shadow (depth) ── */}
+          <line
+            x1={TRACK_START_X} y1={GROUND_Y + 5}
+            x2={TRACK_END_X} y2={GROUND_Y + 5}
+            stroke="rgba(0,0,0,0.45)" strokeWidth="12" strokeLinecap="round"
+          />
+
+          {/* ── Background rail ── */}
+          <line
+            x1={TRACK_START_X} y1={GROUND_Y}
+            x2={TRACK_END_X} y2={GROUND_Y}
+            stroke="rgba(255,255,255,0.08)" strokeWidth="18" strokeLinecap="round"
+          />
+
+          {/* ── Dashed centre guide ── */}
+          <line
+            x1={TRACK_START_X} y1={GROUND_Y}
+            x2={TRACK_END_X} y2={GROUND_Y}
+            stroke="rgba(245,158,11,0.22)" strokeWidth="2"
+            strokeDasharray="8 16"
+          />
+
+          {/* ── Animated amber fill (driven by scroll, via strokeDashoffset) ── */}
+          <line
+            ref={routeFillRef}
+            x1={TRACK_START_X} y1={GROUND_Y}
+            x2={TRACK_END_X} y2={GROUND_Y}
+            stroke="url(#rm-route-grad)"
+            strokeWidth="5"
+            strokeLinecap="round"
+            strokeDasharray={TRACK_LENGTH}
+            strokeDashoffset={TRACK_LENGTH}
+            filter="url(#rm-glow)"
+          />
+
+          {/* ── Phase nodes + vertical connector lines ── */}
+          {NODE_POINTS.map((node, index) => {
+            const reached = activeStep > index
+            const active = activeStep === index
+
+            // Connector goes from node up to card anchor region
+            const connTop = CARD_ANCHOR_Y
+            const connBottom = GROUND_Y - 20
+
+            return (
+              <g
+                key={node.step}
+                transform={`translate(${node.x}, ${node.y})`}
+                onClick={() => scrollToPhase(index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                className="cursor-pointer pointer-events-auto group"
+                role="button"
+                tabIndex={0}
+                aria-label={`Jump to Phase ${node.step}: ${node.phase}`}
+              >
+                {/* Vertical connector line from node up to card area */}
+                <line
+                  x1="0" y1={-20}
+                  x2="0" y2={-(connBottom - connTop)}
+                  stroke={active ? 'rgba(245,158,11,0.50)' : 'rgba(255,255,255,0.12)'}
+                  strokeWidth="1"
+                  strokeDasharray="4 7"
+                />
+
+                {/* Phase label just above connector top */}
+                <text
+                  x="0"
+                  y={-(connBottom - connTop) - 10}
+                  textAnchor="middle"
+                  fill={active ? '#f59e0b' : 'rgba(255,255,255,0.35)'}
+                  fontSize="8.5"
+                  fontWeight="700"
+                  fontFamily="monospace"
+                  letterSpacing="2.5"
+                  className="select-none pointer-events-none"
+                >
+                  PHASE {node.step}
+                </text>
+
+                {/* Outer pulse ring */}
+                {active && (
+                  <circle
+                    r="30"
+                    fill="none"
+                    stroke="rgba(245,158,11,0.30)"
+                    strokeWidth="1"
+                    className="animate-ping"
+                    style={{ transformOrigin: 'center', animationDuration: '2s' }}
+                  />
+                )}
+
+                {/* Mid halo */}
+                <circle
+                  r={active ? 20 : 16}
+                  fill="none"
+                  stroke={active ? 'rgba(245,158,11,0.70)' : 'rgba(255,255,255,0.20)'}
+                  strokeWidth={active ? 1.5 : 1}
+                  className="transition-all duration-300"
+                />
+
+                {/* Node fill */}
+                <circle
+                  r="9"
+                  fill={
+                    active ? '#f59e0b' :
+                      reached ? 'rgba(245,158,11,0.60)' :
+                        'rgba(255,255,255,0.15)'
+                  }
+                  stroke={active ? '#fde68a' : reached ? '#f59e0b' : 'rgba(255,255,255,0.30)'}
+                  strokeWidth="1.5"
+                  className="transition-all duration-300"
+                />
+
+                {/* Centre dot */}
+                <circle
+                  r="3"
+                  fill={active ? '#1a0a00' : reached ? '#fff8e7' : 'rgba(255,255,255,0.50)'}
+                />
+              </g>
+            )
+          })}
+        </svg>
+
+        {/* ════════════════════════════════════════
+            3D ROVER OVERLAY — locked to ground rail
+        ════════════════════════════════════════ */}
+        <div
+          ref={robotOverlayRef}
+          className="absolute z-20 pointer-events-none"
+          style={{
+            left: `${(TRACK_START_X / 1200) * 100}%`,
+            top: `${GROUND_Y_PCT}%`,
+            transform: 'translate(-50%, -50%)',
+            width: 'clamp(130px, 13vw, 210px)',
+            height: 'clamp(130px, 13vw, 210px)',
+          }}
+        >
+          {/* Wheel-dust glow — elliptic shadow beneath rover */}
+          <div
+            className="absolute pointer-events-none"
+            style={{
+              bottom: '20%',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '70%',
+              height: '12%',
+              background: 'radial-gradient(ellipse, rgba(184,100,40,0.50) 0%, transparent 75%)',
+              filter: 'blur(5px)',
+            }}
+            aria-hidden="true"
+          />
+          <RoadmapRobot3D progressRef={progressRef} reducedMotion={reducedMotion} />
         </div>
 
-        {/* BOTTOM SCROLL INDICATOR */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-center">
-          <p className="font-mono text-[10px] tracking-widest2 uppercase text-ivory/50">
-            ↓ Scroll to navigate rover ({activeStep + 1}/03)
-          </p>
+        {/* ════════════════════════════════════════
+            DESKTOP GLASSMORPHIC CARDS (lg+)
+            Centered above their node X, in the sky
+        ════════════════════════════════════════ */}
+        <div
+          className="absolute inset-0 z-20 hidden lg:block pointer-events-none"
+          aria-live="polite"
+        >
+          <AnimatePresence mode="wait">
+            {years.map((item, index) => {
+              if (index !== activeStep) return null
+
+              // Card centred on node X, clamped so it doesn't overflow
+              const nodeLeftPct = (NODE_XS[index] / 1200) * 100
+              const cardWidthVw = 23  // approximate card width as % of viewport
+              const clampedLeft = Math.max(2, Math.min(nodeLeftPct - cardWidthVw / 2, 100 - cardWidthVw - 2))
+
+              return (
+                <motion.article
+                  key={item.step}
+                  initial={{ opacity: 0, y: 22, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 16, scale: 0.95 }}
+                  transition={{ duration: reducedMotion ? 0 : 0.30, ease: [0.22, 1, 0.36, 1] }}
+                  style={{
+                    position: 'absolute',
+                    left: `${clampedLeft}%`,
+                    // Card sits in the upper sky area, above the connector top
+                    top: '9%',
+                    width: 'clamp(300px, 23vw, 370px)',
+                  }}
+                  className="pointer-events-auto"
+                >
+                  {/* Glassmorphic card */}
+                  <div
+                    className="relative overflow-hidden"
+                    style={{
+                      background: 'rgba(12, 6, 2, 0.72)',
+                      backdropFilter: 'blur(20px)',
+                      WebkitBackdropFilter: 'blur(20px)',
+                      border: '1px solid rgba(245,158,11,0.28)',
+                      boxShadow: '0 24px 64px rgba(0,0,0,0.55), 0 0 0 1px rgba(245,158,11,0.10), inset 0 1px 0 rgba(255,255,255,0.06)',
+                    }}
+                  >
+                    {/* Amber top-edge glow line */}
+                    <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent pointer-events-none" />
+
+                    {/* Corner brackets */}
+                    <span className="absolute left-0 top-0 h-3 w-3 border-l border-t border-amber-400/70" />
+                    <span className="absolute right-0 top-0 h-3 w-3 border-r border-t border-amber-400/20" />
+                    <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-amber-400/20" />
+                    <span className="absolute bottom-0 right-0 h-3 w-3 border-b border-r border-amber-400/70" />
+
+                    {/* Inner edge frame */}
+                    <div className="pointer-events-none absolute inset-[5px] border border-white/[0.04]" />
+
+                    {/* Radial amber glow */}
+                    <div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background: 'radial-gradient(circle at 85% 0%, rgba(245,158,11,0.12) 0%, transparent 55%)',
+                      }}
+                    />
+
+                    <div className="relative p-5 xl:p-6">
+                      {/* Top meta row */}
+                      <div className="mb-3 flex items-center justify-between">
+                        <span className="font-mono text-[9px] xl:text-[9.5px] tracking-[0.26em] uppercase font-bold text-amber-400/90">
+                          {item.year}&ensp;·&ensp;Phase {item.step}
+                        </span>
+                        <span
+                          className="font-mono text-[7.5px] xl:text-[8px] tracking-[0.18em] rounded-full px-2.5 py-0.5 uppercase font-bold"
+                          style={{
+                            border: '1px solid rgba(245,158,11,0.40)',
+                            background: 'rgba(245,158,11,0.10)',
+                            color: '#f59e0b',
+                          }}
+                        >
+                          Active
+                        </span>
+                      </div>
+
+                      {/* Title */}
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <h3 className="font-serifEd text-xl xl:text-2xl leading-[1.10] text-white tracking-tight font-bold">
+                          {item.title}
+                        </h3>
+                        <span className="font-mono text-3xl xl:text-4xl font-black leading-none shrink-0 select-none"
+                          style={{ color: 'rgba(245,158,11,0.18)' }}>
+                          {item.step}
+                        </span>
+                      </div>
+
+                      {/* Tagline */}
+                      <p className="text-[12px] xl:text-[13px] leading-relaxed text-white/55 font-light">
+                        {item.tagline}
+                      </p>
+
+                      {/* Divider */}
+                      <div className="mt-4 h-px bg-gradient-to-r from-amber-400/25 via-white/10 to-transparent" />
+
+                      {/* Detail bullets */}
+                      <ul className="mt-3.5 space-y-2.5" aria-label="Phase objectives">
+                        {item.details.map((detail) => (
+                          <li key={detail} className="flex items-start gap-2.5 text-[11.5px] xl:text-[12.5px] leading-snug text-white/75">
+                            <span className="text-amber-400 font-bold text-[9px] shrink-0 mt-0.5" aria-hidden="true">▸</span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </motion.article>
+              )
+            })}
+          </AnimatePresence>
         </div>
+
+        {/* ════════════════════════════════════════
+            MOBILE BOTTOM CARD (< lg)
+        ════════════════════════════════════════ */}
+        <div className="absolute bottom-4 sm:bottom-8 left-3 right-3 sm:left-6 sm:right-6 max-w-md sm:max-w-lg mx-auto lg:hidden z-30">
+          <AnimatePresence mode="wait">
+            {years.map(
+              (item, index) =>
+                index === activeStep && (
+                  <motion.article
+                    key={item.step}
+                    initial={{ opacity: 0, y: 14, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                    transition={{ duration: reducedMotion ? 0 : 0.25, ease: 'easeOut' }}
+                    className="relative overflow-hidden"
+                    style={{
+                      background: 'rgba(8,4,2,0.82)',
+                      backdropFilter: 'blur(18px)',
+                      WebkitBackdropFilter: 'blur(18px)',
+                      border: '1px solid rgba(245,158,11,0.28)',
+                      boxShadow: '0 16px 48px rgba(0,0,0,0.55)',
+                    }}
+                  >
+                    {/* Top line glow */}
+                    <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
+                    {/* Corner brackets */}
+                    <span className="absolute left-0 top-0 h-2.5 w-2.5 border-l border-t border-amber-400/70" />
+                    <span className="absolute right-0 top-0 h-2.5 w-2.5 border-r border-t border-amber-400/20" />
+                    <span className="absolute bottom-0 left-0 h-2.5 w-2.5 border-b border-l border-amber-400/20" />
+                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 border-b border-r border-amber-400/70" />
+
+                    <div className="relative p-3.5 sm:p-4">
+                      {/* Meta row */}
+                      <div className="mb-1.5 flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-mono text-[8.5px] tracking-[0.22em] text-amber-400 font-bold uppercase">
+                            {item.year}
+                          </span>
+                          <span className="text-amber-400/30 font-mono text-[8px]">/</span>
+                          <span className="font-mono text-[8.5px] tracking-[0.18em] text-white/40 uppercase">
+                            Phase {item.step}
+                          </span>
+                        </div>
+                        <span className="font-mono text-[7.5px] tracking-[0.14em] rounded-full px-2.5 py-0.5 text-amber-400 font-bold uppercase"
+                          style={{ border: '1px solid rgba(245,158,11,0.35)', background: 'rgba(245,158,11,0.10)' }}>
+                          {item.badge}
+                        </span>
+                      </div>
+
+                      <div className="flex items-start justify-between gap-2">
+                        <h3 className="font-serifEd text-base sm:text-lg leading-[1.15] text-white font-semibold">
+                          {item.title}
+                        </h3>
+                        <span className="font-mono text-xl font-black shrink-0 leading-none select-none"
+                          style={{ color: 'rgba(245,158,11,0.18)' }}>{item.step}</span>
+                      </div>
+
+                      <p className="mt-1 text-[11px] sm:text-[12px] leading-snug text-white/50 font-light line-clamp-2">
+                        {item.tagline}
+                      </p>
+
+                      <div className="mt-2 h-px bg-gradient-to-r from-amber-400/20 via-white/8 to-transparent" />
+
+                      <ul className="mt-1.5 space-y-1">
+                        {item.details.map((d) => (
+                          <li key={d} className="flex items-start gap-1.5 text-[10.5px] sm:text-[11.5px] leading-snug text-white/70">
+                            <span className="text-amber-400 font-bold text-[9px] shrink-0 mt-0.5">▸</span>
+                            <span className="line-clamp-1 sm:line-clamp-none">{d}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      {/* Dot nav */}
+                      <div className="mt-2.5 pt-2 border-t border-white/[0.06] flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                          {years.map((_, dotIdx) => (
+                            <button
+                              key={dotIdx}
+                              onClick={() => scrollToPhase(dotIdx)}
+                              aria-label={`Go to Phase ${dotIdx + 1}`}
+                              className="h-1.5 rounded-full transition-all duration-300"
+                              style={{
+                                width: activeStep === dotIdx ? '1.25rem' : '0.375rem',
+                                background: activeStep === dotIdx ? '#f59e0b' : 'rgba(255,255,255,0.18)',
+                              }}
+                            />
+                          ))}
+                        </div>
+                        <span className="font-mono text-[7.5px] tracking-[0.18em] text-white/30 uppercase">
+                          Scroll to explore
+                        </span>
+                      </div>
+                    </div>
+                  </motion.article>
+                )
+            )}
+          </AnimatePresence>
+        </div>
+
       </div>
     </section>
   )
