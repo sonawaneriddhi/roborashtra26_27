@@ -153,10 +153,6 @@ function LeftEdgeRoulette({ units, selectedId, onSelectUnit }) {
           const zIndex = isActive ? 50 : Math.round((cosVal + 1) * 20)
 
           if (!isVisibleInArc) return null
-
-          const totalPersons = (unit.heads?.length || 0) + (unit.members?.length || 0)
-          const personText = String(totalPersons).padStart(2, '0') + ' PERSONS'
-
           return (
             <motion.div
               key={unit.id}
@@ -206,16 +202,6 @@ function LeftEdgeRoulette({ units, selectedId, onSelectUnit }) {
                 </h4>
               </div>
 
-              {/* Members Count Footer */}
-              <div className="flex items-center justify-between">
-                <span
-                  className={`font-cinzel text-[9px] sm:text-[10px] tracking-widest uppercase font-semibold ${
-                    isActive ? 'text-black/90' : 'text-[#888888]'
-                  }`}
-                >
-                  {personText}
-                </span>
-              </div>
             </motion.div>
           )
         })}
@@ -277,12 +263,6 @@ function HeadCard({ head, index }) {
         <p className="font-mono text-[10px] text-[#FF8A00] tracking-widest2 uppercase font-semibold mb-1.5">
           {head.role}
         </p>
-
-        {head.description && (
-          <p className="text-[11px] text-[#666666] leading-relaxed line-clamp-2 mb-2">
-            {head.description}
-          </p>
-        )}
       </div>
 
       {/* Social / Contact Links (LinkedIn & Instagram for Unit Heads and Leads) */}
@@ -296,26 +276,7 @@ function HeadCard({ head, index }) {
         >
           <LinkedInIcon className="w-3.5 h-3.5" />
         </a>
-        <a
-          href={head.socials?.instagram || head.socials?.insta || 'https://instagram.com'}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-7 h-7 rounded-lg bg-[#FAF8F5] hover:bg-[#FF8A00]/15 hover:text-[#FF8A00] flex items-center justify-center transition-colors"
-          aria-label={`${head.name} Instagram`}
-        >
-          <InstagramIcon className="w-3.5 h-3.5" />
-        </a>
-        {head.socials?.github && (
-          <a
-            href={head.socials.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-7 h-7 rounded-lg bg-[#FAF8F5] hover:bg-[#FF8A00]/15 hover:text-[#FF8A00] flex items-center justify-center transition-colors"
-            aria-label={`${head.name} GitHub`}
-          >
-            <Globe className="w-3.5 h-3.5" />
-          </a>
-        )}
+        
       </div>
     </motion.div>
   )
@@ -335,14 +296,6 @@ function MemberCard({ member, index }) {
     >
       <div className="flex items-center gap-4 min-w-0">
         {/* Rounded Rectangle Profile Avatar */}
-        <div className="w-20 h-20 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shrink-0 border border-black/8 bg-[#FAF8F5]">
-          <img
-            src={member.image}
-            alt={member.name}
-            className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-108"
-            loading="lazy"
-          />
-        </div>
 
         {/* Member Details (Bigger font) */}
         <div className="min-w-0">
@@ -366,15 +319,7 @@ function MemberCard({ member, index }) {
         >
           <LinkedInIcon className="w-4 h-4" />
         </a>
-        <a
-          href={member.socials?.instagram || member.socials?.insta || 'https://instagram.com'}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${member.name} Instagram`}
-          className="w-8 h-8 rounded-xl bg-[#FAF8F5] hover:bg-[#FF8A00]/15 hover:text-[#FF8A00] flex items-center justify-center transition-colors"
-        >
-          <InstagramIcon className="w-4 h-4" />
-        </a>
+        
       </div>
     </motion.div>
   )
@@ -503,7 +448,7 @@ export default function Team() {
                   )}
 
                   {/* 2. UNIT MEMBERS SECTION (Hidden for the LEAD unit, shown for squads) */}
-                  {activeUnit.id !== 'lead' && (
+                  {(activeUnit.id !== 'lead') || (activeUnit.id !== 'CAD/CAM') && (
                     <div>
                       <div className="flex items-center gap-4 mb-3.5">
                         <span className="font-cinzel text-xs tracking-widest uppercase text-[#111111] font-bold shrink-0">

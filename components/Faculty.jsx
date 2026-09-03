@@ -292,17 +292,6 @@ export default function Faculty() {
         aria-label="Faculty Mentorship"
         className="w-full bg-[#070707] text-ivory py-28 px-6 md:px-12 border-t border-b border-white/10"
       >
-        <div className="max-w-7xl mx-auto mb-14 text-center">
-          <p className="font-mono text-xs tracking-widest2 uppercase text-amber mb-3">
-            FACULTY GUIDANCE &amp; DIRECTION
-          </p>
-          <h2 className="font-serifEd text-5xl md:text-7xl text-ivory tracking-tight mb-4">
-            ROBORASHTRA
-          </h2>
-          <p className="font-mono text-xs text-ivory/60 tracking-wider max-w-xl mx-auto">
-            The visionary faculty mentors orchestrating autonomous robotics research and state championship teams.
-          </p>
-        </div>
 
         <div className="flex flex-col md:flex-row justify-center items-center gap-8 max-w-5xl mx-auto">
           {facultyMembers.map((faculty, i) => (
