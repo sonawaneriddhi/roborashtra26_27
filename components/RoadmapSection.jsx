@@ -258,27 +258,10 @@ export default function RoadmapSection() {
         {/* TOP COMPACT HEADER HUD (Floating) */}
         <div className="absolute top-6 left-6 md:left-12 right-6 md:right-12 z-30 flex items-center justify-between pointer-events-none">
           <div>
-<<<<<<< HEAD
-=======
-            <div className="flex items-center gap-2 mb-1">
-              <span className="w-2 h-2 rounded-full bg-rust animate-pulse" />
-              <p className="font-mono text-[10px] tracking-widest2 uppercase text-ivory/80">
-                MARS TRAVERSE · 3-YEAR TIMELINE
-              </p>
-            </div>
->>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
             <h2 className="font-serifEd text-3xl sm:text-4xl md:text-5xl leading-none text-ivory tracking-tight">
               The Martian Route
             </h2>
           </div>
-<<<<<<< HEAD
-=======
-
-          <div className="hidden sm:flex items-center gap-4 font-mono text-[10px] tracking-widest2 uppercase text-ivory/70 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-white/10">
-            <span><strong className="text-rust">EXPEDITION:</strong> ACTIVE</span>
-            <span><strong className="text-amber">TERRAIN:</strong> OLYMPUS MONS</span>
-          </div>
->>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
         </div>
 
         {/* FULLSCREEN MARS MAP SVG CANVAS */}

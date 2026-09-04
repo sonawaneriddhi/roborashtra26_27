@@ -12,11 +12,7 @@ const links = [
   { label: 'SPONSORS', href: '#sponsors' },
   { label: 'FACULTY', href: '#faculty' },
   { label: 'TEAM', href: '#team' },
-<<<<<<< HEAD
   { label: 'REGISTER', href: 'https://unstop.com/' },
-=======
-  { label: 'REGISTER', href: '/join' },
->>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
 ]
 
 const listVariants = {
@@ -59,7 +55,6 @@ export default function FullscreenMenu({ open, onClose }) {
           >
             {links.map((l) => (
               <motion.div key={l.label} variants={itemVariants} className="overflow-hidden">
-<<<<<<< HEAD
                 {l.href.startsWith('http') ? (
                   <a
                     href={l.href}
@@ -79,15 +74,6 @@ export default function FullscreenMenu({ open, onClose }) {
                     {l.label}
                   </Link>
                 )}
-=======
-                <Link
-                  href={l.href}
-                  onClick={onClose}
-                  className="block font-serifEd text-5xl sm:text-6xl md:text-7xl leading-[1.15] hover:text-rust transition-colors"
-                >
-                  {l.label}
-                </Link>
->>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
               </motion.div>
             ))}
           </motion.nav>
@@ -98,11 +84,7 @@ export default function FullscreenMenu({ open, onClose }) {
             animate="show"
             className="px-6 md:px-12 pb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 font-mono text-[11px] tracking-widest2 text-ivory/60 uppercase"
           >
-<<<<<<< HEAD
             <span></span>
-=======
-            <span>Roborashtra — Robotics Competition — Pune / India</span>
->>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
             <span>Instagram · LinkedIn · Email</span>
           </motion.div>
         </motion.div>

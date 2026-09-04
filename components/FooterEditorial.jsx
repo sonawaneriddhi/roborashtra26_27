@@ -1,13 +1,9 @@
 import Link from 'next/link'
 
 const nav = [
-  { label: 'COUNTDOWN', href: '#countdown' },
-  { label: 'ABOUT', href: '#gallery' },
   { label: 'EVENTS', href: '#events' },
-  { label: 'ROADMAP', href: '#roadmap' },
   { label: 'SPONSORS', href: '#sponsors' },
   { label: 'FACULTY', href: '#faculty' },
-  { label: 'TEAM', href: '#team' },
   { label: 'REGISTER', href: '/join' },
 ]
 
@@ -18,13 +14,6 @@ export default function FooterEditorial() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
           <div>
             <p className="font-serifEd text-2xl mb-4">Roborashtra</p>
-            <p className="font-mono text-[11px] tracking-widest2 uppercase text-ivory/60 leading-relaxed">
-              Robotics Competition
-              <br />
-              2026
-              <br />
-              Pune / India
-            </p>
           </div>
 
           <nav className="flex flex-wrap gap-x-8 gap-y-3 md:justify-end content-start">
@@ -47,7 +36,6 @@ export default function FooterEditorial() {
         </h2>
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-8 border-t border-ivory/10 font-mono text-[10px] tracking-widest2 uppercase text-ivory/50">
-          <span>© {new Date().getFullYear()} Roborashtra — All units operational</span>
           <div className="flex gap-6">
             <a href="#" className="hover:text-rust transition-colors">Instagram</a>
             <a href="#" className="hover:text-rust transition-colors">LinkedIn</a>

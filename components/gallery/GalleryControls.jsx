@@ -18,36 +18,10 @@ export default function GalleryControls({
       {/* Top Editorial Header */}
       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
         <div>
-<<<<<<< HEAD
-=======
-          <div className="flex items-center gap-2 mb-3">
-            <span className="h-1.5 w-1.5 rounded-full bg-amber animate-pulse" />
-            <p className="font-mono text-[11px] tracking-widest2 uppercase text-amber">
-              ARCHIVE / 01 — SELECTED MOMENTS
-            </p>
-          </div>
->>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
           <h2 className="font-serifEd text-4xl sm:text-5xl md:text-6xl text-paperWhite tracking-tight leading-[0.95] max-w-xl">
             Orbiting the build.
           </h2>
         </div>
-<<<<<<< HEAD
-=======
-
-        <div className="max-w-xs text-left md:text-right">
-          <p className="text-textMuted text-xs sm:text-sm font-body leading-relaxed">
-            An organic spatial collection of prototypes, arena qualifiers, and late-night fabrication records.
-          </p>
-          <div className="flex items-center md:justify-end gap-3 mt-3">
-            <div className="flex items-center gap-2 px-2.5 py-1 rounded bg-black/40 border border-white/10 backdrop-blur-sm">
-              <Disc size={12} className="text-amber animate-spin" style={{ animationDuration: '6s' }} />
-              <span className="font-mono text-[10px] tracking-widest text-ink/90 uppercase">
-                {totalPhotos} ARTIFACTS IN 3D ORBIT
-              </span>
-            </div>
-          </div>
-        </div>
->>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
       </div>
 
       {/* Bottom HUD: Hints, Progress Tracker & Status Readout */}

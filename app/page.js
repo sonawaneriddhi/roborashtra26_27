@@ -25,7 +25,6 @@ export default function Home() {
   return (
     <>
       <LoadingScreen onFinish={() => setLoaded(true)} />
-<<<<<<< HEAD
       <main className={`transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <Hero />
         <Countdown targetDate={new Date('2027-02-01T00:00:00+05:30')} />
@@ -39,21 +38,6 @@ export default function Home() {
       <div className={`transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <FooterEditorial />
       </div>
-=======
-      {loaded && (
-        <main>
-          <Hero />
-          <Countdown targetDate={new Date('2027-02-01T00:00:00+05:30')} />
-          <Gallery />
-          <RoadmapSection />
-          <EventsStory />
-          <Sponsors />
-          <Faculty />
-          <Team />
-        </main>
-      )}
-      {loaded && <FooterEditorial />}
->>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
     </>
   )
 }
