@@ -639,6 +639,9 @@ function MarsExplorationRover({ progressRef, reducedMotion }) {
   const arm = useRef()
   const wheels = useRef([])
   const previousProgress = useRef(0)
+  const facingDirection = useRef(1) // 1 = facing right (+X), -1 = facing left (-X)
+  const currentYaw = useRef(Math.PI / 2 - 0.15)
+  const wheelRoll = useRef(0)
 
   useFrame((state) => {
     if (reducedMotion) return
@@ -648,19 +651,36 @@ function MarsExplorationRover({ progressRef, reducedMotion }) {
     const travelDelta = progress - previousProgress.current
     previousProgress.current = progress
 
-    // Martian terrain: vertical bounce + slight pitch roll to simulate surface driving
+    // Detect scroll direction change with deadzone to prevent micro-jitter
+    if (travelDelta < -0.0006) {
+      facingDirection.current = -1
+    } else if (travelDelta > 0.0006) {
+      facingDirection.current = 1
+    }
+
+    const YAW_RIGHT = Math.PI / 2 - 0.15
+    const YAW_LEFT = YAW_RIGHT + Math.PI // 180-degree turn to face left
+    const targetYaw = facingDirection.current === 1 ? YAW_RIGHT : YAW_LEFT
+
+    // Smooth lerp transition for cinematic 180-degree U-turn rotation
+    currentYaw.current = THREE.MathUtils.lerp(currentYaw.current, targetYaw, 0.075)
+
+    // Martian terrain: vertical bounce + pitch/roll/yaw to simulate active driving & turning
     if (rig.current) {
-      // Vertical bounce — rover "drives" over the rocky terrain
+      // Vertical bounce — rover drives over rocky Martian terrain
       rig.current.position.y = -0.32 + Math.sin(time * 2.4) * 0.022 + Math.sin(time * 1.1) * 0.012
       // Pitch (nose up/down) from terrain undulation
-      rig.current.rotation.x = Math.cos(time * 1.6) * 0.018
+      rig.current.rotation.x = 0.04 + Math.cos(time * 1.6) * 0.018
+      // Smooth Y rotation for 180° turn when reversing direction
+      rig.current.rotation.y = currentYaw.current
       // Roll side-to-side — subtle suspension flex
       rig.current.rotation.z = Math.sin(time * 1.0) * 0.016
     }
 
-    // Pancam Mast: scans the horizon ahead (rotates around Y toward direction of travel)
+    // Pancam Mast: scans horizon ahead in current direction of travel
     if (mast.current) {
-      mast.current.rotation.y = 0.18 + Math.sin(time * 0.55) * 0.20
+      const mastBias = facingDirection.current === 1 ? 0.18 : -0.18
+      mast.current.rotation.y = mastBias + Math.sin(time * 0.55) * 0.20
       mast.current.rotation.x = -0.08 + Math.sin(time * 0.70) * 0.028
     }
 
@@ -669,17 +689,20 @@ function MarsExplorationRover({ progressRef, reducedMotion }) {
       dish.current.rotation.y = time * 0.18 + progress * 0.5
     }
 
-    // Robotic Arm subtle micro-flex while in transit
+    // Robotic Arm micro-flex while in transit
     if (arm.current) {
       arm.current.rotation.z = Math.sin(time * 0.45) * 0.020
       arm.current.rotation.x = Math.cos(time * 0.55) * 0.014
     }
 
-    // All 6 wheels: continuous rolling + extra push from scroll travel delta
-    const baseRoll = time * 1.85  // constant rotation at driving speed
+    // Continuously roll all 6 wheels forward in travel direction
+    const speed = Math.abs(travelDelta) * 35 + (Math.abs(travelDelta) > 0.0001 ? 0.03 : 0.015)
+    wheelRoll.current += speed
+    const baseRoll = time * 1.85 + wheelRoll.current
+
     wheels.current.forEach((wheel) => {
       if (wheel) {
-        wheel.rotation.x = -(baseRoll + progress * 28)
+        wheel.rotation.x = -baseRoll
       }
     })
   })

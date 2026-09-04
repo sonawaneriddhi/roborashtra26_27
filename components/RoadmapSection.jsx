@@ -70,6 +70,7 @@ const NODE_POINTS = NODE_XS.map((x, i) => ({ ...years[i], x, y: GROUND_Y }))
 
 export default function RoadmapSection() {
   const sectionRef = useRef(null)
+  const stageRef = useRef(null)
   const routeFillRef = useRef(null)
   const robotOverlayRef = useRef(null)
   const progressRef = useRef(0)
@@ -82,12 +83,49 @@ export default function RoadmapSection() {
     offset: ['start start', 'end end'],
   })
 
+  const updateRoverPosition = (progressVal) => {
+    if (!robotOverlayRef.current || !stageRef.current) return
+    const progress = typeof progressVal === 'number' ? progressVal : progressRef.current
+    const svgX = TRACK_START_X + TRACK_LENGTH * progress
+
+    const w = stageRef.current.clientWidth
+    const h = stageRef.current.clientHeight
+    const svgAspect = 1200 / 700
+    const vpAspect = w / h
+
+    let leftPct, topPct
+    if (vpAspect > svgAspect) {
+      // Wide screen bounded by height
+      const renderedW = h * svgAspect
+      const xOffset = (w - renderedW) / 2
+      leftPct = ((xOffset + (svgX / 1200) * renderedW) / w) * 100
+      topPct = (GROUND_Y / 700) * 100
+    } else {
+      // Tall screen bounded by width (mobile portrait)
+      const renderedH = w / svgAspect
+      const yOffset = (h - renderedH) / 2
+      leftPct = (svgX / 1200) * 100
+      topPct = ((yOffset + (GROUND_Y / 700) * renderedH) / h) * 100
+    }
+
+    robotOverlayRef.current.style.left = `${leftPct}%`
+    robotOverlayRef.current.style.top = `${topPct}%`
+  }
+
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
     const upd = () => setReducedMotion(mq.matches)
     upd()
     mq.addEventListener('change', upd)
-    return () => mq.removeEventListener('change', upd)
+
+    updateRoverPosition(progressRef.current || 0)
+    const handleResize = () => updateRoverPosition(progressRef.current)
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      mq.removeEventListener('change', upd)
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
 
   // ── Pure linear mapping: scroll → rover X, Y is locked to ground
@@ -95,12 +133,7 @@ export default function RoadmapSection() {
     const progress = Math.min(Math.max(value, 0), 1)
     progressRef.current = progress
 
-    const svgX = TRACK_START_X + TRACK_LENGTH * progress
-
-    if (robotOverlayRef.current) {
-      robotOverlayRef.current.style.left = `${(svgX / 1200) * 100}%`
-      robotOverlayRef.current.style.top = `${GROUND_Y_PCT}%`
-    }
+    updateRoverPosition(progress)
 
     if (routeFillRef.current) {
       routeFillRef.current.style.strokeDashoffset = String(TRACK_LENGTH * (1 - progress))
@@ -180,7 +213,7 @@ export default function RoadmapSection() {
             AMBIENT STEP WATERMARK
         ════════════════════════════════════════ */}
         <div
-          className="pointer-events-none absolute inset-x-0 top-[8%] z-[1] flex flex-col items-center select-none overflow-hidden"
+          className="pointer-events-none absolute inset-x-0 top-[12%] z-[1] flex flex-col items-center select-none overflow-hidden"
           aria-hidden="true"
         >
           <AnimatePresence mode="wait">
@@ -212,41 +245,40 @@ export default function RoadmapSection() {
         </div>
 
         {/* ════════════════════════════════════════
-            TOP HEADER — right-aligned
+            TOP HEADER — Left-aligned HUD Title & Right Phase Controls
         ════════════════════════════════════════ */}
-        <header className="absolute left-4 right-4 top-4 z-30 flex items-start justify-between sm:left-8 sm:right-8 sm:top-6 lg:left-12 lg:right-12 lg:top-8 xl:left-16 xl:right-16">
-          {/* Left: step indicator pill */}
-          <div className="hidden lg:flex items-center gap-3 pt-1">
-            <div
-              className="flex items-center gap-2 rounded-full px-3 py-1.5"
-              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)' }}
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]" />
-              <span className="font-mono text-[9px] tracking-[0.24em] text-white/55 uppercase font-semibold">
-                Phase&ensp;{String(activeStep + 1).padStart(2, '0')}&ensp;/&ensp;03
+        <header className="absolute left-3 right-3 top-3 z-30 flex items-center justify-between sm:left-8 sm:right-8 sm:top-6 lg:left-12 lg:right-12 lg:top-7 xl:left-16 xl:right-16 pointer-events-none">
+          {/* Left: Title block */}
+          <div className="pointer-events-auto">
+            <div className="mb-0.5 flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b]" />
+              <span className="font-mono text-[7.5px] sm:text-[9.5px] tracking-[0.2em] text-amber-400/90 uppercase font-semibold">
+                Surface Expedition
               </span>
             </div>
+            <h2 className="font-serifEd leading-none tracking-tight text-white font-bold flex items-center gap-1.5 text-base sm:text-2xl lg:text-3xl xl:text-4xl">
+              <span className="text-white/95">MISSION</span>
+              <span className="text-amber-400 italic">TRAJECTORY</span>
+            </h2>
           </div>
 
-          {/* Right: title block */}
-          <div className="text-right ml-auto">
-            <div className="mb-1 sm:mb-2 flex items-center justify-end gap-2">
-              <span className="font-mono text-[8px] sm:text-[9.5px] tracking-[0.22em] text-amber-400/70 uppercase font-semibold">
-                Surface Expedition&nbsp;&nbsp;·&nbsp;&nbsp;03 Phases&nbsp;&nbsp;·&nbsp;&nbsp;Live
-              </span>
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b]" />
-            </div>
-            <h2
-              className="font-serifEd leading-[0.90] tracking-tight"
-              style={{ fontSize: 'clamp(1.6rem,5.5vw,5.5rem)' }}
+          {/* Right: Phase Controls & Indicator */}
+          <div className="pointer-events-auto flex items-center gap-2 shrink-0">
+            {/* Step indicator pill (hidden on small mobile, shown on sm+) */}
+            <div
+              className="hidden sm:flex items-center gap-2 rounded-full px-3 py-1.5"
+              style={{ background: 'rgba(12, 6, 2, 0.65)', border: '1px solid rgba(245,158,11,0.25)', backdropFilter: 'blur(12px)' }}
             >
-              <span className="text-white/95 block">MISSION</span>
-              <span className="text-amber-400 italic block">TRAJECTORY</span>
-            </h2>
-            {/* Mobile nav pills */}
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]" />
+              <span className="font-mono text-[8.5px] sm:text-[9.5px] tracking-[0.22em] text-white/70 uppercase font-semibold">
+                Phase&ensp;{String(activeStep + 1).padStart(2, '0')}&ensp;/&ensp;03&ensp;·&ensp;{years[activeStep].shortBadge}
+              </span>
+            </div>
+
+            {/* Interactive phase nav pills with touch target spacing */}
             <nav
               aria-label="Phase navigation"
-              className="mt-2 flex items-center justify-end gap-1.5 lg:hidden"
+              className="flex items-center gap-1 sm:gap-1.5"
             >
               {years.map((item, idx) => {
                 const active = activeStep === idx
@@ -256,15 +288,18 @@ export default function RoadmapSection() {
                     onClick={() => scrollToPhase(idx)}
                     onKeyDown={(e) => handleKeyDown(e, idx)}
                     aria-pressed={active}
-                    className="shrink-0 rounded-full border px-2.5 py-1 font-mono text-[8px] tracking-wider transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                    className="shrink-0 rounded-full border px-2.5 py-1.5 sm:px-3 sm:py-1.5 font-mono text-[8.5px] sm:text-[9.5px] tracking-wider transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 cursor-pointer min-h-[36px] flex items-center justify-center"
                     style={{
                       borderColor: active ? '#f59e0b' : 'rgba(255,255,255,0.18)',
-                      background: active ? 'rgba(245,158,11,0.15)' : 'rgba(255,255,255,0.05)',
-                      color: active ? '#f59e0b' : 'rgba(255,255,255,0.55)',
+                      background: active ? 'rgba(245,158,11,0.22)' : 'rgba(12,6,2,0.65)',
+                      color: active ? '#fde68a' : 'rgba(255,255,255,0.60)',
                       fontWeight: active ? 700 : 400,
+                      boxShadow: active ? '0 0 10px rgba(245,158,11,0.25)' : 'none',
+                      backdropFilter: 'blur(8px)',
                     }}
                   >
-                    {item.step}&nbsp;·&nbsp;{item.shortBadge}
+                    <span className="sm:hidden">{item.step}</span>
+                    <span className="hidden sm:inline">{item.step}&nbsp;·&nbsp;{item.shortBadge}</span>
                   </button>
                 )
               })}
@@ -294,189 +329,196 @@ export default function RoadmapSection() {
         </footer>
 
         {/* ════════════════════════════════════════
-            TRAJECTORY SVG — straight ground rail
-        ════════════════════════════════════════ */}
-        <svg
-          viewBox="0 0 1200 700"
-          preserveAspectRatio="xMidYMid meet"
-          className="absolute inset-0 z-10 h-full w-full pointer-events-none"
-          aria-hidden="true"
-        >
-          <defs>
-            {/* Horizontal gradient for the fill track */}
-            <linearGradient id="rm-route-grad" x1="0" x2="1" y1="0" y2="0"
-              gradientUnits="objectBoundingBox">
-              <stop offset="0" stopColor="#fde68a" stopOpacity="0.85" />
-              <stop offset="0.5" stopColor="#f59e0b" stopOpacity="1" />
-              <stop offset="1" stopColor="#b84a32" stopOpacity="1" />
-            </linearGradient>
-
-            {/* Tight glow — bounds tightly constrained to avoid diagonal bleed */}
-            <filter id="rm-glow" x="-5%" y="-800%" width="110%" height="1700%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-
-            {/* Connector line gradient — vertical, from amber to transparent */}
-            <linearGradient id="rm-conn-grad" x1="0" x2="0" y1="0" y2="1"
-              gradientUnits="objectBoundingBox">
-              <stop offset="0" stopColor="#f59e0b" stopOpacity="0.0" />
-              <stop offset="1" stopColor="#f59e0b" stopOpacity="0.55" />
-            </linearGradient>
-          </defs>
-
-          {/* ── Track shadow (depth) ── */}
-          <line
-            x1={TRACK_START_X} y1={GROUND_Y + 5}
-            x2={TRACK_END_X} y2={GROUND_Y + 5}
-            stroke="rgba(0,0,0,0.45)" strokeWidth="12" strokeLinecap="round"
-          />
-
-          {/* ── Background rail ── */}
-          <line
-            x1={TRACK_START_X} y1={GROUND_Y}
-            x2={TRACK_END_X} y2={GROUND_Y}
-            stroke="rgba(255,255,255,0.08)" strokeWidth="18" strokeLinecap="round"
-          />
-
-          {/* ── Dashed centre guide ── */}
-          <line
-            x1={TRACK_START_X} y1={GROUND_Y}
-            x2={TRACK_END_X} y2={GROUND_Y}
-            stroke="rgba(245,158,11,0.22)" strokeWidth="2"
-            strokeDasharray="8 16"
-          />
-
-          {/* ── Animated amber fill (driven by scroll, via strokeDashoffset) ── */}
-          <line
-            ref={routeFillRef}
-            x1={TRACK_START_X} y1={GROUND_Y}
-            x2={TRACK_END_X} y2={GROUND_Y}
-            stroke="url(#rm-route-grad)"
-            strokeWidth="5"
-            strokeLinecap="round"
-            strokeDasharray={TRACK_LENGTH}
-            strokeDashoffset={TRACK_LENGTH}
-            filter="url(#rm-glow)"
-          />
-
-          {/* ── Phase nodes + vertical connector lines ── */}
-          {NODE_POINTS.map((node, index) => {
-            const reached = activeStep > index
-            const active = activeStep === index
-
-            // Connector goes from node up to card anchor region
-            const connTop = CARD_ANCHOR_Y
-            const connBottom = GROUND_Y - 20
-
-            return (
-              <g
-                key={node.step}
-                transform={`translate(${node.x}, ${node.y})`}
-                onClick={() => scrollToPhase(index)}
-                onKeyDown={(e) => handleKeyDown(e, index)}
-                className="cursor-pointer pointer-events-auto group"
-                role="button"
-                tabIndex={0}
-                aria-label={`Jump to Phase ${node.step}: ${node.phase}`}
-              >
-                {/* Vertical connector line from node up to card area */}
-                <line
-                  x1="0" y1={-20}
-                  x2="0" y2={-(connBottom - connTop)}
-                  stroke={active ? 'rgba(245,158,11,0.50)' : 'rgba(255,255,255,0.12)'}
-                  strokeWidth="1"
-                  strokeDasharray="4 7"
-                />
-
-                {/* Phase label just above connector top */}
-                <text
-                  x="0"
-                  y={-(connBottom - connTop) - 10}
-                  textAnchor="middle"
-                  fill={active ? '#f59e0b' : 'rgba(255,255,255,0.35)'}
-                  fontSize="8.5"
-                  fontWeight="700"
-                  fontFamily="monospace"
-                  letterSpacing="2.5"
-                  className="select-none pointer-events-none"
-                >
-                  PHASE {node.step}
-                </text>
-
-                {/* Outer pulse ring */}
-                {active && (
-                  <circle
-                    r="30"
-                    fill="none"
-                    stroke="rgba(245,158,11,0.30)"
-                    strokeWidth="1"
-                    className="animate-ping"
-                    style={{ transformOrigin: 'center', animationDuration: '2s' }}
-                  />
-                )}
-
-                {/* Mid halo */}
-                <circle
-                  r={active ? 20 : 16}
-                  fill="none"
-                  stroke={active ? 'rgba(245,158,11,0.70)' : 'rgba(255,255,255,0.20)'}
-                  strokeWidth={active ? 1.5 : 1}
-                  className="transition-all duration-300"
-                />
-
-                {/* Node fill */}
-                <circle
-                  r="9"
-                  fill={
-                    active ? '#f59e0b' :
-                      reached ? 'rgba(245,158,11,0.60)' :
-                        'rgba(255,255,255,0.15)'
-                  }
-                  stroke={active ? '#fde68a' : reached ? '#f59e0b' : 'rgba(255,255,255,0.30)'}
-                  strokeWidth="1.5"
-                  className="transition-all duration-300"
-                />
-
-                {/* Centre dot */}
-                <circle
-                  r="3"
-                  fill={active ? '#1a0a00' : reached ? '#fff8e7' : 'rgba(255,255,255,0.50)'}
-                />
-              </g>
-            )
-          })}
-        </svg>
-
-        {/* ════════════════════════════════════════
-            3D ROVER OVERLAY — locked to ground rail
+            TRAJECTORY STAGE (SVG + 3D ROVER)
+            Constrained above the bottom card on mobile (< lg)
         ════════════════════════════════════════ */}
         <div
-          ref={robotOverlayRef}
-          className="absolute z-20 pointer-events-none"
-          style={{
-            left: `${(TRACK_START_X / 1200) * 100}%`,
-            top: `${GROUND_Y_PCT}%`,
-            transform: 'translate(-50%, -50%)',
-            width: 'clamp(130px, 13vw, 210px)',
-            height: 'clamp(130px, 13vw, 210px)',
-          }}
+          ref={stageRef}
+          className="absolute inset-x-0 top-0 bottom-[240px] sm:bottom-[270px] lg:bottom-0 z-10 pointer-events-none"
         >
-          {/* Wheel-dust glow — elliptic shadow beneath rover */}
-          <div
-            className="absolute pointer-events-none"
-            style={{
-              bottom: '20%',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: '70%',
-              height: '12%',
-              background: 'radial-gradient(ellipse, rgba(184,100,40,0.50) 0%, transparent 75%)',
-              filter: 'blur(5px)',
-            }}
+          {/* ── Trajectory SVG ── */}
+          <svg
+            viewBox="0 0 1200 700"
+            preserveAspectRatio="xMidYMid meet"
+            className="absolute inset-0 z-10 h-full w-full pointer-events-none"
             aria-hidden="true"
-          />
-          <RoadmapRobot3D progressRef={progressRef} reducedMotion={reducedMotion} />
+          >
+            <defs>
+              {/* Horizontal gradient for the fill track */}
+              <linearGradient id="rm-route-grad" x1="0" x2="1" y1="0" y2="0"
+                gradientUnits="objectBoundingBox">
+                <stop offset="0" stopColor="#fde68a" stopOpacity="0.85" />
+                <stop offset="0.5" stopColor="#f59e0b" stopOpacity="1" />
+                <stop offset="1" stopColor="#b84a32" stopOpacity="1" />
+              </linearGradient>
+
+              {/* Tight glow — bounds tightly constrained to avoid diagonal bleed */}
+              <filter id="rm-glow" x="-5%" y="-800%" width="110%" height="1700%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+
+              {/* Connector line gradient — vertical, from amber to transparent */}
+              <linearGradient id="rm-conn-grad" x1="0" x2="0" y1="0" y2="1"
+                gradientUnits="objectBoundingBox">
+                <stop offset="0" stopColor="#f59e0b" stopOpacity="0.0" />
+                <stop offset="1" stopColor="#f59e0b" stopOpacity="0.55" />
+              </linearGradient>
+            </defs>
+
+            {/* ── Track shadow (depth) ── */}
+            <line
+              x1={TRACK_START_X} y1={GROUND_Y + 5}
+              x2={TRACK_END_X} y2={GROUND_Y + 5}
+              stroke="rgba(0,0,0,0.45)" strokeWidth="12" strokeLinecap="round"
+            />
+
+            {/* ── Background rail ── */}
+            <line
+              x1={TRACK_START_X} y1={GROUND_Y}
+              x2={TRACK_END_X} y2={GROUND_Y}
+              stroke="rgba(255,255,255,0.08)" strokeWidth="18" strokeLinecap="round"
+            />
+
+            {/* ── Dashed centre guide ── */}
+            <line
+              x1={TRACK_START_X} y1={GROUND_Y}
+              x2={TRACK_END_X} y2={GROUND_Y}
+              stroke="rgba(245,158,11,0.22)" strokeWidth="2"
+              strokeDasharray="8 16"
+            />
+
+            {/* ── Animated amber fill (driven by scroll, via strokeDashoffset) ── */}
+            <line
+              ref={routeFillRef}
+              x1={TRACK_START_X} y1={GROUND_Y}
+              x2={TRACK_END_X} y2={GROUND_Y}
+              stroke="url(#rm-route-grad)"
+              strokeWidth="5"
+              strokeLinecap="round"
+              strokeDasharray={TRACK_LENGTH}
+              strokeDashoffset={TRACK_LENGTH}
+              filter="url(#rm-glow)"
+            />
+
+            {/* ── Phase nodes + vertical connector lines ── */}
+            {NODE_POINTS.map((node, index) => {
+              const reached = activeStep > index
+              const active = activeStep === index
+
+              // Connector goes from node up to card anchor region
+              const connTop = CARD_ANCHOR_Y
+              const connBottom = GROUND_Y - 20
+
+              return (
+                <g
+                  key={node.step}
+                  transform={`translate(${node.x}, ${node.y})`}
+                  onClick={() => scrollToPhase(index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  className="cursor-pointer pointer-events-auto group"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Jump to Phase ${node.step}: ${node.phase}`}
+                >
+                  {/* Vertical connector line from node up to card area */}
+                  <line
+                    x1="0" y1={-20}
+                    x2="0" y2={-(connBottom - connTop)}
+                    stroke={active ? 'rgba(245,158,11,0.50)' : 'rgba(255,255,255,0.12)'}
+                    strokeWidth="1"
+                    strokeDasharray="4 7"
+                  />
+
+                  {/* Phase label just above connector top */}
+                  <text
+                    x="0"
+                    y={-(connBottom - connTop) - 10}
+                    textAnchor="middle"
+                    fill={active ? '#f59e0b' : 'rgba(255,255,255,0.35)'}
+                    fontSize="8.5"
+                    fontWeight="700"
+                    fontFamily="monospace"
+                    letterSpacing="2.5"
+                    className="select-none pointer-events-none"
+                  >
+                    PHASE {node.step}
+                  </text>
+
+                  {/* Outer pulse ring */}
+                  {active && (
+                    <circle
+                      r="30"
+                      fill="none"
+                      stroke="rgba(245,158,11,0.30)"
+                      strokeWidth="1"
+                      className="animate-ping"
+                      style={{ transformOrigin: 'center', animationDuration: '2s' }}
+                    />
+                  )}
+
+                  {/* Mid halo */}
+                  <circle
+                    r={active ? 20 : 16}
+                    fill="none"
+                    stroke={active ? 'rgba(245,158,11,0.70)' : 'rgba(255,255,255,0.20)'}
+                    strokeWidth={active ? 1.5 : 1}
+                    className="transition-all duration-300"
+                  />
+
+                  {/* Node fill */}
+                  <circle
+                    r="9"
+                    fill={
+                      active ? '#f59e0b' :
+                        reached ? 'rgba(245,158,11,0.60)' :
+                          'rgba(255,255,255,0.15)'
+                    }
+                    stroke={active ? '#fde68a' : reached ? '#f59e0b' : 'rgba(255,255,255,0.30)'}
+                    strokeWidth="1.5"
+                    className="transition-all duration-300"
+                  />
+
+                  {/* Centre dot */}
+                  <circle
+                    r="3"
+                    fill={active ? '#1a0a00' : reached ? '#fff8e7' : 'rgba(255,255,255,0.50)'}
+                  />
+                </g>
+              )
+            })}
+          </svg>
+
+          {/* ════════════════════════════════════════
+              3D ROVER OVERLAY — locked to ground rail inside stage
+          ════════════════════════════════════════ */}
+          <div
+            ref={robotOverlayRef}
+            className="absolute z-20 pointer-events-none"
+            style={{
+              left: `${(TRACK_START_X / 1200) * 100}%`,
+              top: `${GROUND_Y_PCT}%`,
+              transform: 'translate(-50%, -50%)',
+              width: 'clamp(110px, 16vw, 210px)',
+              height: 'clamp(110px, 16vw, 210px)',
+            }}
+          >
+            {/* Wheel-dust glow — elliptic shadow beneath rover */}
+            <div
+              className="absolute pointer-events-none"
+              style={{
+                bottom: '20%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '70%',
+                height: '12%',
+                background: 'radial-gradient(ellipse, rgba(184,100,40,0.50) 0%, transparent 75%)',
+                filter: 'blur(5px)',
+              }}
+              aria-hidden="true"
+            />
+            <RoadmapRobot3D progressRef={progressRef} reducedMotion={reducedMotion} />
+          </div>
         </div>
 
         {/* ════════════════════════════════════════
@@ -491,10 +533,10 @@ export default function RoadmapSection() {
             {years.map((item, index) => {
               if (index !== activeStep) return null
 
-              // Card centred on node X, clamped so it doesn't overflow
+              // Card centered on node X, clamped safely between 3% and (97 - cardWidthPct)%
               const nodeLeftPct = (NODE_XS[index] / 1200) * 100
-              const cardWidthVw = 23  // approximate card width as % of viewport
-              const clampedLeft = Math.max(2, Math.min(nodeLeftPct - cardWidthVw / 2, 100 - cardWidthVw - 2))
+              const cardWidthPct = 24  // approximate card width as % of viewport
+              const clampedLeft = Math.max(3, Math.min(nodeLeftPct - cardWidthPct / 2, 97 - cardWidthPct))
 
               return (
                 <motion.article
@@ -506,9 +548,9 @@ export default function RoadmapSection() {
                   style={{
                     position: 'absolute',
                     left: `${clampedLeft}%`,
-                    // Card sits in the upper sky area, above the connector top
-                    top: '9%',
-                    width: 'clamp(300px, 23vw, 370px)',
+                    // Card sits comfortably below top HUD header, in clear upper sky
+                    top: 'clamp(100px, 15vh, 140px)',
+                    width: 'clamp(300px, 24vw, 380px)',
                   }}
                   className="pointer-events-auto"
                 >
@@ -599,95 +641,134 @@ export default function RoadmapSection() {
 
         {/* ════════════════════════════════════════
             MOBILE BOTTOM CARD (< lg)
+            Supports drag swipe gestures & touch controls
         ════════════════════════════════════════ */}
-        <div className="absolute bottom-4 sm:bottom-8 left-3 right-3 sm:left-6 sm:right-6 max-w-md sm:max-w-lg mx-auto lg:hidden z-30">
+        <div className="absolute bottom-3 sm:bottom-6 left-3 right-3 sm:left-6 sm:right-6 max-w-md sm:max-w-lg mx-auto lg:hidden z-30 pointer-events-auto">
           <AnimatePresence mode="wait">
             {years.map(
               (item, index) =>
                 index === activeStep && (
                   <motion.article
                     key={item.step}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.25}
+                    onDragEnd={(_, { offset }) => {
+                      if (offset.x < -40 && activeStep < years.length - 1) {
+                        scrollToPhase(activeStep + 1)
+                      } else if (offset.x > 40 && activeStep > 0) {
+                        scrollToPhase(activeStep - 1)
+                      }
+                    }}
                     initial={{ opacity: 0, y: 14, scale: 0.97 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -8, scale: 0.97 }}
                     transition={{ duration: reducedMotion ? 0 : 0.25, ease: 'easeOut' }}
-                    className="relative overflow-hidden"
+                    className="relative overflow-hidden touch-pan-y cursor-grab active:cursor-grabbing select-none"
                     style={{
-                      background: 'rgba(8,4,2,0.82)',
-                      backdropFilter: 'blur(18px)',
-                      WebkitBackdropFilter: 'blur(18px)',
-                      border: '1px solid rgba(245,158,11,0.28)',
-                      boxShadow: '0 16px 48px rgba(0,0,0,0.55)',
+                      background: 'rgba(10, 5, 2, 0.88)',
+                      backdropFilter: 'blur(20px)',
+                      WebkitBackdropFilter: 'blur(20px)',
+                      border: '1px solid rgba(245,158,11,0.32)',
+                      boxShadow: '0 16px 48px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06)',
                     }}
                   >
-                    {/* Top line glow */}
-                    <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
-                    {/* Corner brackets */}
-                    <span className="absolute left-0 top-0 h-2.5 w-2.5 border-l border-t border-amber-400/70" />
-                    <span className="absolute right-0 top-0 h-2.5 w-2.5 border-r border-t border-amber-400/20" />
-                    <span className="absolute bottom-0 left-0 h-2.5 w-2.5 border-b border-l border-amber-400/20" />
-                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 border-b border-r border-amber-400/70" />
+                    {/* Sheet handle visual indicator */}
+                    <div className="pt-2 pb-0.5 flex justify-center">
+                      <div className="w-9 h-1 rounded-full bg-amber-400/35" />
+                    </div>
 
-                    <div className="relative p-3.5 sm:p-4">
+                    {/* Top line glow */}
+                    <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
+                    {/* Corner brackets */}
+                    <span className="absolute left-0 top-0 h-2.5 w-2.5 border-l border-t border-amber-400/80" />
+                    <span className="absolute right-0 top-0 h-2.5 w-2.5 border-r border-t border-amber-400/30" />
+                    <span className="absolute bottom-0 left-0 h-2.5 w-2.5 border-b border-l border-amber-400/30" />
+                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 border-b border-r border-amber-400/80" />
+
+                    <div className="relative px-4 pb-3.5 pt-1">
                       {/* Meta row */}
                       <div className="mb-1.5 flex items-center justify-between">
                         <div className="flex items-center gap-1.5">
-                          <span className="font-mono text-[8.5px] tracking-[0.22em] text-amber-400 font-bold uppercase">
+                          <span className="font-mono text-[9px] tracking-[0.22em] text-amber-400 font-bold uppercase">
                             {item.year}
                           </span>
                           <span className="text-amber-400/30 font-mono text-[8px]">/</span>
-                          <span className="font-mono text-[8.5px] tracking-[0.18em] text-white/40 uppercase">
+                          <span className="font-mono text-[9px] tracking-[0.18em] text-white/50 uppercase">
                             Phase {item.step}
                           </span>
                         </div>
-                        <span className="font-mono text-[7.5px] tracking-[0.14em] rounded-full px-2.5 py-0.5 text-amber-400 font-bold uppercase"
-                          style={{ border: '1px solid rgba(245,158,11,0.35)', background: 'rgba(245,158,11,0.10)' }}>
+                        <span
+                          className="font-mono text-[8px] tracking-[0.14em] rounded-full px-2.5 py-0.5 text-amber-400 font-bold uppercase"
+                          style={{ border: '1px solid rgba(245,158,11,0.40)', background: 'rgba(245,158,11,0.12)' }}
+                        >
                           {item.badge}
                         </span>
                       </div>
 
                       <div className="flex items-start justify-between gap-2">
-                        <h3 className="font-serifEd text-base sm:text-lg leading-[1.15] text-white font-semibold">
+                        <h3 className="font-serifEd text-base sm:text-lg leading-[1.15] text-white font-bold">
                           {item.title}
                         </h3>
-                        <span className="font-mono text-xl font-black shrink-0 leading-none select-none"
-                          style={{ color: 'rgba(245,158,11,0.18)' }}>{item.step}</span>
+                        <span
+                          className="font-mono text-2xl font-black shrink-0 leading-none select-none"
+                          style={{ color: 'rgba(245,158,11,0.22)' }}
+                        >
+                          {item.step}
+                        </span>
                       </div>
 
-                      <p className="mt-1 text-[11px] sm:text-[12px] leading-snug text-white/50 font-light line-clamp-2">
+                      <p className="mt-1 text-[11.5px] sm:text-[12px] leading-snug text-white/60 font-light line-clamp-2">
                         {item.tagline}
                       </p>
 
-                      <div className="mt-2 h-px bg-gradient-to-r from-amber-400/20 via-white/8 to-transparent" />
+                      <div className="mt-2 h-px bg-gradient-to-r from-amber-400/25 via-white/10 to-transparent" />
 
-                      <ul className="mt-1.5 space-y-1">
+                      <ul className="mt-2 space-y-1">
                         {item.details.map((d) => (
-                          <li key={d} className="flex items-start gap-1.5 text-[10.5px] sm:text-[11.5px] leading-snug text-white/70">
+                          <li key={d} className="flex items-start gap-1.5 text-[11px] sm:text-[12px] leading-snug text-white/80">
                             <span className="text-amber-400 font-bold text-[9px] shrink-0 mt-0.5">▸</span>
                             <span className="line-clamp-1 sm:line-clamp-none">{d}</span>
                           </li>
                         ))}
                       </ul>
 
-                      {/* Dot nav */}
-                      <div className="mt-2.5 pt-2 border-t border-white/[0.06] flex items-center justify-between">
-                        <div className="flex items-center gap-1.5">
+                      {/* Touch navigation controls */}
+                      <div className="mt-3 pt-2 border-t border-white/[0.08] flex items-center justify-between">
+                        <button
+                          disabled={activeStep === 0}
+                          onClick={(e) => { e.stopPropagation(); scrollToPhase(activeStep - 1) }}
+                          className="font-mono text-[9px] font-semibold text-amber-400/90 disabled:opacity-25 disabled:cursor-not-allowed flex items-center gap-1 px-2.5 py-1 rounded border border-amber-400/25 active:bg-amber-400/20 min-h-[36px] touch-manipulation cursor-pointer"
+                        >
+                          ‹ PREV
+                        </button>
+
+                        <div className="flex items-center gap-1">
                           {years.map((_, dotIdx) => (
                             <button
                               key={dotIdx}
-                              onClick={() => scrollToPhase(dotIdx)}
+                              onClick={(e) => { e.stopPropagation(); scrollToPhase(dotIdx) }}
                               aria-label={`Go to Phase ${dotIdx + 1}`}
-                              className="h-1.5 rounded-full transition-all duration-300"
-                              style={{
-                                width: activeStep === dotIdx ? '1.25rem' : '0.375rem',
-                                background: activeStep === dotIdx ? '#f59e0b' : 'rgba(255,255,255,0.18)',
-                              }}
-                            />
+                              className="min-h-[36px] min-w-[28px] flex items-center justify-center cursor-pointer"
+                            >
+                              <span
+                                className="block h-1.5 rounded-full transition-all duration-300"
+                                style={{
+                                  width: activeStep === dotIdx ? '1.25rem' : '0.4rem',
+                                  background: activeStep === dotIdx ? '#f59e0b' : 'rgba(255,255,255,0.25)',
+                                }}
+                              />
+                            </button>
                           ))}
                         </div>
-                        <span className="font-mono text-[7.5px] tracking-[0.18em] text-white/30 uppercase">
-                          Scroll to explore
-                        </span>
+
+                        <button
+                          disabled={activeStep === years.length - 1}
+                          onClick={(e) => { e.stopPropagation(); scrollToPhase(activeStep + 1) }}
+                          className="font-mono text-[9px] font-semibold text-amber-400/90 disabled:opacity-25 disabled:cursor-not-allowed flex items-center gap-1 px-2.5 py-1 rounded border border-amber-400/25 active:bg-amber-400/20 min-h-[36px] touch-manipulation cursor-pointer"
+                        >
+                          NEXT ›
+                        </button>
                       </div>
                     </div>
                   </motion.article>
