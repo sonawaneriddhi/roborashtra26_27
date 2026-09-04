@@ -133,8 +133,11 @@ function Card({ index, progress, reduced }) {
           <div className="pt-4 border-t border-black/10 flex items-center justify-between">
             <a
               href={events[index].href}
+<<<<<<< HEAD
               target="_blank"
               rel="noopener noreferrer"
+=======
+>>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
               className="inline-flex items-center gap-2 font-mono text-xs tracking-widest2 uppercase font-semibold text-textDark hover:text-rust transition-colors group"
             >
               <span>{events[index].cta}</span>
@@ -167,12 +170,23 @@ export default function EventsStory() {
 
   // Subtle initial scale down without heavy zoom
   const containerScale = useTransform(scrollYProgress, [0, 0.22], [1.04, 1.0])
+<<<<<<< HEAD
+=======
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.16], [1, 0])
+  const headerY = useTransform(scrollYProgress, [0, 0.16], [0, -30])
+>>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
   const promptOpacity = useTransform(scrollYProgress, [0, 0.12], [0.8, 0])
 
   if (reduced) {
     return (
       <section id="events" className="bg-[#F1EDE3] text-textDark py-24 px-6 md:px-12 border-t border-b border-black/10">
         <div className="max-w-7xl mx-auto mb-12">
+<<<<<<< HEAD
+=======
+          <p className="font-mono text-[11px] tracking-widest2 uppercase text-textMuted mb-2">
+            Events / 03
+          </p>
+>>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
           <h2 className="font-serifEd text-5xl md:text-6xl text-textDark">
             The Arena
           </h2>
@@ -194,11 +208,23 @@ export default function EventsStory() {
       style={{ height: '240vh' }}
     >
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex flex-col justify-center items-center">
+<<<<<<< HEAD
         {/* Top Left Title (Remains visible as you scroll) */}
         <div
           className="absolute top-10 md:top-14 left-6 md:left-12 right-6 md:right-12 z-30 flex flex-col md:flex-row md:items-end justify-between gap-4 pointer-events-none"
         >
           <div>
+=======
+        {/* Overlay Title (Fades smoothly as you scroll) */}
+        <motion.div
+          style={{ opacity: headerOpacity, y: headerY }}
+          className="absolute top-10 md:top-14 left-6 md:left-12 right-6 md:right-12 z-30 flex flex-col md:flex-row md:items-end justify-between gap-4 pointer-events-none"
+        >
+          <div>
+            <p className="font-mono text-[11px] tracking-widest2 uppercase text-textMuted mb-1">
+              Events / 03
+            </p>
+>>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
             <h2
               className="font-serifEd leading-[0.9] text-textDark"
               style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}
@@ -206,7 +232,14 @@ export default function EventsStory() {
               The Arena
             </h2>
           </div>
+<<<<<<< HEAD
         </div>
+=======
+          <p className="font-mono text-xs md:text-sm tracking-widest2 uppercase text-textMuted">
+            Three challenges. One champion.
+          </p>
+        </motion.div>
+>>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
 
         {/* Interactive 3-Card Split & Tilted Turn Unit */}
         <motion.div

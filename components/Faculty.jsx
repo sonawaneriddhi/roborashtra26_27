@@ -270,10 +270,17 @@ export default function Faculty() {
     restDelta: 0.001,
   })
 
-  // Unified "ROBORASHTRA" Text Movement:
-  // Starts centered at initial size, moves up above the cards while reducing size to fit the card boundaries
-  const titleY = useTransform(smoothProgress, [0.18, 0.65, 0.9], ['0vh', '-31vh', '-33vh'])
-  const titleScale = useTransform(smoothProgress, [0.18, 0.65], [1, 0.68])
+  // 1. "ROBO" Text Movement: Translates to the LEFT & moves slightly up
+  const roboX = useTransform(smoothProgress, [0.18, 0.55, 0.9], ['0vw', '-22vw', '-26vw'])
+  const roboY = useTransform(smoothProgress, [0.18, 0.55, 0.9], ['0vh', '-26vh', '-28vh'])
+  const roboOpacity = useTransform(smoothProgress, [0.18, 0.45, 0.85], [1, 0.45, 0.3])
+  const roboScale = useTransform(smoothProgress, [0.18, 0.55], [1, 0.78])
+
+  // 2. "RASHTRA" Text Movement: Translates to the RIGHT & moves slightly up
+  const rashtraX = useTransform(smoothProgress, [0.18, 0.55, 0.9], ['0vw', '22vw', '26vw'])
+  const rashtraY = useTransform(smoothProgress, [0.18, 0.55, 0.9], ['0vh', '-26vh', '-28vh'])
+  const rashtraOpacity = useTransform(smoothProgress, [0.18, 0.45, 0.85], [1, 0.45, 0.3])
+  const rashtraScale = useTransform(smoothProgress, [0.18, 0.55], [1, 0.78])
 
   // 3. Center Faculty Cards: Emerge from the center area
   const cardsOpacity = useTransform(smoothProgress, [0.35, 0.65], [0, 1])
@@ -292,6 +299,17 @@ export default function Faculty() {
         aria-label="Faculty Mentorship"
         className="w-full bg-[#070707] text-ivory py-28 px-6 md:px-12 border-t border-b border-white/10"
       >
+        <div className="max-w-7xl mx-auto mb-14 text-center">
+          <p className="font-mono text-xs tracking-widest2 uppercase text-amber mb-3">
+            FACULTY GUIDANCE &amp; DIRECTION
+          </p>
+          <h2 className="font-serifEd text-5xl md:text-7xl text-ivory tracking-tight mb-4">
+            ROBORASHTRA
+          </h2>
+          <p className="font-mono text-xs text-ivory/60 tracking-wider max-w-xl mx-auto">
+            The visionary faculty mentors orchestrating autonomous robotics research and state championship teams.
+          </p>
+        </div>
 
         <div className="flex flex-col md:flex-row justify-center items-center gap-8 max-w-5xl mx-auto">
           {facultyMembers.map((faculty, i) => (
@@ -325,36 +343,48 @@ export default function Faculty() {
         {/* Top Subtle HUD Telemetry Bar */}
         <div className="absolute top-8 left-6 md:left-12 right-6 md:right-12 z-30 flex items-center justify-between pointer-events-none">
           <div className="flex items-center gap-2">
-            
-            <h2
-              className="font-serifEd leading-[0.9] text-textLight"
-              style={{ fontSize: 'clamp(2.4rem, 2vw, 5rem)' }}
-            >
-              Faculty Mentorship
-            </h2>
+            <span className="w-2 h-2 rounded-full bg-amber animate-pulse" />
+            <p className="font-mono text-[10px] tracking-widest2 uppercase text-ivory/70">
+              FACULTY MENTORSHIP // 04
+            </p>
           </div>
-          
+          <span className="font-mono text-[10px] tracking-widest2 uppercase text-ivory/40 hidden sm:inline">
+            ENGINEERING &amp; AI COUNCIL
+          </span>
         </div>
 
-        {/* CINEMATIC UNIFIED TYPOGRAPHY */}
+        {/* CINEMATIC SPLIT TYPOGRAPHY */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-          <motion.div
-            style={{
-              y: titleY,
-              scale: titleScale,
-              transformOrigin: 'center center',
-            }}
-            className="flex items-center justify-center font-display font-extrabold tracking-tighter leading-none select-none text-[#FAF8F5] will-change-transform text-center"
-          >
-            <span
+          <div className="flex items-center justify-center font-display font-extrabold tracking-tighter leading-none select-none text-[#FAF8F5]">
+            
+            {/* LEFT HALF: "ROBO" */}
+            <motion.span
               style={{
+                x: roboX,
+                y: roboY,
+                opacity: roboOpacity,
+                scale: roboScale,
                 fontSize: 'clamp(3rem, 11vw, 11rem)',
               }}
-              className="inline-block whitespace-nowrap"
+              className="inline-block whitespace-nowrap will-change-transform text-right"
             >
-              ROBORASHTRA
-            </span>
-          </motion.div>
+              ROBO
+            </motion.span>
+
+            {/* RIGHT HALF: "RASHTRA" */}
+            <motion.span
+              style={{
+                x: rashtraX,
+                y: rashtraY,
+                opacity: rashtraOpacity,
+                scale: rashtraScale,
+                fontSize: 'clamp(3rem, 11vw, 11rem)',
+              }}
+              className="inline-block whitespace-nowrap will-change-transform text-left"
+            >
+              RASHTRA
+            </motion.span>
+          </div>
         </div>
 
         {/* EMERGING FACULTY PROFILE CARDS */}

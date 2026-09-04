@@ -20,10 +20,17 @@ export default function Footer() {
         <div>
           <p className="label-eyebrow mb-4">Navigate</p>
           <ul className="space-y-2 text-sm text-slate">
+<<<<<<< HEAD
             <li><Link href="/#gallery" className="hover:text-amber transition-colors">About</Link></li>
             <li><Link href="/#events" className="hover:text-amber transition-colors">Missions</Link></li>
             <li><Link href="/#team" className="hover:text-amber transition-colors">Units</Link></li>
             <li><a href="https://unstop.com/" target="_blank" rel="noopener noreferrer" className="hover:text-amber transition-colors">Enlist</a></li>
+=======
+            <li><Link href="/projects" className="hover:text-amber transition-colors">Build Log</Link></li>
+            <li><Link href="/events" className="hover:text-amber transition-colors">Missions</Link></li>
+            <li><Link href="/team" className="hover:text-amber transition-colors">Units</Link></li>
+            <li><Link href="/join" className="hover:text-amber transition-colors">Enlist</Link></li>
+>>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
           </ul>
         </div>
 

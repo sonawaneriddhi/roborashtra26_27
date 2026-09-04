@@ -8,7 +8,11 @@ export const events = [
       'Build a rover that clears an unmapped obstacle course in under 90 seconds, using only onboard sensors — no remote input allowed.',
     objective: 'Fastest clean run through a randomized obstacle field.',
     cta: 'VIEW EVENT →',
+<<<<<<< HEAD
     href: 'https://unstop.com/',
+=======
+    href: '/events',
+>>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
   },
   {
     id: 2,
@@ -19,7 +23,11 @@ export const events = [
       'Design an arm that identifies, picks, and stacks five irregular objects by shape — fastest and cleanest stack wins.',
     objective: 'Precision manipulation under a strict time limit.',
     cta: 'VIEW EVENT →',
+<<<<<<< HEAD
     href: 'https://unstop.com/',
+=======
+    href: '/events',
+>>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
   },
   {
     id: 3,
@@ -30,6 +38,10 @@ export const events = [
       'A 3-minute elimination bout, 15kg class. Survive, disable, or out-point your opponent inside the arena.',
     objective: 'Single-elimination combat, judged on damage and control.',
     cta: 'VIEW EVENT →',
+<<<<<<< HEAD
     href: 'https://unstop.com/',
+=======
+    href: '/events',
+>>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
   },
 ]

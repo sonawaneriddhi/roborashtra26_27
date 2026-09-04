@@ -110,7 +110,11 @@ export default function Countdown({ targetDate = DEFAULT_EVENT_DATE }) {
           </p>
         </div>
 
+<<<<<<< HEAD
         {/* MECHANICAL FLIP-CLOCK CARDS (DAYS - HOURS - MINUTES - SECONDS) */}
+=======
+        {/* THREE LARGE MECHANICAL FLIP-CLOCK CARDS (DAYS - HOURS - MINUTES) */}
+>>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
         <div className="w-full my-4 sm:my-8 flex justify-center">
           <FlipCountdown targetDate={targetDate} />
         </div>
@@ -129,13 +133,43 @@ export default function Countdown({ targetDate = DEFAULT_EVENT_DATE }) {
           <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0">
             {/* Registration CTA */}
             <Link
+<<<<<<< HEAD
               href="https://unstop.com/"
+=======
+              href="/join"
+>>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
               className="inline-flex items-center gap-2 bg-[#FF8A00] hover:bg-[#E67C00] text-black font-mono text-xs font-bold tracking-widest uppercase px-5 py-3 rounded-xl shadow-[0_4px_16px_rgba(255,138,0,0.25)] transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <span>REGISTER TEAM</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
+<<<<<<< HEAD
             
+=======
+
+            {/* Google Calendar Link */}
+            <a
+              href={googleCalendarUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-[#FAF9F5] hover:bg-[#F3EFE6] text-[#222222] border border-black/10 font-mono text-xs tracking-wider uppercase px-3.5 py-3 rounded-xl transition-colors"
+              title="Add to Google Calendar"
+            >
+              <Calendar className="w-3.5 h-3.5 text-[#FF8A00]" />
+              <span className="hidden md:inline">CALENDAR</span>
+            </a>
+
+            {/* Apple / Outlook .ICS Download */}
+            <button
+              onClick={handleDownloadICS}
+              className="inline-flex items-center gap-1.5 bg-[#FAF9F5] hover:bg-[#F3EFE6] text-[#222222] border border-black/10 font-mono text-xs tracking-wider uppercase px-3.5 py-3 rounded-xl transition-colors"
+              title="Download iCalendar file (.ics)"
+            >
+              <Clock className="w-3.5 h-3.5 text-[#666666]" />
+              <span className="hidden md:inline">.ICS</span>
+            </button>
+
+>>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
             {/* Quick Share Link */}
             <button
               onClick={handleShareLink}

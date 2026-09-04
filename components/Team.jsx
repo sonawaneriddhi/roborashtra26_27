@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { motion, AnimatePresence, useMotionValue, useSpring, animate, useScroll } from 'framer-motion'
 import { teamData } from '@/data/teamData'
-import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Globe } from 'lucide-react'
+import { ChevronUp, ChevronDown, Globe } from 'lucide-react'
 
 // Custom Clean Social Icons
 function LinkedInIcon({ className = 'w-3.5 h-3.5' }) {
@@ -27,29 +27,29 @@ function InstagramIcon({ className = 'w-3.5 h-3.5' }) {
 /**
  * Left-Edge Half-Hidden Circular Wheel Component (Click & Step Navigation)
  */
-function LeftEdgeRoulette({ units, selectedId, onSelectUnit, onStep }) {
+function LeftEdgeRoulette({ units, selectedId, onSelectUnit }) {
   const numUnits = units.length
   const angleStep = 360 / numUnits
 
   // Wheel geometry: Radius in pixels optimized to fit screen
-  const [radius, setRadius] = useState(330)
+  const [radius, setRadius] = useState(360)
   const [centerOffset, setCenterOffset] = useState(-80)
 
   useEffect(() => {
     const updateDimensions = () => {
       const w = window.innerWidth
       if (w < 640) {
-        setRadius(220)
-        setCenterOffset(-45)
+        setRadius(230)
+        setCenterOffset(-50)
       } else if (w < 1024) {
-        setRadius(270)
-        setCenterOffset(-65)
+        setRadius(290)
+        setCenterOffset(-70)
       } else if (w < 1440) {
-        setRadius(310)
-        setCenterOffset(-75)
-      } else {
-        setRadius(340)
+        setRadius(350)
         setCenterOffset(-85)
+      } else {
+        setRadius(390)
+        setCenterOffset(-95)
       }
     }
     updateDimensions()
@@ -90,11 +90,19 @@ function LeftEdgeRoulette({ units, selectedId, onSelectUnit, onStep }) {
     rotateToUnit(selectedId)
   }, [selectedId, rotateToUnit])
 
+  // Next / Previous step
+  const handleStep = (direction) => {
+    const currentIdx = units.findIndex((u) => u.id === selectedId)
+    if (currentIdx !== -1) {
+      const nextIdx = (((currentIdx + direction) % numUnits) + numUnits) % numUnits
+      onSelectUnit(units[nextIdx].id)
+    }
+  }
 
   return (
     <div className="relative w-full flex flex-col justify-center select-none py-2">
       {/* Semi-circular Wheel Container */}
-      <div className="relative w-full h-[400px] sm:h-[440px] lg:h-[480px] flex items-center">
+      <div className="relative w-full h-[460px] sm:h-[500px] lg:h-[560px] flex items-center">
         {/* Subtle circular outline track */}
         <div
           style={{
@@ -145,6 +153,10 @@ function LeftEdgeRoulette({ units, selectedId, onSelectUnit, onStep }) {
           const zIndex = isActive ? 50 : Math.round((cosVal + 1) * 20)
 
           if (!isVisibleInArc) return null
+
+          const totalPersons = (unit.heads?.length || 0) + (unit.members?.length || 0)
+          const personText = String(totalPersons).padStart(2, '0') + ' PERSONS'
+
           return (
             <motion.div
               key={unit.id}
@@ -194,34 +206,40 @@ function LeftEdgeRoulette({ units, selectedId, onSelectUnit, onStep }) {
                 </h4>
               </div>
 
+              {/* Members Count Footer */}
+              <div className="flex items-center justify-between">
+                <span
+                  className={`font-cinzel text-[9px] sm:text-[10px] tracking-widest uppercase font-semibold ${
+                    isActive ? 'text-black/90' : 'text-[#888888]'
+                  }`}
+                >
+                  {personText}
+                </span>
+              </div>
             </motion.div>
           )
         })}
       </div>
 
-      {/* Manual Step Controls (Positioned directly below the circular roulette) */}
-      <div className="relative z-[70] flex items-center gap-3.5 pl-4 sm:pl-8 mt-3 sm:mt-5">
-        <div className="flex items-center gap-1 bg-white rounded-xl p-1 border border-black/8 shadow-sm">
+      {/* Manual Step Controls (Positioned further down towards the bottom of the screen) */}
+      <div className="flex items-center gap-3.5 pl-4 sm:pl-8 mt-10 sm:mt-14 lg:mt-20">
+        <div className="flex items-center gap-1.5 bg-white rounded-xl p-1.5 border border-black/8 shadow-sm">
           <button
-            type="button"
-            onClick={() => onStep?.(-1)}
-            aria-label="Previous squad"
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg hover:bg-[#F7F4ED] hover:text-[#FF8A00] text-[#111111] flex items-center justify-center transition-colors cursor-pointer"
-            title="Previous squad"
+            onClick={() => handleStep(-1)}
+            aria-label="Previous unit"
+            className="w-9 h-9 rounded-lg hover:bg-[#F7F4ED] hover:text-[#FF8A00] text-[#111111] flex items-center justify-center transition-colors"
           >
             <ChevronUp className="w-4 h-4" />
           </button>
           <button
-            type="button"
-            onClick={() => onStep?.(1)}
-            aria-label="Next squad"
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg hover:bg-[#F7F4ED] hover:text-[#FF8A00] text-[#111111] flex items-center justify-center transition-colors cursor-pointer"
-            title="Next squad"
+            onClick={() => handleStep(1)}
+            aria-label="Next unit"
+            className="w-9 h-9 rounded-lg hover:bg-[#F7F4ED] hover:text-[#FF8A00] text-[#111111] flex items-center justify-center transition-colors"
           >
             <ChevronDown className="w-4 h-4" />
           </button>
         </div>
-        <span className="font-cinzel text-[10px] sm:text-[11px] tracking-widest uppercase text-[#555555] font-bold select-none">
+        <span className="font-cinzel text-[10px] sm:text-[11px] tracking-widest uppercase text-[#666666] font-bold">
           NAVIGATE SQUADS
         </span>
       </div>
@@ -243,7 +261,7 @@ function HeadCard({ head, index }) {
     >
       <div>
         {/* Compact Image */}
-        <div className="relative aspect-[2/2] w-full rounded-xl overflow-hidden mb-3 bg-[#F7F4ED] border border-black/5">
+        <div className="relative aspect-[4/3.2] w-full rounded-xl overflow-hidden mb-3 bg-[#F7F4ED] border border-black/5">
           <img
             src={head.image}
             alt={head.name}
@@ -259,6 +277,12 @@ function HeadCard({ head, index }) {
         <p className="font-mono text-[10px] text-[#FF8A00] tracking-widest2 uppercase font-semibold mb-1.5">
           {head.role}
         </p>
+
+        {head.description && (
+          <p className="text-[11px] text-[#666666] leading-relaxed line-clamp-2 mb-2">
+            {head.description}
+          </p>
+        )}
       </div>
 
       {/* Social / Contact Links (LinkedIn & Instagram for Unit Heads and Leads) */}
@@ -272,7 +296,26 @@ function HeadCard({ head, index }) {
         >
           <LinkedInIcon className="w-3.5 h-3.5" />
         </a>
-        
+        <a
+          href={head.socials?.instagram || head.socials?.insta || 'https://instagram.com'}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-7 h-7 rounded-lg bg-[#FAF8F5] hover:bg-[#FF8A00]/15 hover:text-[#FF8A00] flex items-center justify-center transition-colors"
+          aria-label={`${head.name} Instagram`}
+        >
+          <InstagramIcon className="w-3.5 h-3.5" />
+        </a>
+        {head.socials?.github && (
+          <a
+            href={head.socials.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-7 h-7 rounded-lg bg-[#FAF8F5] hover:bg-[#FF8A00]/15 hover:text-[#FF8A00] flex items-center justify-center transition-colors"
+            aria-label={`${head.name} GitHub`}
+          >
+            <Globe className="w-3.5 h-3.5" />
+          </a>
+        )}
       </div>
     </motion.div>
   )
@@ -290,8 +333,16 @@ function MemberCard({ member, index }) {
       transition={{ duration: 0.35, delay: 0.08 + index * 0.04, ease: [0.16, 1, 0.3, 1] }}
       className="group bg-white rounded-2xl p-4 sm:p-4.5 border border-black/6 shadow-[0_3px_14px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.08)] transition-all duration-300 flex items-center justify-between gap-3.5 select-none"
     >
-      <div className="flex items-center gap-3 min-w-0">
+      <div className="flex items-center gap-4 min-w-0">
         {/* Rounded Rectangle Profile Avatar */}
+        <div className="w-20 h-20 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shrink-0 border border-black/8 bg-[#FAF8F5]">
+          <img
+            src={member.image}
+            alt={member.name}
+            className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-108"
+            loading="lazy"
+          />
+        </div>
 
         {/* Member Details (Bigger font) */}
         <div className="min-w-0">
@@ -305,7 +356,7 @@ function MemberCard({ member, index }) {
       </div>
 
       {/* Social Quick Links */}
-      <div className="flex items-center gap-1 text-[#666666] shrink-0">
+      <div className="flex items-center gap-2 text-[#666666] shrink-0">
         <a
           href={member.socials?.linkedin || 'https://linkedin.com'}
           target="_blank"
@@ -315,7 +366,15 @@ function MemberCard({ member, index }) {
         >
           <LinkedInIcon className="w-4 h-4" />
         </a>
-        
+        <a
+          href={member.socials?.instagram || member.socials?.insta || 'https://instagram.com'}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${member.name} Instagram`}
+          className="w-8 h-8 rounded-xl bg-[#FAF8F5] hover:bg-[#FF8A00]/15 hover:text-[#FF8A00] flex items-center justify-center transition-colors"
+        >
+          <InstagramIcon className="w-4 h-4" />
+        </a>
       </div>
     </motion.div>
   )
@@ -366,17 +425,6 @@ export default function Team() {
     return allUnits.find((u) => u.id === selectedUnitId) || allUnits[0]
   }, [allUnits, selectedUnitId])
 
-  const handleStep = useCallback(
-    (direction) => {
-      const currentIdx = allUnits.findIndex((u) => u.id === selectedUnitId)
-      if (currentIdx !== -1) {
-        const nextIdx = (((currentIdx + direction) % allUnits.length) + allUnits.length) % allUnits.length
-        setSelectedUnitId(allUnits[nextIdx].id)
-      }
-    },
-    [allUnits, selectedUnitId]
-  )
-
   return (
     <section
       id="team"
@@ -409,30 +457,11 @@ export default function Team() {
                 units={allUnits}
                 selectedId={selectedUnitId}
                 onSelectUnit={(id) => setSelectedUnitId(id)}
-                onStep={handleStep}
               />
             </div>
 
             {/* RIGHT: SELECTED TEAM CONTENT & MEMBER CARDS */}
-            <div className="lg:col-span-7 xl:col-span-8 px-4 sm:px-6 md:px-8 lg:pr-10 lg:pl-2 max-h-[88svh] overflow-y-auto">
-              {/* Header Bar: Active Squad Title */}
-              <div className="sticky top-0 z-30 bg-[#F7F4ED]/95 backdrop-blur-sm pt-2 pb-3 mb-4 sm:mb-6 border-b border-black/8 flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <span className="font-cinzel text-xs sm:text-sm font-bold text-[#FF8A00] tracking-widest px-2.5 py-1 rounded-md bg-[#FF8A00]/10 border border-[#FF8A00]/20">
-                    {activeUnit.number || '01'}
-                  </span>
-                  <motion.h2
-                    key={activeUnit.id}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#111111] leading-none"
-                  >
-                    {activeUnit.name}
-                  </motion.h2>
-                </div>
-              </div>
-
+            <div className="lg:col-span-7 xl:col-span-8 px-4 sm:px-6 md:px-8 lg:pr-10 lg:pl-2">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeUnit.id}
@@ -442,11 +471,18 @@ export default function Team() {
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                   className="space-y-6 sm:space-y-8"
                 >
-                  {activeUnit.description && (
+                  {/* Top Selected Team Header */}
+                  <div>
+                    <span className="font-mono text-[11px] tracking-widest2 uppercase text-[#FF8A00] font-bold block mb-1.5">
+                      SELECTED UNIT // {activeUnit.number}
+                    </span>
+                    <h2 className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#111111] leading-none mb-2">
+                      {activeUnit.name}
+                    </h2>
                     <p className="text-xs sm:text-sm text-[#555555] leading-relaxed max-w-3xl font-body">
                       {activeUnit.description}
                     </p>
-                  )}
+                  </div>
 
                   {/* 1. UNIT HEADS SECTION (Smaller, Compact Cards) */}
                   {activeUnit.heads && activeUnit.heads.length > 0 && (
@@ -467,7 +503,7 @@ export default function Team() {
                   )}
 
                   {/* 2. UNIT MEMBERS SECTION (Hidden for the LEAD unit, shown for squads) */}
-                  {activeUnit.id !== 'lead' && activeUnit.id !== 'cad' && (
+                  {activeUnit.id !== 'lead' && (
                     <div>
                       <div className="flex items-center gap-4 mb-3.5">
                         <span className="font-cinzel text-xs tracking-widest uppercase text-[#111111] font-bold shrink-0">
