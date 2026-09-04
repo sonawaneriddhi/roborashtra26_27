@@ -38,6 +38,7 @@ export default function FooterEditorial() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-8 border-t border-ivory/10 font-mono text-[10px] tracking-widest2 uppercase text-ivory/50">
           <div className="flex gap-6">
             <a href="#" className="hover:text-rust transition-colors">Instagram</a>
+            <a href="https://www.youtube.com/@RobohawkPCCOER/videos" className="hover:text-rust transition-colors">Youtube</a>
             <a href="#" className="hover:text-rust transition-colors">LinkedIn</a>
             <a href="#" className="hover:text-rust transition-colors">Email</a>
           </div>
