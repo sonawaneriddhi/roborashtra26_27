@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react'
 
 const links = [
   { href: '/', label: 'HOME' },
-  { href: '/projects', label: 'BUILD LOG' },
-  { href: '/events', label: 'MISSIONS' },
-  { href: '/team', label: 'UNITS' },
-  { href: '/join', label: 'ENLIST' },
+  { href: '/#gallery', label: 'ABOUT' },
+  { href: '/#events', label: 'MISSIONS' },
+  { href: '/#team', label: 'UNITS' },
+  { href: 'https://unstop.com/', label: 'ENLIST' },
 ]
 
 export default function Nav() {
@@ -37,22 +37,35 @@ export default function Nav() {
         <ul className="hidden md:flex items-center gap-8 font-mono text-xs tracking-widest2">
           {links.slice(1).map((l) => (
             <li key={l.href}>
-              <Link href={l.href} className="text-slate hover:text-amber transition-colors">
-                {l.label}
-              </Link>
+              {l.href.startsWith('http') ? (
+                <a
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate hover:text-amber transition-colors"
+                >
+                  {l.label}
+                </a>
+              ) : (
+                <Link href={l.href} className="text-slate hover:text-amber transition-colors">
+                  {l.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>
-        <Link
-          href="/join"
+        <a
+          href="https://unstop.com/"
+          target="_blank"
+          rel="noopener noreferrer"
           className="hidden md:inline-block border border-amber text-amber px-4 py-2 text-xs font-mono tracking-widest2 hover:bg-amber hover:text-blueprintDeep transition-colors"
         >
           ENLIST →
-        </Link>
+        </a>
         {/* Mobile: simple link row */}
         <div className="md:hidden font-mono text-[10px] tracking-widest2 flex gap-4">
-          <Link href="/team" className="text-slate hover:text-amber">UNITS</Link>
-          <Link href="/join" className="text-amber">ENLIST</Link>
+          <Link href="/#team" className="text-slate hover:text-amber">UNITS</Link>
+          <a href="https://unstop.com/" target="_blank" rel="noopener noreferrer" className="text-amber">ENLIST</a>
         </div>
       </nav>
     </header>

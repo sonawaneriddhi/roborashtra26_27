@@ -23,7 +23,7 @@ export default function Navbar() {
         <nav className="hidden md:flex items-center gap-9 font-mono text-[11px] tracking-widest2 text-ivory/80">
           <Link href="#gallery" className="hover:text-rust transition-colors">ABOUT</Link>
           <Link href="#events" className="hover:text-rust transition-colors">EVENTS</Link>
-          <Link href="/join" className="hover:text-rust transition-colors">REGISTER</Link>
+          <a href="https://unstop.com/" target="_blank" rel="noopener noreferrer" className="hover:text-rust transition-colors">REGISTER</a>
         </nav>
 
         <button

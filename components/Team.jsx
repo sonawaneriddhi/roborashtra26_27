@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { motion, AnimatePresence, useMotionValue, useSpring, animate, useScroll } from 'framer-motion'
 import { teamData } from '@/data/teamData'
-import { ChevronUp, ChevronDown, Globe } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Globe } from 'lucide-react'
 
 // Custom Clean Social Icons
 function LinkedInIcon({ className = 'w-3.5 h-3.5' }) {
@@ -27,29 +27,29 @@ function InstagramIcon({ className = 'w-3.5 h-3.5' }) {
 /**
  * Left-Edge Half-Hidden Circular Wheel Component (Click & Step Navigation)
  */
-function LeftEdgeRoulette({ units, selectedId, onSelectUnit }) {
+function LeftEdgeRoulette({ units, selectedId, onSelectUnit, onStep }) {
   const numUnits = units.length
   const angleStep = 360 / numUnits
 
   // Wheel geometry: Radius in pixels optimized to fit screen
-  const [radius, setRadius] = useState(360)
+  const [radius, setRadius] = useState(330)
   const [centerOffset, setCenterOffset] = useState(-80)
 
   useEffect(() => {
     const updateDimensions = () => {
       const w = window.innerWidth
       if (w < 640) {
-        setRadius(230)
-        setCenterOffset(-50)
+        setRadius(220)
+        setCenterOffset(-45)
       } else if (w < 1024) {
-        setRadius(290)
-        setCenterOffset(-70)
+        setRadius(270)
+        setCenterOffset(-65)
       } else if (w < 1440) {
-        setRadius(350)
-        setCenterOffset(-85)
+        setRadius(310)
+        setCenterOffset(-75)
       } else {
-        setRadius(390)
-        setCenterOffset(-95)
+        setRadius(340)
+        setCenterOffset(-85)
       }
     }
     updateDimensions()
@@ -90,19 +90,11 @@ function LeftEdgeRoulette({ units, selectedId, onSelectUnit }) {
     rotateToUnit(selectedId)
   }, [selectedId, rotateToUnit])
 
-  // Next / Previous step
-  const handleStep = (direction) => {
-    const currentIdx = units.findIndex((u) => u.id === selectedId)
-    if (currentIdx !== -1) {
-      const nextIdx = (((currentIdx + direction) % numUnits) + numUnits) % numUnits
-      onSelectUnit(units[nextIdx].id)
-    }
-  }
 
   return (
     <div className="relative w-full flex flex-col justify-center select-none py-2">
       {/* Semi-circular Wheel Container */}
-      <div className="relative w-full h-[460px] sm:h-[500px] lg:h-[560px] flex items-center">
+      <div className="relative w-full h-[400px] sm:h-[440px] lg:h-[480px] flex items-center">
         {/* Subtle circular outline track */}
         <div
           style={{
@@ -207,25 +199,29 @@ function LeftEdgeRoulette({ units, selectedId, onSelectUnit }) {
         })}
       </div>
 
-      {/* Manual Step Controls (Positioned further down towards the bottom of the screen) */}
-      <div className="flex items-center gap-3.5 pl-4 sm:pl-8 mt-10 sm:mt-14 lg:mt-20">
-        <div className="flex items-center gap-1.5 bg-white rounded-xl p-1.5 border border-black/8 shadow-sm">
+      {/* Manual Step Controls (Positioned directly below the circular roulette) */}
+      <div className="relative z-[70] flex items-center gap-3.5 pl-4 sm:pl-8 mt-3 sm:mt-5">
+        <div className="flex items-center gap-1 bg-white rounded-xl p-1 border border-black/8 shadow-sm">
           <button
-            onClick={() => handleStep(-1)}
-            aria-label="Previous unit"
-            className="w-9 h-9 rounded-lg hover:bg-[#F7F4ED] hover:text-[#FF8A00] text-[#111111] flex items-center justify-center transition-colors"
+            type="button"
+            onClick={() => onStep?.(-1)}
+            aria-label="Previous squad"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg hover:bg-[#F7F4ED] hover:text-[#FF8A00] text-[#111111] flex items-center justify-center transition-colors cursor-pointer"
+            title="Previous squad"
           >
             <ChevronUp className="w-4 h-4" />
           </button>
           <button
-            onClick={() => handleStep(1)}
-            aria-label="Next unit"
-            className="w-9 h-9 rounded-lg hover:bg-[#F7F4ED] hover:text-[#FF8A00] text-[#111111] flex items-center justify-center transition-colors"
+            type="button"
+            onClick={() => onStep?.(1)}
+            aria-label="Next squad"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg hover:bg-[#F7F4ED] hover:text-[#FF8A00] text-[#111111] flex items-center justify-center transition-colors cursor-pointer"
+            title="Next squad"
           >
             <ChevronDown className="w-4 h-4" />
           </button>
         </div>
-        <span className="font-cinzel text-[10px] sm:text-[11px] tracking-widest uppercase text-[#666666] font-bold">
+        <span className="font-cinzel text-[10px] sm:text-[11px] tracking-widest uppercase text-[#555555] font-bold select-none">
           NAVIGATE SQUADS
         </span>
       </div>
@@ -370,6 +366,17 @@ export default function Team() {
     return allUnits.find((u) => u.id === selectedUnitId) || allUnits[0]
   }, [allUnits, selectedUnitId])
 
+  const handleStep = useCallback(
+    (direction) => {
+      const currentIdx = allUnits.findIndex((u) => u.id === selectedUnitId)
+      if (currentIdx !== -1) {
+        const nextIdx = (((currentIdx + direction) % allUnits.length) + allUnits.length) % allUnits.length
+        setSelectedUnitId(allUnits[nextIdx].id)
+      }
+    },
+    [allUnits, selectedUnitId]
+  )
+
   return (
     <section
       id="team"
@@ -402,11 +409,30 @@ export default function Team() {
                 units={allUnits}
                 selectedId={selectedUnitId}
                 onSelectUnit={(id) => setSelectedUnitId(id)}
+                onStep={handleStep}
               />
             </div>
 
             {/* RIGHT: SELECTED TEAM CONTENT & MEMBER CARDS */}
-            <div className="lg:col-span-7 xl:col-span-8 px-4 sm:px-6 md:px-8 lg:pr-10 lg:pl-2">
+            <div className="lg:col-span-7 xl:col-span-8 px-4 sm:px-6 md:px-8 lg:pr-10 lg:pl-2 max-h-[88svh] overflow-y-auto">
+              {/* Header Bar: Active Squad Title */}
+              <div className="sticky top-0 z-30 bg-[#F7F4ED]/95 backdrop-blur-sm pt-2 pb-3 mb-4 sm:mb-6 border-b border-black/8 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="font-cinzel text-xs sm:text-sm font-bold text-[#FF8A00] tracking-widest px-2.5 py-1 rounded-md bg-[#FF8A00]/10 border border-[#FF8A00]/20">
+                    {activeUnit.number || '01'}
+                  </span>
+                  <motion.h2
+                    key={activeUnit.id}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#111111] leading-none"
+                  >
+                    {activeUnit.name}
+                  </motion.h2>
+                </div>
+              </div>
+
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeUnit.id}
@@ -416,18 +442,11 @@ export default function Team() {
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                   className="space-y-6 sm:space-y-8"
                 >
-                  {/* Top Selected Team Header */}
-                  <div>
-                    <span className="font-mono text-[11px] tracking-widest2 uppercase text-[#FF8A00] font-bold block mb-1.5">
-                      SELECTED UNIT // {activeUnit.number}
-                    </span>
-                    <h2 className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#111111] leading-none mb-2">
-                      {activeUnit.name}
-                    </h2>
+                  {activeUnit.description && (
                     <p className="text-xs sm:text-sm text-[#555555] leading-relaxed max-w-3xl font-body">
                       {activeUnit.description}
                     </p>
-                  </div>
+                  )}
 
                   {/* 1. UNIT HEADS SECTION (Smaller, Compact Cards) */}
                   {activeUnit.heads && activeUnit.heads.length > 0 && (

@@ -12,7 +12,7 @@ const links = [
   { label: 'SPONSORS', href: '#sponsors' },
   { label: 'FACULTY', href: '#faculty' },
   { label: 'TEAM', href: '#team' },
-  { label: 'REGISTER', href: '/join' },
+  { label: 'REGISTER', href: 'https://unstop.com/' },
 ]
 
 const listVariants = {
@@ -55,13 +55,25 @@ export default function FullscreenMenu({ open, onClose }) {
           >
             {links.map((l) => (
               <motion.div key={l.label} variants={itemVariants} className="overflow-hidden">
-                <Link
-                  href={l.href}
-                  onClick={onClose}
-                  className="block font-serifEd text-5xl sm:text-6xl md:text-7xl leading-[1.15] hover:text-rust transition-colors"
-                >
-                  {l.label}
-                </Link>
+                {l.href.startsWith('http') ? (
+                  <a
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={onClose}
+                    className="block font-serifEd text-5xl sm:text-6xl md:text-7xl leading-[1.15] hover:text-rust transition-colors"
+                  >
+                    {l.label}
+                  </a>
+                ) : (
+                  <Link
+                    href={l.href}
+                    onClick={onClose}
+                    className="block font-serifEd text-5xl sm:text-6xl md:text-7xl leading-[1.15] hover:text-rust transition-colors"
+                  >
+                    {l.label}
+                  </Link>
+                )}
               </motion.div>
             ))}
           </motion.nav>

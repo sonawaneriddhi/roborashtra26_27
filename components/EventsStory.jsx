@@ -133,6 +133,8 @@ function Card({ index, progress, reduced }) {
           <div className="pt-4 border-t border-black/10 flex items-center justify-between">
             <a
               href={events[index].href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 font-mono text-xs tracking-widest2 uppercase font-semibold text-textDark hover:text-rust transition-colors group"
             >
               <span>{events[index].cta}</span>
