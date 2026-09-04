@@ -247,7 +247,7 @@ function HeadCard({ head, index }) {
     >
       <div>
         {/* Compact Image */}
-        <div className="relative aspect-[2/2.4] w-full rounded-xl overflow-hidden mb-3 bg-[#F7F4ED] border border-black/5">
+        <div className="relative aspect-[2/2] w-full rounded-xl overflow-hidden mb-3 bg-[#F7F4ED] border border-black/5">
           <img
             src={head.image}
             alt={head.name}
@@ -294,7 +294,7 @@ function MemberCard({ member, index }) {
       transition={{ duration: 0.35, delay: 0.08 + index * 0.04, ease: [0.16, 1, 0.3, 1] }}
       className="group bg-white rounded-2xl p-4 sm:p-4.5 border border-black/6 shadow-[0_3px_14px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.08)] transition-all duration-300 flex items-center justify-between gap-3.5 select-none"
     >
-      <div className="flex items-center gap-4 min-w-0">
+      <div className="flex items-center gap-3 min-w-0">
         {/* Rounded Rectangle Profile Avatar */}
 
         {/* Member Details (Bigger font) */}
@@ -309,7 +309,7 @@ function MemberCard({ member, index }) {
       </div>
 
       {/* Social Quick Links */}
-      <div className="flex items-center gap-2 text-[#666666] shrink-0">
+      <div className="flex items-center gap-1 text-[#666666] shrink-0">
         <a
           href={member.socials?.linkedin || 'https://linkedin.com'}
           target="_blank"
@@ -448,7 +448,7 @@ export default function Team() {
                   )}
 
                   {/* 2. UNIT MEMBERS SECTION (Hidden for the LEAD unit, shown for squads) */}
-                  {(activeUnit.id !== 'lead') || (activeUnit.id !== 'CAD/CAM') && (
+                  {activeUnit.id !== 'lead' && activeUnit.id !== 'cad' && (
                     <div>
                       <div className="flex items-center gap-4 mb-3.5">
                         <span className="font-cinzel text-xs tracking-widest uppercase text-[#111111] font-bold shrink-0">
