@@ -20,47 +20,47 @@ const CARD_ANCHOR_Y = 120  // SVG units above ground = Y ≈ 460, i.e. 65.7%
 const years = [
   {
     step: '01',
-    year: 'YEAR 01',
-    phase: 'GENESIS & PROTOTYPING',
-    title: 'Bare-Metal & Chassis Engineering',
-    tagline: 'From zero-knowledge to combat-ready autonomous prototypes.',
+    year: '1ST EDITION',
+    phase: 'ROBORASHTRA 2K24',
+    title: 'Hosting a National-Level Event',
+    tagline: 'Successfully managing RoboRashtra 2k24 with 290+ registrations and ₹1,00,000+ prize pools.',
     at: 0.15,
-    badge: 'CORE RECRUITS',
-    shortBadge: 'GENESIS',
+    badge: 'DRDO SPONSORED',
+    shortBadge: '1ST ED',
     details: [
-      'Comprehensive rookie induction workshops & PCB fabrication',
-      'Autonomous line-followers & ultrasonic obstacle rovers',
-      'First-generation 15 kg featherweight combat chassis',
+      'Successfully managing RoboRashtra 2k24 national-level event with 290+ registrations',
+      'Offered total prize pools exceeding ₹1,00,000 across multiple competitive events',
+      'Proudly sponsored by the Defense Research and Development Organization (DRDO)',
     ],
   },
   {
     step: '02',
-    year: 'YEAR 02',
-    phase: 'FLEET SCALE & SPEED',
-    title: 'FPV Fleet PAVAN & Pneumatics',
-    tagline: 'High-speed dynamics, custom telemetries, and arena combat.',
+    year: '2ND EDITION',
+    phase: 'ROBORASHTRA 2K25',
+    title: 'National Festival & Unstop Partner',
+    tagline: 'Partnered with Unstop for pan-India execution, launching ResQlympic 2.0 & Yantra Utsav - Jr.',
     at: 0.50,
-    badge: 'ADVANCED DYNAMICS',
-    shortBadge: 'FLEET',
+    badge: 'UNSTOP PARTNER',
+    shortBadge: '2ND ED',
     details: [
-      'Fleet PAVAN: carbon-fiber 6-rotor high-speed FPV racing drones',
-      'High-pressure pneumatic flipper & high-torque kinetic spinners',
-      'State-level circuit qualifiers and regional podium finishes',
+      'Successfully hosted a massive national-level technical festival partnering with Unstop for seamless execution',
+      'Introduced ResQlympic 2.O, pushing competition and course complexity further than the 2024 edition',
+      'Launched Yantra Utsav - Jr., creating a dedicated national platform for school-aged innovators (12th grade & below)',
     ],
   },
   {
     step: '03',
-    year: 'YEAR 03',
-    phase: 'AUTONOMY & CONQUEST',
-    title: 'LiDAR SLAM & National Conquest',
-    tagline: 'Full ROS 2 integration, edge-AI vision, and national championship.',
+    year: '3RD EDITION',
+    phase: 'ROBORASHTRA 2K26',
+    title: 'Pan-India Reach & Industry Alliances',
+    tagline: '147+ institutions participating across colleges, schools, and universities with premier corporate sponsors.',
     at: 0.85,
-    badge: 'NATIONAL PODIUM',
-    shortBadge: 'CONQUEST',
+    badge: 'TITLE: MITSUBISHI',
+    shortBadge: '3RD ED',
     details: [
-      'Onboard 3D LiDAR & real-time SLAM mapping for autonomous rovers',
-      'Edge-AI computer vision for real-time target recognition',
-      'National Robotics Championship 15 kg Combat — 1st Place',
+      'More than 147+ participated in RoboRashtra 2K26 across various colleges, schools, and universities',
+      'Mitsubishi Electric served as the Title Sponsor for RoboRashtra 2K26',
+      'Bank of Maharashtra as Silver Sponsor and Ventek Automation as Platinum Sponsor',
     ],
   },
 ]
@@ -160,7 +160,7 @@ export default function RoadmapSection() {
       id="roadmap"
       ref={sectionRef}
       role="region"
-      aria-label="Mission Trajectory Roadmap"
+      aria-label="Roborastra Roadmap"
       className="relative h-[320vh] sm:h-[380vh] lg:h-[420vh] bg-black"
     >
       <div className="sticky top-0 h-[100svh] overflow-hidden">
@@ -257,7 +257,7 @@ export default function RoadmapSection() {
               </span>
             </div>
             <h2 className="font-serifEd leading-none tracking-tight text-white font-bold flex items-center gap-1.5 text-base sm:text-2xl lg:text-3xl xl:text-4xl">
-              <span className="text-white/95">MISSION</span>
+              <span className="text-white/95">ROBORASHTRA</span>
               <span className="text-amber-400 italic">TRAJECTORY</span>
             </h2>
           </div>
@@ -271,7 +271,7 @@ export default function RoadmapSection() {
             >
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]" />
               <span className="font-mono text-[8.5px] sm:text-[9.5px] tracking-[0.22em] text-white/70 uppercase font-semibold">
-                Phase&ensp;{String(activeStep + 1).padStart(2, '0')}&ensp;/&ensp;03&ensp;·&ensp;{years[activeStep].shortBadge}
+                Edition&ensp;{String(activeStep + 1).padStart(2, '0')}&ensp;/&ensp;03&ensp;·&ensp;{years[activeStep].shortBadge}
               </span>
             </div>
 
@@ -419,7 +419,7 @@ export default function RoadmapSection() {
                   className="cursor-pointer pointer-events-auto group"
                   role="button"
                   tabIndex={0}
-                  aria-label={`Jump to Phase ${node.step}: ${node.phase}`}
+                  aria-label={`Jump to Edition ${node.step}: ${node.phase}`}
                 >
                   {/* Vertical connector line from node up to card area */}
                   <line
@@ -442,7 +442,7 @@ export default function RoadmapSection() {
                     letterSpacing="2.5"
                     className="select-none pointer-events-none"
                   >
-                    PHASE {node.step}
+                    EDITION {node.step}
                   </text>
 
                   {/* Outer pulse ring */}
@@ -535,7 +535,7 @@ export default function RoadmapSection() {
 
               // Card centered on node X, clamped safely between 3% and (97 - cardWidthPct)%
               const nodeLeftPct = (NODE_XS[index] / 1200) * 100
-              const cardWidthPct = 24  // approximate card width as % of viewport
+              const cardWidthPct = 26  // approximate card width as % of viewport
               const clampedLeft = Math.max(3, Math.min(nodeLeftPct - cardWidthPct / 2, 97 - cardWidthPct))
 
               return (
@@ -549,8 +549,8 @@ export default function RoadmapSection() {
                     position: 'absolute',
                     left: `${clampedLeft}%`,
                     // Card sits comfortably below top HUD header, in clear upper sky
-                    top: 'clamp(100px, 15vh, 140px)',
-                    width: 'clamp(300px, 24vw, 380px)',
+                    top: 'clamp(86px, 12vh, 120px)',
+                    width: 'clamp(320px, 26vw, 420px)',
                   }}
                   className="pointer-events-auto"
                 >
@@ -589,7 +589,7 @@ export default function RoadmapSection() {
                       {/* Top meta row */}
                       <div className="mb-3 flex items-center justify-between">
                         <span className="font-mono text-[9px] xl:text-[9.5px] tracking-[0.26em] uppercase font-bold text-amber-400/90">
-                          {item.year}&ensp;·&ensp;Phase {item.step}
+                          {item.year}&ensp;·&ensp;{item.phase}
                         </span>
                         <span
                           className="font-mono text-[7.5px] xl:text-[8px] tracking-[0.18em] rounded-full px-2.5 py-0.5 uppercase font-bold"
@@ -599,7 +599,7 @@ export default function RoadmapSection() {
                             color: '#f59e0b',
                           }}
                         >
-                          Active
+                          {item.badge}
                         </span>
                       </div>
 
@@ -695,7 +695,7 @@ export default function RoadmapSection() {
                           </span>
                           <span className="text-amber-400/30 font-mono text-[8px]">/</span>
                           <span className="font-mono text-[9px] tracking-[0.18em] text-white/50 uppercase">
-                            Phase {item.step}
+                            Edition {item.step}
                           </span>
                         </div>
                         <span
@@ -728,7 +728,7 @@ export default function RoadmapSection() {
                         {item.details.map((d) => (
                           <li key={d} className="flex items-start gap-1.5 text-[11px] sm:text-[12px] leading-snug text-white/80">
                             <span className="text-amber-400 font-bold text-[9px] shrink-0 mt-0.5">▸</span>
-                            <span className="line-clamp-1 sm:line-clamp-none">{d}</span>
+                            <span className="line-clamp-2 sm:line-clamp-none">{d}</span>
                           </li>
                         ))}
                       </ul>
