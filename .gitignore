@@ -1,46 +1,30 @@
-<<<<<<< HEAD
+# Dependencies
 node_modules/
-.next/
-dist/
-build/
-.env/
-.env.local
-=======
-# dependencies
-/node_modules
 /.pnp
 .pnp.js
 
-# testing
-/coverage
-
-# next.js
-/.next/
+# Next.js build output
+.next/
 /out/
-
-# production
 /build
+.agents
 
-# debug
+# Logs & Environment
+*.log
 npm-debug.log*
 yarn-debug.log*
-pnpm-debug.log*
-
-# local env files
-.env*.local
+yarn-error.log*
 .env
+.env*.local
 
-# vercel
-.vercel
+# Agents & IDE config
+.agents/
+.gemini/
+.vscode/
+.idea/
 
-# typescript
-*.tsbuildinfo
-next-env.d.json
-
-# temporary files & OS files
-temp.md
-temp.*
-*.tmp
-.DS_Store
-*.pem
->>>>>>> ad124b9b486038f4aee989ea22af474d204c82a7
+# Custom scratch / documentation files
+DECISIONS.md
+Design.md
+FLOW.md
+public/images.jfif

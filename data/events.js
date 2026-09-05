@@ -3,6 +3,7 @@ export const events = [
     id: 1,
     code: '01',
     category: 'NAVIGATION',
+    iconName: 'Navigation',
     title: 'AUTONOMOUS SPRINT',
     description:
       'Build a rover that clears an unmapped obstacle course in under 90 seconds, using only onboard sensors — no remote input allowed.',
@@ -14,6 +15,7 @@ export const events = [
     id: 2,
     code: '02',
     category: 'MANIPULATION',
+    iconName: 'Cpu',
     title: 'GRIP & STACK',
     description:
       'Design an arm that identifies, picks, and stacks five irregular objects by shape — fastest and cleanest stack wins.',
@@ -25,6 +27,7 @@ export const events = [
     id: 3,
     code: '03',
     category: 'COMBAT',
+    iconName: 'Swords',
     title: 'LAST BOT STANDING',
     description:
       'A 3-minute elimination bout, 15kg class. Survive, disable, or out-point your opponent inside the arena.',
@@ -33,3 +36,4 @@ export const events = [
     href: 'https://unstop.com/',
   },
 ]
+
