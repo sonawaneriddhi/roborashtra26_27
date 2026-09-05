@@ -12,17 +12,18 @@ export default function LoadingScreen({ onFinish }) {
 
   const advanceToExit = useCallback(() => {
     setStageIndex(STAGES.indexOf('exit'))
+    setDone(true)
   }, [])
 
   useEffect(() => {
     const timers = [
-      setTimeout(() => setStageIndex(1), 800), // enter
-      setTimeout(() => setStageIndex(2), 1800), // center
-      setTimeout(() => setStageIndex(3), 2300), // look
-      setTimeout(() => setStageIndex(4), 2800), // armRaise
-      setTimeout(() => setStageIndex(5), 3100), // click
-      setTimeout(() => setStageIndex(6), 3500), // exit
-      setTimeout(() => setDone(true), 4100),
+      setTimeout(() => setStageIndex(1), 200), // enter
+      setTimeout(() => setStageIndex(2), 500), // center
+      setTimeout(() => setStageIndex(3), 800), // look
+      setTimeout(() => setStageIndex(4), 1000), // armRaise
+      setTimeout(() => setStageIndex(5), 1200), // click
+      setTimeout(() => setStageIndex(6), 1400), // exit
+      setTimeout(() => setDone(true), 1700),
     ]
     return () => timers.forEach(clearTimeout)
   }, [])
@@ -46,18 +47,18 @@ export default function LoadingScreen({ onFinish }) {
           onClick={advanceToExit}
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.5, ease: 'easeInOut' } }}
-          className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center cursor-pointer"
+          exit={{ opacity: 0, transition: { duration: 0.4, ease: 'easeInOut' } }}
+          className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center cursor-pointer pointer-events-auto"
         >
           <motion.div
             animate={exiting ? { y: -30, opacity: 0 } : { y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center"
           >
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.9 }}
+              transition={{ duration: 0.4 }}
               className="font-serifEd text-4xl sm:text-6xl tracking-[0.06em] text-ivory"
             >
               Roborashtra
@@ -65,7 +66,7 @@ export default function LoadingScreen({ onFinish }) {
 
             <div className="relative h-28 w-28 mt-6">
               <motion.div
-                initial={{ opacity: 0, y: 50, x: 24, rotate: 0 }}
+                initial={{ opacity: 0, y: 30, x: 12, rotate: 0 }}
                 animate={
                   entered
                     ? {
@@ -78,8 +79,8 @@ export default function LoadingScreen({ onFinish }) {
                 }
                 transition={
                   stage === 'look'
-                    ? { duration: 0.6, ease: 'easeInOut' }
-                    : { duration: 0.9, ease: [0.16, 1, 0.3, 1] }
+                    ? { duration: 0.4, ease: 'easeInOut' }
+                    : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
                 }
                 className="w-full h-full"
               >
@@ -90,7 +91,7 @@ export default function LoadingScreen({ onFinish }) {
                 <motion.span
                   initial={{ opacity: 0.6, scale: 0.2 }}
                   animate={{ opacity: 0, scale: 2.4 }}
-                  transition={{ duration: 0.6, ease: 'easeOut' }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
                   className="absolute -right-2 top-8 w-6 h-6 rounded-full border border-rust pointer-events-none"
                 />
               )}

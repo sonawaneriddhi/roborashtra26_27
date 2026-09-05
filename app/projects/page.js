@@ -1,4 +1,3 @@
-import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Reveal from '@/components/Reveal'
 
@@ -48,7 +47,6 @@ const log = [
 export default function Projects() {
   return (
     <>
-      <Nav />
       <main className="pt-32 pb-28">
         <div className="mx-auto max-w-5xl px-6 md:px-10">
           <Reveal>

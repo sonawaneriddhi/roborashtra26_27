@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import LoadingScreen from '@/components/LoadingScreen'
 import Hero from '@/components/Hero'
 import Gallery from '@/components/Gallery'
@@ -15,29 +15,20 @@ import Faculty from '@/components/Faculty'
 export default function Home() {
   const [loaded, setLoaded] = useState(false)
 
-  useEffect(() => {
-    document.body.style.overflow = loaded ? '' : 'hidden'
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [loaded])
-
   return (
     <>
       <LoadingScreen onFinish={() => setLoaded(true)} />
-      {loaded && (
-        <main>
-          <Hero />
-          <Countdown targetDate={new Date('2027-02-01T00:00:00+05:30')} />
-          <Gallery />
-          <RoadmapSection />
-          <EventsStory />
-          <Sponsors />
-          <Faculty />
-          <Team />
-        </main>
-      )}
-      {loaded && <FooterEditorial />}
+      <main>
+        <Hero />
+        <Countdown targetDate={new Date('2027-02-01T00:00:00+05:30')} />
+        <Gallery />
+        <RoadmapSection />
+        <EventsStory />
+        <Sponsors />
+        <Faculty />
+        <Team />
+      </main>
+      <FooterEditorial />
     </>
   )
 }

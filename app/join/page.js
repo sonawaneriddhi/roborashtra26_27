@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 
 const divisions = [
@@ -27,7 +26,6 @@ export default function Join() {
 
   return (
     <>
-      <Nav />
       <main className="pt-32 pb-28">
         <div className="mx-auto max-w-3xl px-6 md:px-10">
           <p className="label-eyebrow mb-3">ENLIST</p>

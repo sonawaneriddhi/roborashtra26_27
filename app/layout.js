@@ -19,6 +19,7 @@ import 'lenis/dist/lenis.css'
 import './globals.css'
 import CursorTrail from '@/components/CursorTrail'
 import SmoothScroll from '@/components/SmoothScroll'
+import Navbar from '@/components/Navbar'
 
 export const metadata = {
   title: 'ROBORASHTRA — Robotics & Automation Club',
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
       <body className="bg-blueprint text-ink font-body antialiased selection:bg-amber selection:text-blueprintDeep">
         <SmoothScroll />
         <CursorTrail />
+        <Navbar />
         {children}
       </body>
     </html>

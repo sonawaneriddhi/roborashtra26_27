@@ -1,4 +1,3 @@
-import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Reveal from '@/components/Reveal'
 
@@ -44,7 +43,6 @@ const units = [
 export default function Team() {
   return (
     <>
-      <Nav />
       <main className="pt-32 pb-28">
         <div className="mx-auto max-w-6xl px-6 md:px-10">
           <Reveal>
