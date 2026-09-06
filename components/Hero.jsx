@@ -48,7 +48,8 @@ function CustomGLTFModel({ scrollProgress, onInteractiveClick }) {
 
     const maxDim = Math.max(size.x, size.y, size.z)
     const desiredHeight = 2.4 * 0.6
-    const scaleFactor = maxDim > 0 ? desiredHeight / maxDim : 1
+    const baseScaleFactor = maxDim > 0 ? desiredHeight / maxDim : 1
+    const scaleFactor = baseScaleFactor * 1.3 // Slightly larger presence
 
     return {
       centeredOffset: [-center.x * scaleFactor, -center.y * scaleFactor, -center.z * scaleFactor],
@@ -73,10 +74,9 @@ function CustomGLTFModel({ scrollProgress, onInteractiveClick }) {
     const targetBodyRotX = -mouseY * 0.18
     const targetBodyRotZ = -mouseX * 0.08
 
-    // Scroll progress scaling (1.0x -> 1.85x)
-    const sp = scrollProgress ? scrollProgress.get() : 0
-    const targetScale = baseScale * (1 + sp * 0.85)
-    const targetY = -0.15 + floatY - sp * 0.35
+    // Fixed scale (no scroll parallax scaling)
+    const targetScale = baseScale
+    const targetY = -0.15 + floatY
 
     robotGroup.current.scale.setScalar(THREE.MathUtils.lerp(robotGroup.current.scale.x, targetScale, 5.0 * dt))
     robotGroup.current.position.y = THREE.MathUtils.lerp(robotGroup.current.position.y, targetY, 5.0 * dt)
