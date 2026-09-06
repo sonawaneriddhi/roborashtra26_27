@@ -5,7 +5,8 @@ import LoadingScreen from '@/components/LoadingScreen'
 import Hero from '@/components/Hero'
 import Gallery from '@/components/Gallery'
 import RoadmapSection from '@/components/RoadmapSection'
-import EventsStory from '@/components/EventsStory'
+// import EventsStory from '@/components/EventsStory' // Preserved: EventsStory code retained, replaced in UI by PSComing
+import PSComing, { ProblemStatementComing } from '@/components/PSComing'
 import Sponsors from '@/components/Sponsors'
 import Team from '@/components/Team'
 import FooterEditorial from '@/components/FooterEditorial'
@@ -33,7 +34,7 @@ export default function Home() {
           <div className="h-6 bg-[#f6f1e7]" aria-hidden="true" />
           <RoadmapSection />
           <div className="h-6 bg-[#f6f1e7]" aria-hidden="true" />
-          <EventsStory />
+          <ProblemStatementComing />
           <Sponsors />
           <Faculty />
           <Team />

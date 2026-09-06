@@ -7,7 +7,7 @@ import { X } from 'lucide-react'
 const links = [
   { label: 'COUNTDOWN', href: '#countdown' },
   { label: 'ABOUT', href: '#gallery' },
-  { label: 'EVENTS', href: '#events' },
+  { label: 'PROBLEM STATEMENTS', href: '#events' },
   { label: 'ROADMAP', href: '#roadmap' },
   { label: 'SPONSORS', href: '#sponsors' },
   { label: 'FACULTY', href: '#faculty' },
