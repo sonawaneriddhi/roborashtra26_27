@@ -5,7 +5,6 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { ContactShadows, useGLTF } from '@react-three/drei'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import * as THREE from 'three'
-import Navbar from './Navbar'
 
 // Preload the custom GLTF model asset
 useGLTF.preload('/models/3d-metal-robot.glb')
@@ -180,8 +179,6 @@ export default function Hero() {
           }}
         />
 
-        {/* High-Contrast Navigation Header */}
-        <Navbar theme="light" />
 
         {/* PHASE 1: Giant Background Typography (BEHIND 3D Model Canvas - z-5) */}
         <motion.div

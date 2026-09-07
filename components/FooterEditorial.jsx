@@ -4,7 +4,7 @@ const nav = [
   { label: 'EVENTS', href: '#events' },
   { label: 'SPONSORS', href: '#sponsors' },
   { label: 'FACULTY', href: '#faculty' },
-  { label: 'REGISTER', href: '/join' },
+  { label: 'REGISTER', href: 'https://unstop.com/' },
 ]
 
 export default function FooterEditorial() {
@@ -17,15 +17,27 @@ export default function FooterEditorial() {
           </div>
 
           <nav className="flex flex-wrap gap-x-8 gap-y-3 md:justify-end content-start">
-            {nav.map((l) => (
-              <Link
-                key={l.label}
-                href={l.href}
-                className="font-mono text-[11px] tracking-widest2 uppercase text-ivory/70 hover:text-rust transition-colors"
-              >
-                {l.label}
-              </Link>
-            ))}
+            {nav.map((l) =>
+              l.href.startsWith('http') ? (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-[11px] tracking-widest2 uppercase text-ivory/70 hover:text-rust transition-colors"
+                >
+                  {l.label}
+                </a>
+              ) : (
+                <Link
+                  key={l.label}
+                  href={l.href}
+                  className="font-mono text-[11px] tracking-widest2 uppercase text-ivory/70 hover:text-rust transition-colors"
+                >
+                  {l.label}
+                </Link>
+              )
+            )}
           </nav>
         </div>
 

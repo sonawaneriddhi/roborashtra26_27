@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import LoadingScreen from '@/components/LoadingScreen'
+import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import Gallery from '@/components/Gallery'
 import RoadmapSection from '@/components/RoadmapSection'
@@ -11,6 +12,7 @@ import Team from '@/components/Team'
 import FooterEditorial from '@/components/FooterEditorial'
 import Countdown from '@/components/Countdown'
 import Faculty from '@/components/Faculty'
+import ProblemStatementComing from '@/components/ProblemStatementComing'
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false)
@@ -69,19 +71,21 @@ export default function Home() {
   return (
     <>
       <LoadingScreen onFinish={handleLoadingFinish} />
-      <main className={`transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <Hero />
-        <Countdown targetDate={new Date('2027-02-01T00:00:00+05:30')} />
-        <Gallery />
-        <div className="h-6 bg-[#f6f1e7]" aria-hidden="true" />
-        <RoadmapSection />
-        <div className="h-6 bg-[#f6f1e7]" aria-hidden="true" />
-        <EventsStory />
-        <Sponsors />
-        <Faculty />
-        <Team />
-      </main>
       <div className={`transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <Navbar />
+        <main>
+          <Hero />
+          <Countdown targetDate={new Date('2027-02-01T00:00:00+05:30')} />
+          <Gallery />
+          <div className="h-6 bg-[#f6f1e7]" aria-hidden="true" />
+          <RoadmapSection />
+          <div className="h-6 bg-[#f6f1e7]" aria-hidden="true" />
+          {/* <EventsStory /> */}
+          <ProblemStatementComing />
+          <Sponsors />
+          <Faculty />
+          <Team />
+        </main>
         <FooterEditorial />
       </div>
     </>
