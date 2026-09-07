@@ -3,12 +3,12 @@ const sponsors = []
 
 export default function Sponsors() {
   return (
-    <section id="sponsors" className="bg-ivory text-textDark py-28 md:py-40">
+    <section id="sponsors" className="bg-ivory text-textDark py-16 sm:py-28 md:py-40">
       <div className="mx-auto max-w-7xl px-6 md:px-12 text-center">
         <p className="font-mono text-[11px] tracking-widest2 uppercase text-textMuted mb-6">
           Partnerships &amp; Support
         </p>
-        <h2 className="font-serifEd text-5xl sm:text-6xl md:text-7xl mb-16 md:mb-24">Sponsors</h2>
+        <h2 className="font-serifEd text-3xl sm:text-5xl md:text-6xl lg:text-7xl mb-12 md:mb-24">Sponsors</h2>
 
         {sponsors.length === 0 ? (
           <div className="border-t border-b border-black/10 py-20 md:py-28">

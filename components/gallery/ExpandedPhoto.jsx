@@ -77,7 +77,7 @@ export default function ExpandedPhoto({
               stiffness: 280,
               mass: 0.8,
             }}
-            className="relative w-full max-w-5xl max-h-[90vh] bg-[#0c121e] border border-grid rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row text-ink tick-frame"
+            className="relative w-full max-w-5xl max-h-[95svh] md:max-h-[90vh] bg-[#0c121e] border border-grid rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row text-ink tick-frame"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}

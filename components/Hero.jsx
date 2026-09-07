@@ -5,7 +5,6 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { ContactShadows, useGLTF } from '@react-three/drei'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import * as THREE from 'three'
-import Navbar from './Navbar'
 
 // Preload the custom GLTF model asset
 useGLTF.preload('/models/3d-metal-robot.glb')
@@ -48,7 +47,8 @@ function CustomGLTFModel({ scrollProgress, onInteractiveClick }) {
 
     const maxDim = Math.max(size.x, size.y, size.z)
     const desiredHeight = 2.4 * 0.6
-    const scaleFactor = maxDim > 0 ? desiredHeight / maxDim : 1
+    const baseScaleFactor = maxDim > 0 ? desiredHeight / maxDim : 1
+    const scaleFactor = baseScaleFactor * 1.3 // Slightly larger presence
 
     return {
       centeredOffset: [-center.x * scaleFactor, -center.y * scaleFactor, -center.z * scaleFactor],
@@ -73,10 +73,9 @@ function CustomGLTFModel({ scrollProgress, onInteractiveClick }) {
     const targetBodyRotX = -mouseY * 0.18
     const targetBodyRotZ = -mouseX * 0.08
 
-    // Scroll progress scaling (1.0x -> 1.85x)
-    const sp = scrollProgress ? scrollProgress.get() : 0
-    const targetScale = baseScale * (1 + sp * 0.85)
-    const targetY = -0.15 + floatY - sp * 0.35
+    // Fixed scale (no scroll parallax scaling)
+    const targetScale = baseScale
+    const targetY = -0.15 + floatY
 
     robotGroup.current.scale.setScalar(THREE.MathUtils.lerp(robotGroup.current.scale.x, targetScale, 5.0 * dt))
     robotGroup.current.position.y = THREE.MathUtils.lerp(robotGroup.current.position.y, targetY, 5.0 * dt)
@@ -161,11 +160,12 @@ export default function Hero() {
 
   // Phase 3: Dual Brand Reveal (ROBORASHTRA on Left, ROBOHAWK on Right) (42% -> 85%)
   const brandRevealOpacity = useTransform(scrollYProgress, [0.42, 0.58, 0.82, 0.94], [0, 1, 1, 0])
-  const leftBrandX = useTransform(scrollYProgress, [0.42, 0.58], [-40, 0])
-  const rightBrandX = useTransform(scrollYProgress, [0.42, 0.58], [40, 0])
+  const brandRevealY = useTransform(scrollYProgress, [0.42, 0.58], [18, 0])
+  const leftBrandX = useTransform(scrollYProgress, [0.42, 0.58], [-24, 0])
+  const rightBrandX = useTransform(scrollYProgress, [0.42, 0.58], [24, 0])
 
   return (
-    <section ref={sectionRef} className="relative h-[260vh] w-full bg-[#F1EDE3] text-textDark select-none">
+    <section id="hero" ref={sectionRef} className="relative h-[260vh] w-full bg-[#F1EDE3] text-textDark select-none">
       {/* Sticky Viewport Frame */}
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden border-b border-black/10 flex flex-col justify-between">
         {/* Subtle Editorial Background Grid */}
@@ -180,8 +180,6 @@ export default function Hero() {
           }}
         />
 
-        {/* High-Contrast Navigation Header */}
-        <Navbar theme="light" />
 
         {/* PHASE 1: Giant Background Typography (BEHIND 3D Model Canvas - z-5) */}
         <motion.div
@@ -198,7 +196,7 @@ export default function Hero() {
                     initial="hidden"
                     animate="show"
                     className="block"
-                    style={{ fontSize: 'clamp(3.5rem, 13vw, 13.5rem)' }}
+                    style={{ fontSize: 'clamp(2.5rem, 12vw, 13.5rem)' }}
                   >
                     {l}
                   </motion.span>
@@ -247,7 +245,7 @@ export default function Hero() {
         {/* Top Eyebrow & Bottom Minimal Footer Strip (z-20) */}
         <motion.div
           style={{ y: heroTextY, opacity: heroTextOpacity }}
-          className="relative z-20 h-full flex flex-col justify-between px-6 md:px-12 pt-24 sm:pt-28 md:pt-36 pb-8 md:pb-12 pointer-events-none"
+          className="relative z-20 h-full flex flex-col justify-between px-4 sm:px-8 md:px-12 pt-20 sm:pt-28 md:pt-36 pb-6 md:pb-12 pointer-events-none"
         >
           {/* Top Eyebrow Tag */}
           <div className="flex items-center justify-between">
@@ -255,72 +253,56 @@ export default function Hero() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="font-mono text-[10px] sm:text-xs font-bold tracking-widest2 uppercase text-rust"
+              className="font-mono text-[9.5px] sm:text-xs font-bold tracking-wider sm:tracking-widest2 uppercase text-rust"
             >
               FLAGSHIP ROBOTICS CHAMPIONSHIP · 2026-2027
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="hidden md:block font-mono text-[11px] tracking-widest2 uppercase text-textMuted"
-            >
-              MAHARASHTRA / INDIA
-            </motion.div>
           </div>
 
           {/* Spacer for 3D model center area */}
           <div className="flex-1" />
 
-          {/* Bottom Minimal Footer Strip with Nested Button Architecture */}
+          {/* Bottom Minimal Footer Strip */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.8 }}
-            className="flex flex-col md:flex-row md:items-end justify-between gap-4 font-mono text-[11px] tracking-widest2 uppercase text-textDark/80 border-t border-black/10 pt-5"
+            className="flex flex-col md:flex-row md:items-end justify-between gap-4 font-mono text-[10px] sm:text-[11px] tracking-wider sm:tracking-widest2 uppercase text-textDark/80 border-t border-black/10 pt-4 sm:pt-5"
           >
             <div>
               <p className="font-semibold text-textDark">ROBORASHTRA ARENA</p>
-              <p className="text-textMuted text-[10px]">AUTONOMOUS & COMBAT PLATFORM</p>
+              <p className="text-textMuted text-[9px] sm:text-[10px]">AUTONOMOUS & COMBAT PLATFORM</p>
             </div>
-
-            {/* High-End Nested Button-in-Button CTA */}
-            <a
-              href="#countdown"
-              className="pointer-events-auto group inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/80 hover:bg-white backdrop-blur-md border border-black/15 shadow-sm transition-all duration-300 active:scale-95 text-textDark hover:text-rust font-semibold"
-            >
-              <span className="tracking-widest">EXPLORE ARENA</span>
-              <span className="w-6 h-6 rounded-full bg-rust/10 flex items-center justify-center text-rust transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5">
-                ↗
-              </span>
-            </a>
           </motion.div>
         </motion.div>
 
         {/* PHASE 3: Refined Dual Brand Reveal with Double-Bezel Architecture */}
         <motion.div
           style={{ opacity: brandRevealOpacity }}
-          className="absolute inset-0 z-20 pointer-events-none flex flex-col md:flex-row items-center justify-between p-6 sm:p-8 md:px-12 lg:px-16 pt-24 pb-12"
+          className="absolute inset-0 z-20 pointer-events-none flex flex-col md:flex-row items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 pt-20 sm:pt-24 pb-8 sm:pb-12"
         >
           {/* Left Brand Reveal: ROBORASHTRA */}
           <motion.div
-            style={{ x: isMobile ? 0 : leftBrandX }}
-            className="w-full max-w-[220px] sm:max-w-[280px] md:max-w-[340px] space-y-2 md:space-y-3 self-start md:self-center"
+            style={{
+              x: isMobile ? 0 : leftBrandX,
+              y: isMobile ? brandRevealY : 0,
+            }}
+            className="w-full max-w-[240px] xs:max-w-[270px] sm:max-w-[300px] md:max-w-[340px] space-y-2 sm:space-y-2.5 md:space-y-3 self-start md:self-center"
           >
-            <div className="space-y-0.5 md:space-y-1">
-              <span className="font-mono text-[9px] sm:text-[11px] tracking-widest2 uppercase text-rust font-bold block">
+            <div className="space-y-1">
+              <span className="font-mono text-[9.5px] xs:text-[10px] sm:text-[11px] tracking-wider sm:tracking-widest2 uppercase text-rust font-bold block">
                 [ DIVISION 01 // GROUND ARENA ]
               </span>
-              <h2 className="font-serifEd text-2xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.92] text-textDark tracking-tight font-semibold">
+              <h2 className="font-serifEd text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.92] text-textDark tracking-tight font-bold">
                 ROBO<br />RASHTRA
               </h2>
             </div>
 
             {/* Double-Bezel Hardware Card Architecture */}
-            <div className="p-1 bg-black/5 dark:bg-black/10 rounded-[1.25rem] border border-black/10 shadow-sm">
-              <div className="bg-white/90 backdrop-blur-xl p-3.5 sm:p-4 rounded-[1rem] space-y-1 border border-white/60">
-                <span className="font-mono text-[10px] sm:text-[11px] tracking-widest2 uppercase text-textDark font-bold block">
+            <div className="p-1 bg-black/5 dark:bg-black/10 rounded-[1.15rem] sm:rounded-[1.25rem] border border-black/10 shadow-sm">
+              <div className="bg-white/90 backdrop-blur-xl p-3 sm:p-4 rounded-[0.95rem] sm:rounded-[1rem] space-y-1 border border-white/60">
+                <span className="font-mono text-[10px] sm:text-[11px] tracking-wider sm:tracking-widest2 uppercase text-textDark font-bold block">
                   AUTONOMOUS COMBAT RIG
                 </span>
                 <p className="font-mono text-[9px] sm:text-[10px] text-textMuted leading-normal">
@@ -332,22 +314,25 @@ export default function Hero() {
 
           {/* Right Brand Reveal: ROBOHAWK */}
           <motion.div
-            style={{ x: isMobile ? 0 : rightBrandX }}
-            className="w-full max-w-[220px] sm:max-w-[280px] md:max-w-[340px] space-y-2 md:space-y-3 text-right self-end md:self-center"
+            style={{
+              x: isMobile ? 0 : rightBrandX,
+              y: isMobile ? brandRevealY : 0,
+            }}
+            className="w-full max-w-[240px] xs:max-w-[270px] sm:max-w-[300px] md:max-w-[340px] space-y-2 sm:space-y-2.5 md:space-y-3 text-right self-end md:self-center"
           >
-            <div className="space-y-0.5 md:space-y-1">
-              <span className="font-mono text-[9px] sm:text-[11px] tracking-widest2 uppercase text-rust font-bold block">
+            <div className="space-y-1">
+              <span className="font-mono text-[9.5px] xs:text-[10px] sm:text-[11px] tracking-wider sm:tracking-widest2 uppercase text-rust font-bold block">
                 [ DIVISION 02 // AERIAL FLEET ]
               </span>
-              <h2 className="font-serifEd text-2xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.92] text-textDark tracking-tight font-semibold">
+              <h2 className="font-serifEd text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.92] text-textDark tracking-tight font-bold">
                 ROBO<br />HAWK
               </h2>
             </div>
 
             {/* Double-Bezel Hardware Card Architecture */}
-            <div className="p-1 bg-black/5 dark:bg-black/10 rounded-[1.25rem] border border-black/10 shadow-sm inline-block text-right">
-              <div className="bg-white/90 backdrop-blur-xl p-3.5 sm:p-4 rounded-[1rem] space-y-1 border border-white/60">
-                <span className="font-mono text-[10px] sm:text-[11px] tracking-widest2 uppercase text-textDark font-bold block">
+            <div className="p-1 bg-black/5 dark:bg-black/10 rounded-[1.15rem] sm:rounded-[1.25rem] border border-black/10 shadow-sm inline-block text-right">
+              <div className="bg-white/90 backdrop-blur-xl p-3 sm:p-4 rounded-[0.95rem] sm:rounded-[1rem] space-y-1 border border-white/60">
+                <span className="font-mono text-[10px] sm:text-[11px] tracking-wider sm:tracking-widest2 uppercase text-textDark font-bold block">
                   TACTICAL RECON DRONE
                 </span>
                 <p className="font-mono text-[9px] sm:text-[10px] text-textMuted leading-normal">

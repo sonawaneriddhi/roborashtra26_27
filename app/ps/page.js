@@ -1,5 +1,5 @@
-import Nav from '@/components/Nav'
-import Footer from '@/components/Footer'
+import Navbar from '@/components/Navbar'
+import FooterEditorial from '@/components/FooterEditorial'
 import PSComing from '@/components/PSComing'
 
 export const metadata = {
@@ -11,11 +11,11 @@ export const metadata = {
 export default function ProblemStatementsPage() {
   return (
     <>
-      <Nav />
-      <main className="pt-16">
+      <Navbar />
+      <main className="pt-24">
         <PSComing />
       </main>
-      <Footer />
+      <FooterEditorial />
     </>
   )
 }

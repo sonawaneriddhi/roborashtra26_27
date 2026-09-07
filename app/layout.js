@@ -26,6 +26,13 @@ export const metadata = {
     'ROBORASHTRA is the robotics and automation club building autonomous systems, competition bots, and the engineers who make them. Join the build.',
 }
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+}
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

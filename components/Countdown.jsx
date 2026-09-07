@@ -81,7 +81,7 @@ export default function Countdown({ targetDate = DEFAULT_EVENT_DATE }) {
     <section
       id="countdown"
       aria-label="Event Countdown"
-      className="relative w-full bg-[#F7F4ED] text-[#111111] border-y border-black/10 overflow-hidden py-16 sm:py-24 md:py-32 select-none"
+      className="relative w-full bg-[#F7F4ED] text-[#111111] border-y border-black/10 overflow-hidden py-12 sm:py-20 md:py-32 select-none"
     >
       {/* Subtle Editorial Background Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:44px_44px] pointer-events-none opacity-80" />
@@ -95,73 +95,51 @@ export default function Countdown({ targetDate = DEFAULT_EVENT_DATE }) {
         }}
       />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 md:px-12 flex flex-col items-center text-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-6 md:px-12 flex flex-col items-center text-center">
         
         {/* TOP EDITORIAL HEADER */}
-        <div className="mb-10 sm:mb-14 max-w-2xl">
-          <span className="font-mono text-[11px] sm:text-xs tracking-[0.28em] text-[#FF8A00] font-bold uppercase block mb-3">
+        <div className="mb-6 sm:mb-12 max-w-2xl">
+          <span className="font-mono text-[10px] sm:text-xs tracking-[0.24em] sm:tracking-[0.28em] text-[#FF8A00] font-bold uppercase block mb-2 sm:mb-3">
             COUNTDOWN TO ZERO HOUR
           </span>
-          <h2 className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#111111] leading-tight tracking-tight mb-4">
+          <h2 className="font-cinzel text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#111111] leading-tight tracking-tight mb-2 sm:mb-4">
             The Arena Awaits
           </h2>
-          <p className="font-body text-sm sm:text-base text-[#666666] leading-relaxed max-w-xl mx-auto">
+          <p className="font-body text-xs sm:text-base text-[#666666] leading-relaxed max-w-xl mx-auto">
             Autonomous kinematics, combat bots, and precision aerospace fleets calibrate for the state championship.
           </p>
         </div>
 
-        {/* THREE LARGE MECHANICAL FLIP-CLOCK CARDS (DAYS - HOURS - MINUTES) */}
-        <div className="w-full my-4 sm:my-8 flex justify-center">
+        {/* MECHANICAL FLIP-CLOCK CARDS (DAYS - HOURS - MINUTES - SECONDS) */}
+        <div className="w-full my-2 sm:my-6 flex justify-center">
           <FlipCountdown targetDate={targetDate} />
         </div>
 
         {/* BOTTOM ACTION & CALENDAR STRIP */}
-        <div className="mt-12 sm:mt-16 pt-8 border-t border-black/8 w-full flex flex-col sm:flex-row items-center justify-between gap-6 max-w-4xl bg-white/70 backdrop-blur-md rounded-2xl p-6 border border-black/6 shadow-sm">
-          <div className="text-left">
-            <h4 className="font-serifEd text-xl sm:text-2xl text-[#111111] font-medium leading-tight">
+        <div className="mt-6 sm:mt-10 md:mt-14 pt-4 sm:pt-6 border-t border-black/8 w-full flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6 max-w-4xl bg-white/70 backdrop-blur-md rounded-2xl p-3.5 sm:p-6 border border-black/6 shadow-sm text-center sm:text-left">
+          <div>
+            <h4 className="font-serifEd text-base sm:text-xl md:text-2xl text-[#111111] font-medium leading-tight">
               Ready to deploy your machine?
             </h4>
-            <p className="font-mono text-[11px] sm:text-xs text-[#777777] tracking-wider mt-0.5">
+            <p className="font-mono text-[9px] sm:text-[11px] text-[#777777] tracking-wider mt-0.5">
               Registrations for Combat, Autonomous SLAM, and FPV fleets are open.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-3 shrink-0">
             {/* Registration CTA */}
             <Link
-              href="/join"
-              className="inline-flex items-center gap-2 bg-[#FF8A00] hover:bg-[#E67C00] text-black font-mono text-xs font-bold tracking-widest uppercase px-5 py-3 rounded-xl shadow-[0_4px_16px_rgba(255,138,0,0.25)] transition-all hover:scale-[1.02] active:scale-[0.98]"
+              href="https://unstop.com/"
+              className="inline-flex items-center gap-2 bg-[#FF8A00] hover:bg-[#E67C00] text-black font-mono text-xs font-bold tracking-widest uppercase px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl shadow-[0_4px_16px_rgba(255,138,0,0.25)] transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <span>REGISTER TEAM</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
-
-            {/* Google Calendar Link */}
-            <a
-              href={googleCalendarUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 bg-[#FAF9F5] hover:bg-[#F3EFE6] text-[#222222] border border-black/10 font-mono text-xs tracking-wider uppercase px-3.5 py-3 rounded-xl transition-colors"
-              title="Add to Google Calendar"
-            >
-              <Calendar className="w-3.5 h-3.5 text-[#FF8A00]" />
-              <span className="hidden md:inline">CALENDAR</span>
-            </a>
-
-            {/* Apple / Outlook .ICS Download */}
-            <button
-              onClick={handleDownloadICS}
-              className="inline-flex items-center gap-1.5 bg-[#FAF9F5] hover:bg-[#F3EFE6] text-[#222222] border border-black/10 font-mono text-xs tracking-wider uppercase px-3.5 py-3 rounded-xl transition-colors"
-              title="Download iCalendar file (.ics)"
-            >
-              <Clock className="w-3.5 h-3.5 text-[#666666]" />
-              <span className="hidden md:inline">.ICS</span>
-            </button>
-
+            
             {/* Quick Share Link */}
             <button
               onClick={handleShareLink}
-              className="inline-flex items-center gap-1.5 bg-[#FAF9F5] hover:bg-[#F3EFE6] text-[#222222] border border-black/10 font-mono text-xs tracking-wider uppercase px-3.5 py-3 rounded-xl transition-colors"
+              className="inline-flex items-center gap-1.5 bg-[#FAF9F5] hover:bg-[#F3EFE6] text-[#222222] border border-black/10 font-mono text-xs tracking-wider uppercase px-3 sm:px-3.5 py-2.5 sm:py-3 rounded-xl transition-colors"
               title="Copy event link"
             >
               <Radio className="w-3.5 h-3.5 text-[#666666]" />

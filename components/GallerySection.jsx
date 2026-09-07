@@ -17,7 +17,7 @@ export default function GallerySection() {
         <section className="mx-auto max-w-7xl px-6 md:px-10 py-28">
             <Reveal>
                 <p className="label-eyebrow mb-3">ARCHIVE</p>
-                <h2 className="font-display font-700 text-3xl md:text-4xl max-w-xl mb-14">
+                <h2 className="font-display font-bold text-2xl md:text-4xl max-w-xl mb-14">
                     Last season, in frames.
                 </h2>
             </Reveal>

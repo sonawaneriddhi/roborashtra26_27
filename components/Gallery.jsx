@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { useScroll } from 'framer-motion'
+import { useScroll, useMotionValueEvent } from 'framer-motion'
 import GalleryScene from './gallery/GalleryScene'
 import GalleryControls from './gallery/GalleryControls'
 import ExpandedPhoto from './gallery/ExpandedPhoto'
@@ -32,11 +32,9 @@ export default function Gallery() {
 
     const [scrollProgress, setScrollProgress] = useState(0)
 
-    useEffect(() => {
-        return scrollYProgress.onChange((v) => {
-            setScrollProgress(v)
-        })
-    }, [scrollYProgress])
+    useMotionValueEvent(scrollYProgress, 'change', (v) => {
+        setScrollProgress(v)
+    })
 
     // Check prefers-reduced-motion
     useEffect(() => {

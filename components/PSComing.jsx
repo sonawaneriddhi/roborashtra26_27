@@ -79,7 +79,7 @@ export default function PSComing() {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className="relative text-[#F8FAFC] overflow-hidden py-32 md:py-48 flex items-center justify-center min-h-[80vh] cursor-crosshair select-none"
+      className="relative text-[#F8FAFC] overflow-hidden py-20 sm:py-32 md:py-48 flex items-center justify-center min-h-[70vh] sm:min-h-[80vh] cursor-crosshair select-none"
       style={{
         background:
           'radial-gradient(ellipse 90% 80% at 50% 30%, #0A1324 0%, #050811 65%, #020408 100%)',
@@ -115,7 +115,7 @@ export default function PSComing() {
         {/* Parallax Starfield */}
         <motion.div
           style={{ x: reducedMotion ? 0 : bgStarsX, y: reducedMotion ? 0 : bgStarsY }}
-          className="absolute inset-[-40px] pointer-events-none"
+          className="absolute inset-0 sm:inset-[-40px] pointer-events-none overflow-hidden"
         >
           {SPACE_STARS.map((star) => (
             <motion.div
@@ -250,7 +250,7 @@ export default function PSComing() {
           y: reducedMotion ? 0 : textShiftY,
           transformStyle: 'preserve-3d',
         }}
-        className="relative z-10 max-w-5xl mx-auto px-6 text-center"
+        className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center"
       >
         {/* Deep Space Beacon Eyebrow */}
 
@@ -273,7 +273,7 @@ export default function PSComing() {
               },
             },
           }}
-          className="font-display font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.08] text-white"
+          className="font-display font-bold text-2xl min-[380px]:text-3xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.08] text-white"
           style={{ transform: 'translateZ(40px)' }}
         >
           {words.map((word, i) => {

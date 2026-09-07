@@ -12,11 +12,17 @@
   --font-serif-ed: 'Cormorant Garamond', serif;
 }
 
+html {
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+}
+
 * {
-  scroll-behavior: smooth;
+  box-sizing: border-box;
 }
 
 body {
+  overflow-x: clip;
   background-color: #0a0f1a;
   background-image:
     linear-gradient(rgba(90, 110, 130, 0.14) 1px, transparent 1px),
@@ -77,5 +83,120 @@ button:focus-visible {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Hide scrollbar utility (used for horizontal pill selectors on mobile) */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Safe area insets for notched devices */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Improve touch responsiveness */
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* ── Mobile-first responsive fixes ── */
+
+/* Contain horizontal overflow at the body level (already set on html/body above) */
+/* Individual section overflow is controlled per-component */
+
+/* EventsStory 3-card layout: stack vertically on small screens */
+@media (max-width: 639px) {
+  /* Force events cards to be full-width on mobile */
+  [data-events-card] {
+    width: 90% !important;
+    min-width: 0 !important;
+    max-width: 380px !important;
+  }
+}
+
+/* PSComing section: ensure text wraps on very small screens */
+@media (max-width: 479px) {
+  .font-display {
+    word-break: break-word;
+  }
+}
+
+/* Gallery section heading on small screens */
+@media (max-width: 639px) {
+  section#gallery h2 {
+    font-size: clamp(1.6rem, 8vw, 2.5rem) !important;
+  }
+}
+
+/* Sponsors section title on very small screens */
+@media (max-width: 479px) {
+  section#sponsors h2 {
+    font-size: clamp(2rem, 10vw, 3.5rem) !important;
+  }
+}
+
+/* Faculty section: Ensure cards don't overflow */
+@media (max-width: 767px) {
+  section#faculty .max-w-5xl {
+    overflow-x: hidden;
+  }
+}
+
+/* Footer editorial big text: ensure it doesn't overflow on tiny screens */
+@media (max-width: 374px) {
+  footer h2[style*="clamp"] {
+    font-size: clamp(2rem, 12vw, 6rem) !important;
+  }
+}
+
+/* FlipCountdown: Ensure full-width centered alignment without horizontal scroll */
+#countdown {
+  overflow-x: hidden;
+}
+
+/* Team section: pill nav on mobile - ensure full-width availability */
+@media (max-width: 1023px) {
+  section#team .no-scrollbar {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Roadmap bottom card: better spacing on very small screens */
+@media (max-width: 374px) {
+  section#roadmap .absolute.bottom-3 {
+    bottom: 0.5rem !important;
+    left: 0.5rem !important;
+    right: 0.5rem !important;
+  }
+}
+
+/* Hero phase 3 brand reveal: stack on very small screens */
+@media (max-width: 374px) {
+  section#hero .absolute.inset-0 .flex-col {
+    padding-top: 5rem;
+  }
+}
+
+/* Team section: smooth touch scrolling on mobile */
+@media (max-width: 1023px) {
+  section#team {
+    height: auto !important;
+  }
+}
+
+/* FullscreenMenu: reduce font size on very small phones to avoid overflow */
+@media (max-width: 374px) {
+  nav .font-serifEd.text-\[2rem\] {
+    font-size: 1.6rem !important;
   }
 }
