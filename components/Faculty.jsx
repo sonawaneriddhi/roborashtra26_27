@@ -51,7 +51,7 @@ function FacultyCard({ faculty, index }) {
 
   return (
     <div
-      className="relative w-full max-w-[360px] sm:max-w-[400px] md:max-w-[430px] lg:max-w-[460px] h-[520px] sm:h-[550px] md:h-[570px] select-none"
+      className="relative w-full max-w-[310px] sm:max-w-[340px] md:max-w-[360px] lg:max-w-[380px] h-[460px] sm:h-[485px] md:h-[505px] select-none"
       style={{ perspective: '1200px' }}
     >
       <motion.div
@@ -66,10 +66,10 @@ function FacultyCard({ faculty, index }) {
         style={{ transformStyle: 'preserve-3d' }}
         className="group relative w-full h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-4 focus-visible:ring-offset-black rounded-2xl"
       >
-        {/* FRONT FACE (Enlarged Photo, Name Only & Flip Button) */}
+        {/* FRONT FACE (Photo, Name Only & Flip Button) */}
         <div
           style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
-          className="absolute inset-0 rounded-2xl bg-gradient-to-b from-[#121824]/95 via-[#0b101c]/95 to-[#070a13]/98 border border-white/12 p-5 sm:p-6 flex flex-col justify-between shadow-[0_16px_50px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-all duration-500 group-hover:border-amber/40 group-hover:shadow-[0_0_35px_rgba(255,159,28,0.18)] group-hover:-translate-y-1.5"
+          className="absolute inset-0 rounded-2xl bg-gradient-to-b from-[#121824]/95 via-[#0b101c]/95 to-[#070a13]/98 border border-white/12 p-4 sm:p-5 flex flex-col justify-between shadow-[0_16px_50px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-all duration-500 group-hover:border-amber/40 group-hover:shadow-[0_0_35px_rgba(255,159,28,0.18)] group-hover:-translate-y-1.5"
         >
           {/* Precision Corner Crosshairs */}
           <div className="absolute top-2.5 left-2.5 w-2 h-2 border-t border-l border-amber/60 pointer-events-none" />
@@ -77,17 +77,17 @@ function FacultyCard({ faculty, index }) {
           <div className="absolute bottom-2.5 left-2.5 w-2 h-2 border-b border-l border-amber/60 pointer-events-none" />
           <div className="absolute bottom-2.5 right-2.5 w-2 h-2 border-b border-r border-amber/60 pointer-events-none" />
 
-          {/* Top Header & Prominent Large Image */}
+          {/* Top Header & Faculty Portrait */}
           <div className="flex flex-col h-full justify-between">
             <div>
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-2.5">
                 <span className="font-mono text-[9px] sm:text-[10px] tracking-widest2 uppercase px-2.5 py-0.5 rounded bg-amber/10 text-amber font-semibold border border-amber/20">
                   {faculty.badge}
                 </span>
               </div>
 
-              {/* Large, High-Visibility Faculty Portrait */}
-              <div className="relative w-full h-[320px] sm:h-[350px] md:h-[370px] rounded-xl overflow-hidden mb-3 border border-white/10 bg-black/40 shadow-inner">
+              {/* Faculty Portrait */}
+              <div className="relative w-full h-[270px] sm:h-[295px] md:h-[315px] rounded-xl overflow-hidden mb-2.5 border border-white/10 bg-black/40 shadow-inner">
                 <img
                   src={faculty.image}
                   alt={`Portrait of ${faculty.name}`}
@@ -98,17 +98,17 @@ function FacultyCard({ faculty, index }) {
               </div>
 
               {/* Only Name Visible */}
-              <h3 className="font-serifEd text-2xl sm:text-3xl text-ivory font-medium leading-tight group-hover:text-amber transition-colors">
+              <h3 className="font-serifEd text-xl sm:text-2xl text-ivory font-medium leading-tight group-hover:text-amber transition-colors">
                 {faculty.name}
               </h3>
             </div>
 
             {/* Bottom Interactive Flip Prompt */}
-            <div className="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[10px] tracking-widest2 text-ivory/60">
+            <div className="pt-2.5 border-t border-white/10 flex items-center justify-between font-mono text-[9px] sm:text-[10px] tracking-widest2 text-ivory/60">
               <span className="group-hover:text-ivory transition-colors">CONNECT & SOCIALS</span>
-              <div className="flex items-center gap-1.5 text-amber bg-amber/10 px-3 py-1.5 rounded-full border border-amber/20 group-hover:bg-amber group-hover:text-blueprintDeep transition-all shadow-xs">
-                <span className="text-[10px] font-bold uppercase">FLIP</span>
-                <RotateCw className="w-3.5 h-3.5 transition-transform group-hover:rotate-180 duration-500" />
+              <div className="flex items-center gap-1.5 text-amber bg-amber/10 px-2.5 py-1 rounded-full border border-amber/20 group-hover:bg-amber group-hover:text-blueprintDeep transition-all shadow-xs">
+                <span className="text-[9px] sm:text-[10px] font-bold uppercase">FLIP</span>
+                <RotateCw className="w-3 h-3 transition-transform group-hover:rotate-180 duration-500" />
               </div>
             </div>
           </div>
@@ -121,7 +121,7 @@ function FacultyCard({ faculty, index }) {
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
-          className="absolute inset-0 rounded-2xl bg-gradient-to-b from-[#121824]/98 via-[#0b101c]/98 to-[#070a13]/98 border border-amber/30 p-5 sm:p-6 flex flex-col justify-between shadow-[0_16px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+          className="absolute inset-0 rounded-2xl bg-gradient-to-b from-[#121824]/98 via-[#0b101c]/98 to-[#070a13]/98 border border-amber/30 p-4 sm:p-5 flex flex-col justify-between shadow-[0_16px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl"
         >
           {/* Precision Corner Crosshairs */}
           <div className="absolute top-2.5 left-2.5 w-2 h-2 border-t border-l border-amber/60 pointer-events-none" />
@@ -140,35 +140,35 @@ function FacultyCard({ faculty, index }) {
               </span>
             </div>
 
-            <h3 className="font-serifEd text-2xl sm:text-3xl text-ivory font-medium mb-1">
+            <h3 className="font-serifEd text-xl sm:text-2xl text-ivory font-medium mb-1">
               {faculty.name}
             </h3>
             <p className="font-mono text-xs text-amber tracking-widest2 uppercase mb-1">
               {faculty.designation}
             </p>
-            <p className="font-mono text-[11px] text-steel tracking-wider mb-3">
+            <p className="font-mono text-[10px] sm:text-[11px] text-steel tracking-wider mb-2.5">
               {faculty.department}
             </p>
 
-            <div className="bg-black/40 rounded-xl p-3 border border-white/5 mb-3">
-              <p className="font-mono text-[9px] uppercase tracking-widest2 text-ivory/40 mb-1">
+            <div className="bg-black/40 rounded-xl p-2.5 border border-white/5 mb-2.5">
+              <p className="font-mono text-[9px] uppercase tracking-widest2 text-ivory/40 mb-0.5">
                 CREDENTIALS & FOCUS
               </p>
-              <p className="text-xs text-ivory/80 leading-relaxed">
+              <p className="text-[11px] sm:text-xs text-ivory/80 leading-relaxed">
                 {faculty.credentials}
               </p>
             </div>
             
             {faculty.description && (
-              <p className="text-xs text-ivory/65 leading-relaxed line-clamp-2 mb-2">
+              <p className="text-[11px] sm:text-xs text-ivory/65 leading-relaxed line-clamp-2 mb-2">
                 {faculty.description}
               </p>
             )}
           </div>
 
           {/* Clickable Social Media Links */}
-          <div className="space-y-2 my-auto">
-            <p className="font-mono text-[9px] tracking-widest2 uppercase text-ivory/50 mb-1">
+          <div className="space-y-1.5 my-auto">
+            <p className="font-mono text-[9px] tracking-widest2 uppercase text-ivory/50 mb-0.5">
               OFFICIAL CHANNELS
             </p>
 
@@ -179,15 +179,15 @@ function FacultyCard({ faculty, index }) {
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
               aria-label={`Connect with ${faculty.name} on LinkedIn`}
-              className="group/link flex items-center justify-between w-full p-2.5 rounded-xl bg-white/5 hover:bg-[#0A66C2]/20 border border-white/10 hover:border-[#0A66C2]/50 transition-all text-ivory"
+              className="group/link flex items-center justify-between w-full p-2 rounded-xl bg-white/5 hover:bg-[#0A66C2]/20 border border-white/10 hover:border-[#0A66C2]/50 transition-all text-ivory"
             >
-              <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-lg bg-[#0A66C2]/20 text-[#0A66C2] flex items-center justify-center group-hover/link:bg-[#0A66C2] group-hover/link:text-white transition-colors">
-                  <LinkedInIcon className="w-4 h-4" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-6 h-6 rounded-lg bg-[#0A66C2]/20 text-[#0A66C2] flex items-center justify-center group-hover/link:bg-[#0A66C2] group-hover/link:text-white transition-colors">
+                  <LinkedInIcon className="w-3.5 h-3.5" />
                 </div>
-                <span className="font-mono text-xs tracking-wider">LinkedIn Profile</span>
+                <span className="font-mono text-[11px] tracking-wider">LinkedIn Profile</span>
               </div>
-              <ExternalLink className="w-3.5 h-3.5 text-ivory/40 group-hover/link:text-ivory transition-colors" />
+              <ExternalLink className="w-3 h-3 text-ivory/40 group-hover/link:text-ivory transition-colors" />
             </a>
 
             {/* Instagram */}
@@ -197,15 +197,15 @@ function FacultyCard({ faculty, index }) {
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
               aria-label={`Follow ${faculty.name} on Instagram`}
-              className="group/link flex items-center justify-between w-full p-2.5 rounded-xl bg-white/5 hover:bg-[#E1306C]/20 border border-white/10 hover:border-[#E1306C]/50 transition-all text-ivory"
+              className="group/link flex items-center justify-between w-full p-2 rounded-xl bg-white/5 hover:bg-[#E1306C]/20 border border-white/10 hover:border-[#E1306C]/50 transition-all text-ivory"
             >
-              <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-lg bg-[#E1306C]/20 text-[#E1306C] flex items-center justify-center group-hover/link:bg-[#E1306C] group-hover/link:text-white transition-colors">
-                  <InstagramIcon className="w-4 h-4" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-6 h-6 rounded-lg bg-[#E1306C]/20 text-[#E1306C] flex items-center justify-center group-hover/link:bg-[#E1306C] group-hover/link:text-white transition-colors">
+                  <InstagramIcon className="w-3.5 h-3.5" />
                 </div>
-                <span className="font-mono text-xs tracking-wider">Instagram Dispatch</span>
+                <span className="font-mono text-[11px] tracking-wider">Instagram Dispatch</span>
               </div>
-              <ExternalLink className="w-3.5 h-3.5 text-ivory/40 group-hover/link:text-ivory transition-colors" />
+              <ExternalLink className="w-3 h-3 text-ivory/40 group-hover/link:text-ivory transition-colors" />
             </a>
 
             {/* X / Twitter */}
@@ -215,24 +215,24 @@ function FacultyCard({ faculty, index }) {
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
               aria-label={`Follow ${faculty.name} on X`}
-              className="group/link flex items-center justify-between w-full p-2.5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/30 transition-all text-ivory"
+              className="group/link flex items-center justify-between w-full p-2 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/30 transition-all text-ivory"
             >
-              <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-lg bg-white/10 text-ivory flex items-center justify-center group-hover/link:bg-white group-hover/link:text-black transition-colors">
-                  <XTwitterIcon className="w-3.5 h-3.5" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-6 h-6 rounded-lg bg-white/10 text-ivory flex items-center justify-center group-hover/link:bg-white group-hover/link:text-black transition-colors">
+                  <XTwitterIcon className="w-3 h-3" />
                 </div>
-                <span className="font-mono text-xs tracking-wider">X (Twitter) Feed</span>
+                <span className="font-mono text-[11px] tracking-wider">X (Twitter) Feed</span>
               </div>
-              <ExternalLink className="w-3.5 h-3.5 text-ivory/40 group-hover/link:text-ivory transition-colors" />
+              <ExternalLink className="w-3 h-3 text-ivory/40 group-hover/link:text-ivory transition-colors" />
             </a>
           </div>
 
           {/* Bottom Flip Back Button */}
-          <div className="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[10px] tracking-widest2 text-ivory/60">
+          <div className="pt-2 border-t border-white/10 flex items-center justify-between font-mono text-[9px] sm:text-[10px] tracking-widest2 text-ivory/60">
             <span>RETURN TO BIO</span>
-            <div className="flex items-center gap-1.5 text-amber bg-amber/10 px-3 py-1.5 rounded-full border border-amber/20 group-hover:bg-amber group-hover:text-blueprintDeep transition-all shadow-xs">
-              <span className="text-[10px] font-bold uppercase">FLIP BACK</span>
-              <RotateCw className="w-3.5 h-3.5 rotate-180" />
+            <div className="flex items-center gap-1.5 text-amber bg-amber/10 px-2.5 py-1 rounded-full border border-amber/20 group-hover:bg-amber group-hover:text-blueprintDeep transition-all shadow-xs">
+              <span className="text-[9px] sm:text-[10px] font-bold uppercase">FLIP BACK</span>
+              <RotateCw className="w-3 h-3 rotate-180" />
             </div>
           </div>
         </div>
@@ -365,7 +365,7 @@ export default function Faculty() {
             y: cardsY,
             pointerEvents: cardsPointerEvents,
           }}
-          className="relative z-20 flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-8 md:gap-10 w-full px-4 sm:px-6 max-w-6xl mt-8 sm:mt-12 md:mt-14"
+          className="relative z-20 flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-8 md:gap-10 w-full px-4 sm:px-6 max-w-5xl mt-6 sm:mt-10 md:mt-12"
         >
           {facultyMembers.map((faculty, idx) => (
             <FacultyCard key={faculty.id} faculty={faculty} index={idx} />

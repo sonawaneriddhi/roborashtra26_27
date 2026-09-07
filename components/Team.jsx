@@ -287,27 +287,26 @@ function MemberCard({ member, index }) {
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.35, delay: 0.08 + index * 0.04, ease: [0.16, 1, 0.3, 1] }}
-      className="group bg-white rounded-2xl p-4 sm:p-4.5 border border-black/6 shadow-[0_3px_14px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.08)] transition-all duration-300 flex items-center justify-between gap-3.5 select-none"
+      transition={{
+        duration: 0.35,
+        delay: 0.08 + index * 0.04,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className="group w-full bg-white rounded-2xl p-2 sm:p-2.5 border border-black/6 shadow-[0_3px_14px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.08)] transition-all duration-300 flex items-center justify-between gap-2 select-none"
     >
+      {/* Member Details */}
       <div className="flex items-center gap-3 min-w-0">
-        {/* Rounded Rectangle Profile Avatar */}
-
-        {/* Member Details (Bigger font) */}
         <div className="min-w-0">
           <h5 className="font-serifEd text-lg sm:text-xl font-medium text-[#111111] leading-snug truncate group-hover:text-[#FF8A00] transition-colors">
             {member.name}
           </h5>
-          <p className="font-mono text-[11px] sm:text-xs text-[#777777] uppercase tracking-wide truncate mt-0.5">
-            {member.role}
-          </p>
         </div>
       </div>
 
-      {/* Social Quick Links */}
+      {/* LinkedIn */}
       <div className="flex items-center gap-1 text-[#666666] shrink-0">
         <a
-          href={member.socials?.linkedin || 'https://linkedin.com'}
+          href={member.socials?.linkedin || "https://linkedin.com"}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${member.name} LinkedIn`}
@@ -315,10 +314,9 @@ function MemberCard({ member, index }) {
         >
           <LinkedInIcon className="w-4 h-4" />
         </a>
-        
       </div>
     </motion.div>
-  )
+  );
 }
 
 /**
@@ -442,11 +440,6 @@ export default function Team() {
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                   className="space-y-6 sm:space-y-8"
                 >
-                  {activeUnit.description && (
-                    <p className="text-xs sm:text-sm text-[#555555] leading-relaxed max-w-3xl font-body">
-                      {activeUnit.description}
-                    </p>
-                  )}
 
                   {/* 1. UNIT HEADS SECTION (Smaller, Compact Cards) */}
                   {activeUnit.heads && activeUnit.heads.length > 0 && (
@@ -477,7 +470,7 @@ export default function Team() {
                       </div>
 
                       {activeUnit.members && activeUnit.members.length > 0 ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3.5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
                           {activeUnit.members.map((member, i) => (
                             <MemberCard key={member.id} member={member} index={i} />
                           ))}

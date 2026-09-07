@@ -252,9 +252,6 @@ export default function RoadmapSection() {
           <div className="pointer-events-auto">
             <div className="mb-0.5 flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b]" />
-              <span className="font-mono text-[7.5px] sm:text-[9.5px] tracking-[0.2em] text-amber-400/90 uppercase font-semibold">
-                Surface Expedition
-              </span>
             </div>
             <h2 className="font-serifEd leading-none tracking-tight text-white font-bold flex items-center gap-1.5 text-base sm:text-2xl lg:text-3xl xl:text-4xl">
               <span className="text-white/95">ROBORASHTRA</span>
@@ -264,16 +261,6 @@ export default function RoadmapSection() {
 
           {/* Right: Phase Controls & Indicator */}
           <div className="pointer-events-auto flex items-center gap-2 shrink-0">
-            {/* Step indicator pill (hidden on small mobile, shown on sm+) */}
-            <div
-              className="hidden sm:flex items-center gap-2 rounded-full px-3 py-1.5"
-              style={{ background: 'rgba(12, 6, 2, 0.65)', border: '1px solid rgba(245,158,11,0.25)', backdropFilter: 'blur(12px)' }}
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]" />
-              <span className="font-mono text-[8.5px] sm:text-[9.5px] tracking-[0.22em] text-white/70 uppercase font-semibold">
-                Edition&ensp;{String(activeStep + 1).padStart(2, '0')}&ensp;/&ensp;03&ensp;·&ensp;{years[activeStep].shortBadge}
-              </span>
-            </div>
 
             {/* Interactive phase nav pills with touch target spacing */}
             <nav

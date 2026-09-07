@@ -165,7 +165,7 @@ export default function Hero() {
   const rightBrandX = useTransform(scrollYProgress, [0.42, 0.58], [40, 0])
 
   return (
-    <section ref={sectionRef} className="relative h-[260vh] w-full bg-[#F1EDE3] text-textDark select-none">
+    <section id="hero" ref={sectionRef} className="relative h-[260vh] w-full bg-[#F1EDE3] text-textDark select-none">
       {/* Sticky Viewport Frame */}
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden border-b border-black/10 flex flex-col justify-between">
         {/* Subtle Editorial Background Grid */}
@@ -260,14 +260,6 @@ export default function Hero() {
               FLAGSHIP ROBOTICS CHAMPIONSHIP · 2026-2027
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="hidden md:block font-mono text-[11px] tracking-widest2 uppercase text-textMuted"
-            >
-              MAHARASHTRA / INDIA
-            </motion.div>
           </div>
 
           {/* Spacer for 3D model center area */}
@@ -285,16 +277,7 @@ export default function Hero() {
               <p className="text-textMuted text-[10px]">AUTONOMOUS & COMBAT PLATFORM</p>
             </div>
 
-            {/* High-End Nested Button-in-Button CTA */}
-            <a
-              href="#countdown"
-              className="pointer-events-auto group inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/80 hover:bg-white backdrop-blur-md border border-black/15 shadow-sm transition-all duration-300 active:scale-95 text-textDark hover:text-rust font-semibold"
-            >
-              <span className="tracking-widest">EXPLORE ARENA</span>
-              <span className="w-6 h-6 rounded-full bg-rust/10 flex items-center justify-center text-rust transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5">
-                ↗
-              </span>
-            </a>
+            
           </motion.div>
         </motion.div>
 

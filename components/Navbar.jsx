@@ -28,10 +28,15 @@ export default function Navbar({ theme = 'dark' }) {
         </Link>
 
         <nav className={`hidden md:flex items-center gap-9 font-mono text-[11px] tracking-widest2 ${mutedTextClass}`}>
-          <Link href="#countdown" className="hover:text-rust transition-colors">COUNTDOWN</Link>
           <Link href="#gallery" className="hover:text-rust transition-colors">ABOUT</Link>
-          <Link href="#events" className="hover:text-rust transition-colors">EVENTS</Link>
-          <Link href="/join" className="hover:text-rust transition-colors">REGISTER</Link>
+          <Link href="#events" className="hover:text-rust transition-colors">EVENTS</Link><Link
+            href="https://unstop.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-rust transition-colors"
+          >
+            REGISTER
+          </Link>
         </nav>
 
         <button
