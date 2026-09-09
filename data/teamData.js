@@ -394,22 +394,23 @@ export const teamData = {
       heads: [
         {
           id: 'web-head-1',
-          name: 'Yadnesh Borole',
+          name: 'Riddhi Sonawane',
           role: 'Web & Systems Head',
-          image: '/team/web/yadnesh.png',
+          image: '/team/web/riddhi.png',
           socials: {
             linkedin: 'https://linkedin.com',
           },
         },
         {
           id: 'web-head-2',
-          name: 'Riddhi Sonawane',
+          name: 'Yadnesh Borole',
           role: 'Web & Systems Co-Head',
-          image: '/team/web/riddhi.png',
+          image: '/team/web/yadnesh.png',
           socials: {
             linkedin: 'https://linkedin.com',
           },
         },
+        
       ],
       members: [
         {

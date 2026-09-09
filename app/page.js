@@ -75,7 +75,7 @@ export default function Home() {
         <Navbar />
         <main>
           <Hero />
-          <Countdown targetDate={new Date('2027-02-01T00:00:00+05:30')} />
+          <Countdown targetDate={new Date('2027-01-29T00:00:00+05:30')} />
           <Gallery />
           <div className="h-6 bg-[#f6f1e7]" aria-hidden="true" />
           <RoadmapSection />
