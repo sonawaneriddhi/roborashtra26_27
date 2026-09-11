@@ -1,4 +1,4 @@
-import Countdown from '@/components/Countdown'
+import Countdown from '@/app/countdown/Countdown'
 
 export const metadata = {
   title: 'Countdown — ROBORASHTRA',

@@ -1,4 +1,4 @@
-import Sponsors from '@/components/Sponsors'
+import Sponsors from '@/app/sponsor/Sponsors'
 
 export const metadata = {
   title: 'Sponsors — ROBORASHTRA',

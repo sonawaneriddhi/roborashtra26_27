@@ -1,4 +1,4 @@
-import RoadmapSection from '@/components/RoadmapSection'
+import RoadmapSection from '@/app/roadmap/RoadmapSection'
 
 export const metadata = {
   title: 'Roadmap — ROBORASHTRA',

@@ -1,5 +1,5 @@
-import Faculty from '@/components/Faculty'
-import Team from '@/components/Team'
+import Faculty from '@/app/team/Faculty'
+import Team from '@/app/team/Team'
 
 export const metadata = {
   title: 'Team & Faculty — ROBORASHTRA',

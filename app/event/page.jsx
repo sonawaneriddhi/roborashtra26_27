@@ -1,5 +1,5 @@
-import EventsStory from '@/components/EventsStory'
-import ProblemStatementComing from '@/components/ProblemStatementComing'
+import EventsStory from '@/app/event/EventsStory'
+import ProblemStatementComing from '@/app/event/ProblemStatementComing'
 
 export const metadata = {
   title: 'Events & Challenges — ROBORASHTRA',
@@ -9,7 +9,7 @@ export const metadata = {
 export default function EventPage() {
   return (
     <div className="pt-16 sm:pt-20">
-      <EventsStory />
+      {/* <EventsStory /> */}
       <div className="h-6 bg-[#f6f1e7]" aria-hidden="true" />
       <ProblemStatementComing />
     </div>
