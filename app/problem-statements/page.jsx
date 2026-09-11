@@ -1,4 +1,4 @@
-import ProblemStatementComing from '@/components/ProblemStatementComing'
+import ProblemStatementComing from '@/app/event/ProblemStatementComing'
 
 export const metadata = {
   title: 'Problem Statements — ROBORASHTRA',
