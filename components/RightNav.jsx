@@ -65,7 +65,7 @@ export default function RightNav({ className = '' }) {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="flex flex-col items-end gap-2.5 sm:gap-3.5 md:gap-4 max-w-[280px]"
+        className="flex flex-col items-end gap-3 sm:gap-4 md:gap-4.5 max-w-[320px] md:max-w-[360px]"
       >
         {portals.map((item) => {
           const isActive = pathname === item.href
@@ -80,36 +80,37 @@ export default function RightNav({ className = '' }) {
             >
               <Link
                 href={item.href}
+                prefetch={true}
                 aria-label={`${item.id} ${item.label}`}
                 aria-current={isActive ? 'page' : undefined}
-                className="group relative flex flex-col items-end py-1 focus:outline-none"
+                className="group relative flex flex-col items-end py-1.5 focus:outline-none"
               >
                 <div
                   className={`
-                    flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg border backdrop-blur-md transition-all duration-300
+                    flex items-center gap-2.5 sm:gap-3.5 px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 md:py-3.5 rounded-xl border backdrop-blur-md transition-all duration-300
                     ${
                       isActive
-                        ? 'bg-white/95 border-rust shadow-[0_4px_20px_rgba(200,75,39,0.2)] scale-[1.02]'
-                        : 'bg-[#FAF8F5]/90 border-black/10 shadow-[0_2px_12px_rgba(0,0,0,0.04)] hover:border-rust/60 hover:bg-white hover:shadow-[0_4px_20px_rgba(200,75,39,0.16)]'
+                        ? 'bg-white/95 border-rust shadow-[0_4px_24px_rgba(200,75,39,0.22)] scale-[1.03]'
+                        : 'bg-[#FAF8F5]/92 border-black/10 shadow-[0_2px_14px_rgba(0,0,0,0.05)] hover:border-rust/60 hover:bg-white hover:shadow-[0_4px_24px_rgba(200,75,39,0.18)]'
                     }
                   `}
                 >
                   {/* Small section number */}
-                  <span className="font-mono text-[10px] sm:text-xs font-bold tracking-widest text-rust">
+                  <span className="font-mono text-xs sm:text-sm font-bold tracking-widest text-rust">
                     {item.id}
                   </span>
 
                   {/* Left Arrow expanding on hover: 01 → GALLERY */}
                   <motion.span
                     variants={arrowVariants}
-                    className="font-mono text-[11px] text-rust hidden sm:inline-block overflow-hidden"
+                    className="font-mono text-xs sm:text-sm text-rust hidden sm:inline-block overflow-hidden"
                   >
                     →
                   </motion.span>
 
                   {/* Uppercase section title with wide letter-spacing */}
                   <span
-                    className={`font-mono text-[11px] sm:text-xs font-semibold tracking-widest2 uppercase transition-colors ${
+                    className={`font-mono text-xs sm:text-sm font-semibold tracking-widest2 uppercase transition-colors ${
                       isActive ? 'text-rust' : 'text-textDark group-hover:text-rust'
                     }`}
                   >
@@ -119,7 +120,7 @@ export default function RightNav({ className = '' }) {
                   {/* Right Arrow: GALLERY → */}
                   <motion.span
                     variants={rightArrowVariants}
-                    className={`font-mono text-[11px] sm:text-xs font-bold text-rust ${
+                    className={`font-mono text-xs sm:text-sm font-bold text-rust ${
                       isActive ? 'opacity-100' : ''
                     }`}
                   >
@@ -129,7 +130,7 @@ export default function RightNav({ className = '' }) {
 
                 {/* Editorial hairline divider under each button */}
                 <div
-                  className={`w-full h-[1px] mt-1.5 transition-colors duration-300 ${
+                  className={`w-full h-[1px] mt-2 transition-colors duration-300 ${
                     isActive
                       ? 'bg-rust/60'
                       : 'bg-black/10 group-hover:bg-rust/40'

@@ -79,7 +79,7 @@ export default function PSComing() {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className="relative text-[#F8FAFC] overflow-hidden py-32 md:py-48 flex items-center justify-center min-h-[80vh] cursor-crosshair select-none"
+      className="relative w-full h-screen h-[100dvh] text-[#F8FAFC] overflow-hidden flex items-center justify-center cursor-crosshair select-none"
       style={{
         background:
           'radial-gradient(ellipse 90% 80% at 50% 30%, #0A1324 0%, #050811 65%, #020408 100%)',
@@ -313,29 +313,8 @@ export default function PSComing() {
 
 
 
-        {/* Interactive Space Coordinates & Reticle Bar */}
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }}
-          whileInView={{ opacity: 1, scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.1, delay: 0.75 }}
-          className="mt-12 flex items-center justify-center gap-4 max-w-md mx-auto"
-        >
-
-          <div className="h-px flex-1 bg-gradient-to-l from-transparent via-[#4FC3FF]/40 to-[#4FC3FF]/60" />
-        </motion.div>
-
-        {/* Subtle Interactive Instruction */}
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 0.8 : 0.4 }}
-          transition={{ duration: 0.4 }}
-          className="inline-block mt-6 font-mono text-[9px] tracking-[0.25em] text-white/40 uppercase"
-        >
-
-        </motion.span>
       </motion.div>
-    </section >
+    </section>
   )
 }
 

@@ -8,9 +8,7 @@ export const metadata = {
 
 export default function EventPage() {
   return (
-    <div className="pt-16 sm:pt-20">
-      {/* <EventsStory /> */}
-      <div className="h-6 bg-[#f6f1e7]" aria-hidden="true" />
+    <div className="h-screen h-[100dvh] w-full overflow-hidden">
       <ProblemStatementComing />
     </div>
   )

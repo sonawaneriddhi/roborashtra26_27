@@ -247,7 +247,7 @@ export default function RoadmapSection() {
         {/* ════════════════════════════════════════
             TOP HEADER — Left-aligned HUD Title & Right Phase Controls
         ════════════════════════════════════════ */}
-        <header className="absolute left-3 right-3 top-3 z-30 flex items-center justify-between sm:left-8 sm:right-8 sm:top-6 lg:left-12 lg:right-12 lg:top-7 xl:left-16 xl:right-16 pointer-events-none">
+        <header className="absolute left-3 right-3 top-16 z-30 flex items-center justify-between sm:left-8 sm:right-8 sm:top-20 lg:left-12 lg:right-12 lg:top-22 xl:left-16 xl:right-16 pointer-events-none">
           {/* Left: Title block */}
           <div className="pointer-events-auto">
             <div className="mb-0.5 flex items-center gap-1.5">

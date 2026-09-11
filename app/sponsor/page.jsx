@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function SponsorPage() {
   return (
-    <div className="pt-16 sm:pt-20">
+    <div className="h-screen h-[100dvh] w-full overflow-hidden">
       <Sponsors />
     </div>
   )

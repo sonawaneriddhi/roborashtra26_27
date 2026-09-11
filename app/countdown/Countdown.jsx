@@ -81,7 +81,7 @@ export default function Countdown({ targetDate = DEFAULT_EVENT_DATE }) {
     <section
       id="countdown"
       aria-label="Event Countdown"
-      className="relative w-full bg-[#F7F4ED] text-[#111111] border-y border-black/10 overflow-hidden py-16 sm:py-24 md:py-32 select-none"
+      className="relative w-full h-full min-h-screen flex flex-col justify-center items-center bg-[#F7F4ED] text-[#111111] select-none overflow-hidden pt-16 sm:pt-20 pb-4 px-4 sm:px-6 md:px-12"
     >
       {/* Subtle Editorial Background Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:44px_44px] pointer-events-none opacity-80" />
@@ -95,42 +95,42 @@ export default function Countdown({ targetDate = DEFAULT_EVENT_DATE }) {
         }}
       />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 md:px-12 flex flex-col items-center text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-2 sm:px-6 flex flex-col items-center text-center my-auto">
         
         {/* TOP EDITORIAL HEADER */}
-        <div className="mb-10 sm:mb-14 max-w-2xl">
-          <span className="font-mono text-[11px] sm:text-xs tracking-[0.28em] text-[#FF8A00] font-bold uppercase block mb-3">
+        <div className="mb-4 sm:mb-6 max-w-2xl">
+          <span className="font-mono text-[10px] sm:text-xs tracking-[0.28em] text-[#FF8A00] font-bold uppercase block mb-1.5 sm:mb-2">
             COUNTDOWN TO ZERO HOUR
           </span>
-          <h2 className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#111111] leading-tight tracking-tight mb-4">
+          <h2 className="font-cinzel text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#111111] leading-tight tracking-tight mb-2">
             The Arena Awaits
           </h2>
-          <p className="font-body text-sm sm:text-base text-[#666666] leading-relaxed max-w-xl mx-auto">
+          <p className="font-body text-xs sm:text-sm md:text-base text-[#666666] leading-relaxed max-w-xl mx-auto">
             Autonomous kinematics, combat bots, and precision aerospace fleets calibrate for the state championship.
           </p>
         </div>
 
         {/* MECHANICAL FLIP-CLOCK CARDS (DAYS - HOURS - MINUTES - SECONDS) */}
-        <div className="w-full my-4 sm:my-8 flex justify-center">
+        <div className="w-full my-2 sm:my-4 flex justify-center">
           <FlipCountdown targetDate={targetDate} />
         </div>
 
         {/* BOTTOM ACTION & CALENDAR STRIP */}
-        <div className="mt-12 sm:mt-16 pt-8 border-t border-black/8 w-full flex flex-col sm:flex-row items-center justify-between gap-6 max-w-4xl bg-white/70 backdrop-blur-md rounded-2xl p-6 border border-black/6 shadow-sm">
+        <div className="mt-4 sm:mt-6 w-full flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6 max-w-4xl bg-white/70 backdrop-blur-md rounded-2xl p-3.5 sm:p-5 border border-black/6 shadow-sm">
           <div className="text-left">
-            <h4 className="font-serifEd text-xl sm:text-2xl text-[#111111] font-medium leading-tight">
+            <h4 className="font-serifEd text-base sm:text-xl text-[#111111] font-medium leading-tight">
               Ready to deploy your machine?
             </h4>
-            <p className="font-mono text-[11px] sm:text-xs text-[#777777] tracking-wider mt-0.5">
+            <p className="font-mono text-[10px] sm:text-xs text-[#777777] tracking-wider mt-0.5">
               Registrations for Combat, Autonomous SLAM, and FPV fleets are open.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 shrink-0">
             {/* Registration CTA */}
             <Link
               href="https://unstop.com/"
-              className="inline-flex items-center gap-2 bg-[#FF8A00] hover:bg-[#E67C00] text-black font-mono text-xs font-bold tracking-widest uppercase px-5 py-3 rounded-xl shadow-[0_4px_16px_rgba(255,138,0,0.25)] transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="inline-flex items-center gap-2 bg-[#FF8A00] hover:bg-[#E67C00] text-black font-mono text-xs font-bold tracking-widest uppercase px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl shadow-[0_4px_16px_rgba(255,138,0,0.25)] transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <span>REGISTER TEAM</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -139,7 +139,7 @@ export default function Countdown({ targetDate = DEFAULT_EVENT_DATE }) {
             {/* Quick Share Link */}
             <button
               onClick={handleShareLink}
-              className="inline-flex items-center gap-1.5 bg-[#FAF9F5] hover:bg-[#F3EFE6] text-[#222222] border border-black/10 font-mono text-xs tracking-wider uppercase px-3.5 py-3 rounded-xl transition-colors"
+              className="inline-flex items-center gap-1.5 bg-[#FAF9F5] hover:bg-[#F3EFE6] text-[#222222] border border-black/10 font-mono text-xs tracking-wider uppercase px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl transition-colors"
               title="Copy event link"
             >
               <Radio className="w-3.5 h-3.5 text-[#666666]" />

@@ -25,7 +25,6 @@ export default function PhotoRing({
   selectedPhoto = null,
   onSelectPhoto,
   onUserInteracted,
-  scrollProgress = 0,
   reducedMotion = false,
 }) {
   const ringRef = useRef()
@@ -177,9 +176,6 @@ export default function PhotoRing({
       }
     }
 
-    // Scroll influence: seamlessly rotates the full ring across the 2-3 pinned page scrolls
-    const scrollAngle = scrollProgress * Math.PI * 2.8
-
     // Clamp vertical tilt
     ringRotation.current.x = THREE.MathUtils.clamp(
       ringRotation.current.x,
@@ -195,7 +191,7 @@ export default function PhotoRing({
 
     // Target combined Euler rotation
     targetRotation.current.x = ringRotation.current.x + parallaxOffset.current.y
-    targetRotation.current.y = ringRotation.current.y + parallaxOffset.current.x + scrollAngle
+    targetRotation.current.y = ringRotation.current.y + parallaxOffset.current.x
 
     // Smooth lerp into the 3D group
     const lerpFactor = Math.min(1, delta * 12)

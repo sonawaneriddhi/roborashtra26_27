@@ -323,7 +323,7 @@ export default function Faculty() {
         />
 
         {/* Top Subtle HUD Telemetry Bar */}
-        <div className="absolute top-8 left-6 md:left-12 right-6 md:right-12 z-30 flex items-center justify-between pointer-events-none">
+        <div className="absolute top-20 sm:top-24 left-6 md:left-12 right-6 md:right-12 z-30 flex items-center justify-between pointer-events-none">
           <div className="flex items-center gap-2">
             
             <h2

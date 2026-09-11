@@ -51,20 +51,13 @@ function AtmosphericParticles({ count = 80, radius = 9 }) {
   )
 }
 
-// Camera controller with subtle cinematic drift and scroll depth progression
-function CinematicCamera({ isMobile, isTablet, scrollProgress = 0 }) {
+// Camera controller with subtle cinematic drift
+function CinematicCamera({ isMobile, isTablet }) {
   const camRef = useRef()
 
   // Base camera elevation and distance (zoomed out for spacious composition)
   const baseCamZ = isMobile ? 14.0 : isTablet ? 12.5 : 11.5
   const baseCamY = isMobile ? 1.8 : 1.5
-
-  // Dynamic scroll swoop: subtly moves closer during mid-scroll for cinematic depth
-  const scrollSwoopZ = Math.sin(scrollProgress * Math.PI) * -0.75
-  const scrollSwoopY = Math.sin(scrollProgress * Math.PI) * -0.25
-
-  const targetCamZ = baseCamZ + scrollSwoopZ
-  const targetCamY = baseCamY + scrollSwoopY
 
   useFrame((state, delta) => {
     if (!camRef.current) return
@@ -76,7 +69,7 @@ function CinematicCamera({ isMobile, isTablet, scrollProgress = 0 }) {
 
     camRef.current.position.y = THREE.MathUtils.lerp(
       camRef.current.position.y,
-      targetCamY + driftY,
+      baseCamY + driftY,
       delta * 3
     )
     camRef.current.position.x = THREE.MathUtils.lerp(
@@ -86,7 +79,7 @@ function CinematicCamera({ isMobile, isTablet, scrollProgress = 0 }) {
     )
     camRef.current.position.z = THREE.MathUtils.lerp(
       camRef.current.position.z,
-      targetCamZ,
+      baseCamZ,
       delta * 3
     )
 
@@ -98,7 +91,7 @@ function CinematicCamera({ isMobile, isTablet, scrollProgress = 0 }) {
     <PerspectiveCamera
       ref={camRef}
       makeDefault
-      position={[0, targetCamY, targetCamZ]}
+      position={[0, baseCamY, baseCamZ]}
       fov={isMobile ? 52 : 45}
       near={0.1}
       far={100}
@@ -115,7 +108,6 @@ export default function GalleryScene({
   selectedPhoto = null,
   onSelectPhoto,
   onUserInteracted,
-  scrollProgress = 0,
   reducedMotion = false,
 }) {
   // Screen size detection for responsive 3D ring tuning
@@ -173,7 +165,6 @@ export default function GalleryScene({
         <CinematicCamera
           isMobile={screenSize.isMobile}
           isTablet={screenSize.isTablet}
-          scrollProgress={scrollProgress}
         />
 
         {/* Studio Lighting Setup */}
@@ -217,7 +208,6 @@ export default function GalleryScene({
             selectedPhoto={selectedPhoto}
             onSelectPhoto={onSelectPhoto}
             onUserInteracted={onUserInteracted}
-            scrollProgress={scrollProgress}
             reducedMotion={reducedMotion}
           />
         </Suspense>

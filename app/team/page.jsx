@@ -8,9 +8,8 @@ export const metadata = {
 
 export default function TeamPage() {
   return (
-    <div className="pt-16 sm:pt-20">
+    <div className="w-full">
       <Faculty />
-      <div className="h-6 bg-[#f6f1e7]" aria-hidden="true" />
       <Team />
     </div>
   )

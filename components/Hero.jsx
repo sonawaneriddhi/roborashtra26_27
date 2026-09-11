@@ -166,27 +166,6 @@ export default function Hero() {
         }}
       />
 
-      {/* Giant Background Typography (BEHIND 3D Model Canvas - z-5) */}
-      <div className="absolute inset-0 z-5 flex items-center justify-center pointer-events-none px-4 md:px-8">
-        <div className="w-full max-w-[95vw] mx-auto flex items-center justify-center">
-          <h1 className="text-center font-serifEd leading-[0.82] tracking-tighter text-textDark/85 font-extrabold select-none">
-            {lines.map((l, i) => (
-              <span key={l} className="block overflow-hidden">
-                <motion.span
-                  custom={i}
-                  variants={lineVariants}
-                  initial="hidden"
-                  animate="show"
-                  className="block"
-                  style={{ fontSize: 'clamp(3rem, 11vw, 13.5rem)' }}
-                >
-                  {l}
-                </motion.span>
-              </span>
-            ))}
-          </h1>
-        </div>
-      </div>
 
       {/* 3D GLTF Metal Robot Scene (z-10 - IN FRONT OF TEXT) */}
       <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-auto will-change-transform">
@@ -255,9 +234,6 @@ export default function Hero() {
                 <span className="font-mono text-[10px] tracking-widest2 uppercase text-textDark font-bold block">
                   AUTONOMOUS COMBAT RIG
                 </span>
-                <p className="font-mono text-[9px] text-textMuted leading-relaxed">
-                  PUNE DIVISION · HEAVY VEHICLE MATRIX
-                </p>
               </div>
             </div>
           </motion.div>
@@ -279,10 +255,9 @@ export default function Hero() {
         >
           <div>
             <p className="font-semibold text-textDark">ROBORASHTRA ARENA</p>
-            <p className="text-textMuted text-[9px] sm:text-[10px]">AUTONOMOUS & COMBAT PLATFORM</p>
           </div>
           <div className="text-left sm:text-right text-textMuted text-[9px]">
-            <span>PCCOER ROBOTICS CLUB · PUNE</span>
+            <span>Social Links</span>
           </div>
         </motion.div>
       </div>

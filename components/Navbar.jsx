@@ -2,15 +2,34 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import FullscreenMenu from './FullscreenMenu'
 
 export default function Navbar() {
+  const pathname = usePathname()
+  const isConstantNav =
+    pathname === '/gallery' ||
+    pathname === '/event' ||
+    pathname === '/problem-statements' ||
+    pathname === '/sponsor' ||
+    pathname === '/sponsors'
   const [open, setOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
   const lastScrollYRef = useRef(0)
 
+  // Reset hidden state on route changes
   useEffect(() => {
+    setHidden(false)
+  }, [pathname])
+
+  useEffect(() => {
+    // Keep navbar constant on fullscreen single-page routes
+    if (isConstantNav) {
+      setHidden(false)
+      return
+    }
+
     const handleScroll = () => {
       // Don't hide navbar if fullscreen menu is open
       if (open) return
@@ -37,15 +56,17 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [open])
+  }, [open, isConstantNav])
+
+  const isHidden = !isConstantNav && hidden
 
   return (
     <>
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{
-          y: hidden ? -110 : 0,
-          opacity: hidden ? 0 : 1,
+          y: isHidden ? -110 : 0,
+          opacity: isHidden ? 0 : 1,
         }}
         transition={{
           duration: 0.35,

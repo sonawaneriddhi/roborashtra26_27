@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function RoadmapPage() {
   return (
-    <div className="pt-16 sm:pt-20">
+    <div className="w-full">
       <RoadmapSection />
     </div>
   )

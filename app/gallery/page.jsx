@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function GalleryPage() {
   return (
-    <div className="pt-16 sm:pt-20">
+    <div className="h-screen h-[100dvh] w-full overflow-hidden">
       <Gallery />
     </div>
   )

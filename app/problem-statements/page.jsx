@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function ProblemStatementsPage() {
   return (
-    <div className="pt-20 sm:pt-24 min-h-[85vh]">
+    <div className="h-screen h-[100dvh] w-full overflow-hidden">
       <ProblemStatementComing />
     </div>
   )
