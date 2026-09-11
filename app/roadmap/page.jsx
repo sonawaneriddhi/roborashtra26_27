@@ -1,7 +1,7 @@
 import RoadmapSection from '@/app/roadmap/RoadmapSection'
 
 export const metadata = {
-  title: 'Roadmap — ROBORASHTRA',
+  title: 'ROBORASHTRA Roadmap',
   description: 'Roborashtra championship roadmap across 2k24, 2k25, and upcoming editions.',
 }
 

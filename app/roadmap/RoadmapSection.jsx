@@ -295,27 +295,6 @@ export default function RoadmapSection() {
         </header>
 
         {/* ════════════════════════════════════════
-            BOTTOM STATUS BAR (Desktop)
-        ════════════════════════════════════════ */}
-        <footer className="absolute bottom-3 left-4 right-4 sm:left-8 sm:right-8 lg:left-12 lg:right-12 xl:left-16 xl:right-16 z-30 hidden lg:flex items-center justify-between pointer-events-none">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-[9px] font-bold text-amber-400/80 tracking-widest">
-              {String(activeStep + 1).padStart(2, '0')} / 03
-            </span>
-            <span className="h-px w-6 bg-white/20" />
-            <span className="font-mono text-[8px] tracking-[0.2em] text-white/35 uppercase">
-              Scroll to advance trajectory
-            </span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-mono text-[8px] tracking-[0.2em] text-white/30 uppercase">
-              Mission active
-            </span>
-          </div>
-        </footer>
-
-        {/* ════════════════════════════════════════
             TRAJECTORY STAGE (SVG + 3D ROVER)
             Constrained above the bottom card on mobile (< lg)
         ════════════════════════════════════════ */}
