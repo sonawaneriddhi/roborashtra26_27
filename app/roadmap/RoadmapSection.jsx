@@ -171,7 +171,7 @@ export default function RoadmapSection() {
         <div className="absolute inset-0 z-0">
           {/* Full-bleed Mars surface photo */}
           <img
-            src="/mars_surface.jpg"
+            src="https://res.cloudinary.com/hlrhjabh/image/upload/f_auto,q_auto/mars_surface"
             alt=""
             aria-hidden="true"
             className="absolute inset-0 h-full w-full object-cover object-center select-none pointer-events-none"

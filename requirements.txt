@@ -1,7 +1,5 @@
 # RoboRashtra project requirements
 #
-
-
 # System requirements
 node >= 18.17.0
 npm >= 9.0.0
