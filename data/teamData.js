@@ -46,7 +46,7 @@ export const teamData = {
           id: 'workshop-head-1',
           name: 'Dhananjay',
           role: 'Workshop & Fabrication Head',
-          image: '/team/workshop/dhananjay.png',
+          image: 'https://res.cloudinary.com/hlrhjabh/image/upload/v1789165000/dhananjay.png' || '/team/workshop/dhananjay.png',
           socials: {
             linkedin: 'https://linkedin.com',
           },
