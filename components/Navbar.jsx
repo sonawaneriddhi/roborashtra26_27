@@ -62,10 +62,10 @@ export default function Navbar() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-9 font-mono text-[11px] tracking-widest2 text-textDark/80">
-            <Link href="#gallery" className="hover:text-rust transition-colors">
+            <Link href="/gallery" className="hover:text-rust transition-colors">
               ABOUT
             </Link>
-            <Link href="#events" className="hover:text-rust transition-colors">
+            <Link href="/event" className="hover:text-rust transition-colors">
               EVENTS
             </Link>
             <a

@@ -5,13 +5,13 @@ import Link from 'next/link'
 import { X } from 'lucide-react'
 
 const links = [
-  { label: 'COUNTDOWN', href: '#countdown' },
-  { label: 'ABOUT', href: '#gallery' },
-  { label: 'EVENTS', href: '#events' },
-  { label: 'ROADMAP', href: '#roadmap' },
-  { label: 'SPONSORS', href: '#sponsors' },
-  { label: 'FACULTY', href: '#faculty' },
-  { label: 'TEAM', href: '#team' },
+  { label: 'HOME', href: '/' },
+  { label: 'GALLERY', href: '/gallery' },
+  { label: 'EVENT', href: '/event' },
+  { label: 'SPONSOR', href: '/sponsor' },
+  { label: 'TEAM', href: '/team' },
+  { label: 'ROADMAP', href: '/roadmap' },
+  { label: 'COUNTDOWN', href: '/countdown' },
   { label: 'REGISTER', href: 'https://unstop.com/' },
 ]
 
