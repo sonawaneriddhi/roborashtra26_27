@@ -23,7 +23,7 @@ import Navbar from '@/components/Navbar'
 import PageTransition from '@/components/PageTransition'
 
 export const metadata = {
-  title: 'ROBORASHTRA — Robotics & Automation Club',
+  title: 'ROBORASHTRA',
   description:
     'ROBORASHTRA is the robotics and automation club building autonomous systems, competition bots, and the engineers who make them. Join the build.',
 }

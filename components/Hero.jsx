@@ -167,12 +167,12 @@ export default function Hero() {
       />
 
 
-      {/* 3D GLTF Metal Robot Scene (z-10 - IN FRONT OF TEXT) */}
-      <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-auto will-change-transform">
+      {/* 3D GLTF Metal Robot Scene*/}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-auto will-change-transform">
         {mounted && (
           <Canvas
             shadows={!isMobile}
-            camera={{ position: [0, 0.2, 5.8], fov: 42 }}
+            camera={{ position: [0, 0.7, 5.8], fov: 20, near: 0.5}}
             gl={{
               antialias: true,
               alpha: true,
@@ -182,10 +182,11 @@ export default function Hero() {
             dpr={isMobile ? [1, 1] : [1, 1.5]}
           >
             <ambientLight intensity={1.4} />
-            <directionalLight position={[4, 8, 5]} intensity={2.0} color="#ffffff" castShadow={!isMobile} />
-            <directionalLight position={[-4, -2, -3]} intensity={0.8} color="#c84b27" />
+            <directionalLight position={[4, 8, 5]} intensity={7.0} color="#ffffff" castShadow={!isMobile} />
+            <directionalLight position={[-4, -2, -3]} intensity={2} color="#c84b27" />
 
             <ResponsiveRig>
+              <group position={[0, -0.3, 0]}>
               <ContactShadows
                 position={[0, -0.75, 0]}
                 opacity={isMobile ? 0.25 : 0.4}
@@ -198,6 +199,7 @@ export default function Hero() {
               <Suspense fallback={<LoadingFallback />}>
                 <CustomGLTFModel />
               </Suspense>
+              </group>
             </ResponsiveRig>
           </Canvas>
         )}
