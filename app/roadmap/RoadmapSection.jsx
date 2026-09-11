@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from 'framer-motion'
-import RoadmapRobot3D from '../../components/RoadmapRobot3D'
+import RoadmapRobot3D from './RoadmapRobot3D'
 
 // ── Straight horizontal ground rail in a 1200×700 SVG viewBox
 // Ground sits at Y=580 (82.9% from top), leaving ample sky for floating cards
