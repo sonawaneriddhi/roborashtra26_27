@@ -34,6 +34,7 @@ module.exports = {
         ornate: ['var(--font-ornate)', 'serif'],
         cinzel: ['var(--font-cinzel)', '"Cinzel"', 'serif'],
         serifEd: ['var(--font-serif-ed)', 'serif'],
+        orbitron: ['var(--font-orbitron)', 'monospace', 'sans-serif'],
       },
       backgroundImage: {
         blueprintGrid:
