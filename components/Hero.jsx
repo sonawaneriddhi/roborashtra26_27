@@ -44,8 +44,8 @@ function MailIcon({ className = 'w-3.5 h-3.5' }) {
   )
 }
 
-// Preload the custom GLTF model asset from public/model
-useGLTF.preload('/model/3d-metal-robot.glb')
+// Preload the Boston Dynamics Spot 3D GLTF model asset from public/model
+useGLTF.preload('/model/boston_dynamics_robot_spot.glb')
 
 // Responsive Rig for Canvas
 function ResponsiveRig({ children }) {
@@ -54,9 +54,9 @@ function ResponsiveRig({ children }) {
   return <group scale={scale}>{children}</group>
 }
 
-// GLTF 3D Custom Metal Robot Model Component
+// GLTF 3D Custom Model Component
 function CustomGLTFModel({ scrollProgress, onInteractiveClick }) {
-  const { scene } = useGLTF('/model/3d-metal-robot.glb')
+  const { scene } = useGLTF('/model/boston_dynamics_robot_spot.glb')
   const robotGroup = useRef()
   const clickSpinRef = useRef(0)
 
