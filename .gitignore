@@ -47,3 +47,7 @@ temp.*
 *.pem
 GIT_GUIDE.md
 
+# worktrees
+.worktrees/
+worktrees/
+
