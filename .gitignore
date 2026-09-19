@@ -51,3 +51,7 @@ GIT_GUIDE.md
 .worktrees/
 worktrees/
 
+# local junctions
+public/model/
+public/model
+
