@@ -1,98 +1,189 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import FullscreenMenu from './FullscreenMenu'
 
-export default function Navbar({ theme = 'light' }) {
+export default function Navbar() {
+  const pathname = usePathname()
+  const isConstantNav =
+    pathname === '/gallery' ||
+    pathname === '/event' ||
+    pathname === '/problem-statements' ||
+    pathname === '/sponsor' ||
+    pathname === '/sponsors'
   const [open, setOpen] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const [introFinished, setIntroFinished] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const isHome = window.location.pathname === '/' || window.location.pathname === ''
+      if (isHome) {
+        return !!sessionStorage.getItem('roborashtra_intro_shown')
+      }
+      return true
+    }
+    return false
+  })
+  const lastScrollYRef = useRef(0)
 
-  const isLight = theme === 'light'
-  const textClass = isLight ? 'text-textDark' : 'text-ivory'
-  const mutedTextClass = isLight ? 'text-textDark/80 hover:text-rust' : 'text-ivory/80 hover:text-amber'
-  const badgeClass = isLight ? 'bg-black/5 text-rust border-black/10' : 'bg-white/10 text-amber border-white/15'
-  const btnClass = isLight
-    ? 'text-textDark border border-black/20 hover:border-rust hover:text-rust bg-white/70 hover:bg-white shadow-sm'
-    : 'text-ivory border border-white/20 hover:border-amber hover:text-amber bg-black/40 hover:bg-black/70 shadow-sm'
+  // Listen for intro completion on the home page
+  useEffect(() => {
+    if (introFinished) return
+
+    const checkIntro = () => {
+      if (
+        document.documentElement.classList.contains('intro-done') ||
+        sessionStorage.getItem('roborashtra_intro_shown')
+      ) {
+        setIntroFinished(true)
+      }
+    }
+
+    checkIntro()
+    const observer = new MutationObserver(checkIntro)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+    return () => observer.disconnect()
+  }, [introFinished])
+
+  // Reset hidden state on route changes
+  useEffect(() => {
+    setHidden(false)
+  }, [pathname])
+
+  useEffect(() => {
+    // Keep navbar constant on fullscreen single-page routes
+    if (isConstantNav) {
+      setHidden(false)
+      return
+    }
+
+    const handleScroll = () => {
+      // Don't hide navbar if fullscreen menu is open
+      if (open) return
+
+      const currentScrollY = window.scrollY
+      const diff = currentScrollY - lastScrollYRef.current
+
+      // Avoid micro-jitter triggers
+      if (Math.abs(diff) < 6) return
+
+      if (currentScrollY <= 20) {
+        // Always visible at the top of the page
+        setHidden(false)
+      } else if (diff > 0 && currentScrollY > 70) {
+        // Scrolling downwards -> vanish
+        setHidden(true)
+      } else if (diff < 0) {
+        // Scrolling upwards -> reappear for every section
+        setHidden(false)
+      }
+
+      lastScrollYRef.current = currentScrollY
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [open, isConstantNav])
+
+  const isHidden = !isConstantNav && hidden
+
+  // Dispatch custom event for child sections/HUDs that react to navbar visibility
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('nav-visibility-change', {
+          detail: { hidden: isHidden },
+        })
+      )
+    }
+  }, [isHidden])
+
+  if (pathname === '/' || pathname === '') {
+    return null
+  }
 
   return (
     <>
       <motion.header
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.2 }}
-        className="absolute top-0 left-0 right-0 z-40 px-6 sm:px-10 md:px-14 py-6 md:py-8 flex items-center justify-between"
+        initial={{ y: -80, opacity: 0 }}
+        animate={{
+          y: !introFinished || isHidden ? -110 : 0,
+          opacity: !introFinished || isHidden ? 0 : 1,
+        }}
+        transition={{
+          duration: 0.5,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="fixed top-3 sm:top-5 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 pointer-events-none"
       >
-        {/* Brand Identity with Official Logo Emblem */}
-        <Link href="/" className="group flex items-center gap-3.5 sm:gap-4 select-none">
-          <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
-            <Image
-              src={isLight ? "/logo/emblem.png" : "/logo/emblem-bright.png"}
-              alt="Roborashtra Emblem"
-              fill
-              className="object-contain drop-shadow-sm"
-              priority
-            />
-          </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <span className={`font-orbitron font-extrabold text-base sm:text-xl md:text-2xl tracking-wider ${textClass}`}>
-                ROBO<span className="text-rust">RASHTRA</span>
+        <div className="relative pointer-events-auto w-full max-w-5xl flex items-center justify-between px-3 sm:px-6 md:px-8 py-1.5 sm:py-2 rounded-full border border-black/10 bg-[#FAF8F5]/90 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.06)] transition-all duration-300">
+          {/* Left: Logo A + Brand Title */}
+          <div className="flex items-center gap-2 sm:gap-3 z-10 shrink-0">
+            <Link
+              href="/"
+              className="flex items-center gap-2 sm:gap-2.5 group select-none"
+              aria-label="Roborashtra Home"
+            >
+              <div className="relative h-9 sm:h-10 md:h-12 w-auto flex items-center justify-center">
+                <Image
+                  src="/img55.png"
+                  alt="Logo A - Roborashtra"
+                  width={140}
+                  height={56}
+                  priority
+                  className="h-9 sm:h-10 md:h-12 w-auto max-h-12 object-contain mix-blend-multiply transition-all duration-300 group-hover:scale-105 group-hover:opacity-90"
+                />
+              </div>
+              <span className="font-serifEd text-base sm:text-lg md:text-xl tracking-wide text-textDark group-hover:text-rust transition-colors hidden min-[440px]:inline-block">
+                Roborashtra
               </span>
-              <span className={`hidden sm:inline-block font-mono text-[9px] tracking-widest px-2 py-0.5 rounded-full border ${badgeClass}`}>
-                2026-27
-              </span>
-            </div>
-            <span className={`font-mono text-[9px] sm:text-[10px] tracking-widest uppercase ${isLight ? 'text-textMuted' : 'text-ivory/60'}`}>
-              ROBOTICS CLUB · PCCOER PUNE
-            </span>
+            </Link>
           </div>
-        </Link>
 
-        {/* Navigation Center Links */}
-        <nav className="hidden lg:flex items-center gap-8 xl:gap-10 font-mono text-xs font-semibold tracking-widest">
-          <Link href="#countdown" className={`${mutedTextClass} transition-colors py-1 relative group`}>
-            <span>COUNTDOWN</span>
-            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-rust transition-all duration-300 group-hover:w-full" />
-          </Link>
-          <Link href="#gallery" className={`${mutedTextClass} transition-colors py-1 relative group`}>
-            <span>ABOUT</span>
-            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-rust transition-all duration-300 group-hover:w-full" />
-          </Link>
-          <Link href="#events" className={`${mutedTextClass} transition-colors py-1 relative group`}>
-            <span>EVENTS</span>
-            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-rust transition-all duration-300 group-hover:w-full" />
-          </Link>
-          <Link href="/join" className={`${mutedTextClass} transition-colors py-1 relative group`}>
-            <span>REGISTER</span>
-            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-rust transition-all duration-300 group-hover:w-full" />
-          </Link>
-        </nav>
+          {/* Center: Independently Centered Navigation */}
+          <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 lg:gap-8 font-mono text-[11px] tracking-widest2 text-textDark/80 whitespace-nowrap">
+            <Link href="/gallery" className="hover:text-rust transition-colors">
+              ABOUT
+            </Link>
+            <Link href="/event" className="hover:text-rust transition-colors">
+              EVENTS
+            </Link>
+            <a
+              href="https://unstop.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-rust transition-colors"
+            >
+              REGISTER
+            </a>
+          </nav>
 
-        {/* Action / Menu Trigger */}
-        <div className="flex items-center gap-3 sm:gap-4">
-          <Link
-            href="/join"
-            className="hidden sm:inline-flex items-center gap-2 font-mono text-[11px] font-bold tracking-wider px-4 py-2 rounded-xl bg-rust text-white hover:bg-[#a03820] shadow-sm transition-all duration-150 active:scale-[0.98]"
-          >
-            <span>REGISTER TEAM</span>
-          </Link>
+          {/* Right: MENU Button first, then Logo B to the right of the menu */}
+          <div className="flex items-center gap-2.5 sm:gap-3.5 z-10 shrink-0">
+            <button
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+              aria-haspopup="true"
+              aria-expanded={open}
+              className="font-mono text-[10px] sm:text-[11px] tracking-widest2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-black/20 hover:border-rust hover:text-rust active:scale-95 text-textDark transition-all duration-200 shrink-0 select-none"
+            >
+              MENU
+            </button>
 
-          <button
-            onClick={() => setOpen(true)}
-            aria-label="Open menu"
-            aria-haspopup="true"
-            aria-expanded={open}
-            className={`font-mono text-xs font-semibold tracking-wider px-4 py-2 rounded-xl backdrop-blur-md transition-all duration-200 flex items-center gap-2 ${btnClass} active:scale-[0.98]`}
-          >
-            <div className="flex flex-col gap-1 w-3.5">
-              <span className="block h-0.5 w-full bg-current rounded-full" />
-              <span className="block h-0.5 w-2/3 bg-current rounded-full" />
+            <div className="relative h-9 sm:h-10 md:h-12 w-auto flex items-center justify-center">
+              <Image
+                src="/logo-b.png"
+                alt="Logo B"
+                width={140}
+                height={56}
+                priority
+                className="h-9 sm:h-10 md:h-12 w-auto max-h-12 object-contain mix-blend-multiply transition-all duration-300 hover:scale-105 hover:opacity-90 cursor-pointer"
+              />
             </div>
-            <span>MENU</span>
-          </button>
+          </div>
         </div>
       </motion.header>
 

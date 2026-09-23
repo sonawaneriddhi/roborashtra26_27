@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useScroll, useTransform } from 'framer-motion'
-import MoonOrb from './MoonOrb'
+import MoonOrb from '../app/event/MoonOrb'
 
 function VanishingMoon({ sectionRef, range, children, className = '' }) {
   const { scrollYProgress } = useScroll({

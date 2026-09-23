@@ -1,43 +1,71 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import LoadingScreen from '@/components/LoadingScreen'
 import Hero from '@/components/Hero'
-import Gallery from '@/components/Gallery'
-import RoadmapSection from '@/components/RoadmapSection'
-import EventsStory from '@/components/EventsStory'
-import Sponsors from '@/components/Sponsors'
-import Team from '@/components/Team'
-import FooterEditorial from '@/components/FooterEditorial'
-import Countdown from '@/components/Countdown'
-import Faculty from '@/components/Faculty'
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false)
+  const [shouldPlayIntro, setShouldPlayIntro] = useState(false)
 
   useEffect(() => {
-    document.body.style.overflow = loaded ? '' : 'hidden'
-    return () => {
-      document.body.style.overflow = ''
+    // Check session storage to only play intro animation on the initial site visit
+    const hasSeenIntro = sessionStorage.getItem('roborashtra_intro_shown')
+    if (hasSeenIntro) {
+      setLoaded(true)
+      setShouldPlayIntro(false)
+      document.documentElement.classList.remove('intro-pending')
+      document.documentElement.classList.add('intro-done')
+      const blackout = document.getElementById('initial-blackout')
+      if (blackout) blackout.style.display = 'none'
+    } else {
+      setShouldPlayIntro(true)
     }
-  }, [loaded])
+
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual'
+    }
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
+    if (shouldPlayIntro && !loaded) {
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = ''
+      }
+    }
+  }, [shouldPlayIntro, loaded])
+
+  const handleLoadingFinish = useCallback(() => {
+    setLoaded(true)
+    sessionStorage.setItem('roborashtra_intro_shown', 'true')
+    document.documentElement.classList.remove('intro-pending')
+    document.documentElement.classList.add('intro-done')
+    const blackout = document.getElementById('initial-blackout')
+    if (blackout) blackout.style.display = 'none'
+
+    if (typeof window !== 'undefined') {
+      if (window.location.hash && window.location.hash !== '#hero') {
+        history.replaceState(null, '', window.location.pathname + window.location.search)
+      }
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { immediate: true, force: true })
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    }
+  }, [])
 
   return (
     <>
-      <LoadingScreen onFinish={() => setLoaded(true)} />
-      {loaded && (
-        <main>
-          <Hero />
-          <Countdown targetDate={new Date('2027-02-01T00:00:00+05:30')} />
-          <Gallery />
-          <RoadmapSection />
-          <EventsStory />
-          <Sponsors />
-          <Faculty />
-          <Team />
-        </main>
-      )}
-      {loaded && <FooterEditorial />}
+      {shouldPlayIntro && <LoadingScreen onFinish={handleLoadingFinish} />}
+      <div
+        className={`transition-opacity duration-700 ${
+          loaded ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <Hero />
+      </div>
     </>
   )
 }

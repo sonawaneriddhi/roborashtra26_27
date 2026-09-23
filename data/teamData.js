@@ -10,184 +10,32 @@ export const teamData = {
       id: 'lead-1',
       name: 'Shivraj Patil',
       role: 'Club President & Lead',
-      image: '/team/lead/shivrajpatil.png',
-      description: 'Overseeing autonomous systems development, competition strategy, and club-wide engineering operations.',
+      image: '/team/shivrajpatil.png',
       socials: {
-        linkedin: 'https://linkedin.com',
-        instagram: 'https://instagram.com',
-        github: 'https://github.com',
+        linkedin: 'https://www.linkedin.com/in/shivraj-patil-6b205532b?utm_source=share_via&utm_content=profile&utm_medium=member_android',
       },
     },
     {
       id: 'lead-2',
       name: 'Sarthak Gadhave',
       role: 'Management & Ops Lead',
-      image: '/team/lead/sarthakgadhave.png',
-      description: 'Directing logistics, arena track safety, event logistics, and state-level circuit communications.',
+      image: '/team/sarthakgadhave.png',
       socials: {
         linkedin: 'https://linkedin.com',
-        instagram: 'https://instagram.com',
-        github: 'https://github.com',
       },
     },
     {
       id: 'lead-3',
       name: 'Rushikesh Sonaje',
       role: 'Finance & Treasury Lead',
-      image: '/team/lead/rushikeshsonaje.png',
-      description: 'Managing fabrication sponsorships, component procurement, and annual robotics budgeting.',
+      image: '/team/rushikeshsonaje.png',
       socials: {
-        linkedin: 'https://linkedin.com',
-        instagram: 'https://instagram.com',
-        github: 'https://github.com',
+        linkedin: 'https://www.linkedin.com/in/rushikesh-sonaje-a752b232b?utm_source=share_via&utm_content=profile&utm_medium=member_android',
       },
     },
   ],
 
   teams: [
-    {
-      id: 'web',
-      name: 'WEB & AI',
-      shortName: 'WEB',
-      tagline: 'Digital Infrastructure & Live Telemetries',
-      heads: [
-        {
-          id: 'web-head-1',
-          name: 'Yadnesh Borole',
-          role: 'Web & Systems Head',
-          image: 'https://picsum.photos/id/338/400/400',
-          description: 'Architecting high-performance real-time telemetry dashboards and the core Roborashtra web platform.',
-          socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
-          },
-        },
-      ],
-      members: [
-        {
-          id: 'web-member-1',
-          name: 'Aarav Sharma',
-          role: 'Frontend Engineer',
-          image: 'https://picsum.photos/id/1012/400/400',
-          description: 'Building interactive 3D UI experiences and arena scoreboard integrations.',
-          socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
-          },
-        },
-        {
-          id: 'web-member-2',
-          name: 'Isha Deshpande',
-          role: 'Fullstack Developer',
-          image: 'https://picsum.photos/id/1027/400/400',
-          description: 'Managing live scoring APIs and team registration pipelines.',
-          socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
-          },
-        },
-      ],
-    },
-
-    {
-      id: 'design',
-      name: 'DESIGN & MEDIA',
-      shortName: 'DESIGN',
-      tagline: 'Aesthetic Direction & Visual Identity',
-      heads: [
-        {
-          id: 'design-head-1',
-          name: 'Prachi Gareja',
-          role: 'Design Lead',
-          image: 'https://picsum.photos/id/338/400/400',
-          description: 'Spearheading branding, bot schematics visual language, and exhibition UI systems.',
-          socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
-          },
-        },
-      ],
-      members: [
-        {
-          id: 'design-member-1',
-          name: 'Neha Kulkarni',
-          role: 'UI/UX Designer',
-          image: 'https://picsum.photos/id/1062/400/400',
-          description: 'Designing mission control console interfaces and competition print collateral.',
-          socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
-          },
-        },
-        {
-          id: 'design-member-2',
-          name: 'Aditya Joshi',
-          role: '3D & Motion Designer',
-          image: 'https://picsum.photos/id/1005/400/400',
-          description: 'Creating 3D rover CAD renders and cinematic teaser graphics.',
-          socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
-          },
-        },
-      ],
-    },
-
-    {
-      id: 'event',
-      name: 'EVENT & ARENA',
-      shortName: 'EVENT',
-      tagline: 'Arena Management & Combat Regulations',
-      heads: [
-        {
-          id: 'event-head-1',
-          name: 'Devika Chaudhari',
-          role: 'Event Management Head',
-          image: 'https://picsum.photos/id/91/400/400',
-          description: 'Leading battle arena setup, match referee coordination, and tournament brackets.',
-          socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
-          },
-        },
-      ],
-      members: [
-        {
-          id: 'event-member-1',
-          name: 'Rohan Shinde',
-          role: 'Arena Coordinator',
-          image: 'https://picsum.photos/id/1074/400/400',
-          description: 'Managing combat safety pit protocols and rover track calibration.',
-          socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
-          },
-        },
-        {
-          id: 'event-member-2',
-          name: 'Kavya Nair',
-          role: 'Match Marshall',
-          image: 'https://picsum.photos/id/1025/400/400',
-          description: 'Overseeing live telemetry scoring and referee timing systems.',
-          socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
-          },
-        },
-        {
-          id: 'event-member-3',
-          name: 'Siddharth Patil',
-          role: 'Pit Crew Coordinator',
-          image: 'https://picsum.photos/id/1011/400/400',
-          description: 'Assisting competitor pit allocations and battery charging bays.',
-          socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
-          },
-        },
-      ],
-    },
-
     {
       id: 'workshop',
       name: 'WORKSHOP & HARDWARE',
@@ -198,35 +46,67 @@ export const teamData = {
           id: 'workshop-head-1',
           name: 'Dhananjay',
           role: 'Workshop & Fabrication Head',
-          image: 'https://picsum.photos/id/65/400/400',
-          description: 'Directing lathe, CNC milling, metal fabrication, and power transmission test benches.',
+          image: '/team/dhananjay.png',
           socials: {
             linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
           },
         },
       ],
       members: [
         {
           id: 'workshop-member-1',
-          name: 'Omkar Ghadge',
+          name: 'Shruti Gandhat',
           role: 'Chassis Machinist',
-          image: 'https://picsum.photos/id/1069/400/400',
-          description: 'Specializing in hardened steel armor plates and pneumatic pressure vessels.',
           socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
+            linkedin: 'https://www.linkedin.com/in/shruti-gandhat-545235424?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
           },
         },
         {
           id: 'workshop-member-2',
-          name: 'Pooja Sawant',
+          name: 'Swanand Barapatre',
           role: 'Embedded Hardware Engineer',
-          image: 'https://picsum.photos/id/1014/400/400',
-          description: 'Custom PCB routing, high-current ESCs, and sensor harness assembly.',
           socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
+            linkedin: 'https://www.linkedin.com/in/swanand-barapatre-42baa1278?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'workshop-member-3',
+          name: 'Harshwardhan Jadhav',
+          role: 'Embedded Hardware Engineer',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/hjadhavdev',
+          },
+        },
+        {
+          id: 'workshop-member-4',
+          name: 'Shriya Sardeshpande',
+          role: 'Embedded Hardware Engineer',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/shriya-sardeshpande-748a54414?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'workshop-member-5',
+          name: 'Namrata Amilkanthwar',
+          role: 'Embedded Hardware Engineer',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/namrata-amilkanthwar-684997408?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'workshop-member-6',
+          name: 'Manav Bhosale',
+          role: 'Embedded Hardware Engineer',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/manav-undefined-970a90430',
+          },
+        },
+        {
+          id: 'workshop-member-7',
+          name: 'Parth Nikumbh',
+          role: 'Embedded Hardware Engineer',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/parth-nikumbh-42baa1278?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
       ],
@@ -242,24 +122,360 @@ export const teamData = {
           id: 'pr-head-1',
           name: 'Saloni Sinha',
           role: 'Public Relations Head',
-          image: 'https://picsum.photos/id/177/400/400',
-          description: 'Managing industry partnerships, sponsor communications, and university outreach.',
+          image: '/team/saloni.png',
           socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
+            linkedin: 'https://www.linkedin.com/in/saloni-sinha-46b123374?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
           },
         },
       ],
       members: [
         {
           id: 'pr-member-1',
-          name: 'Vikas Mane',
+          name: 'Vedika Katke',
           role: 'Outreach Coordinator',
-          image: 'https://picsum.photos/id/1005/400/400',
-          description: 'Connecting with regional engineering colleges and student clubs.',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/vedika-katke-663572432?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'pr-member-2',
+          name: 'Anuja Pandey',
+          role: 'Outreach Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/anuja-pandey-44a27b419?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'pr-member-3',
+          name: 'Manisi Khushi',
+          role: 'Outreach Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/manisi-khushi-385037363?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'pr-member-4',
+          name: 'Aditya Kadam',
+          role: 'Outreach Coordinator',
           socials: {
             linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
+          },
+        },
+        {
+          id: 'pr-member-5',
+          name: 'Sukrut Suryavanshi',
+          role: 'Outreach Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/sukrut-suryawanshi',
+          },
+        },
+        {
+          id: 'pr-member-6',
+          name: 'Vedant Parsewar',
+          role: 'Outreach Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/vedant-parsewar-819993376?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'pr-member-7',
+          name: 'Sanatkumar Pol',
+          role: 'Outreach Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/sanatkumar-pol-b60b68430',
+          },
+        },
+        {
+          id: 'pr-member-8',
+          name: 'Divya Nande',
+          role: 'Outreach Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/divya-nande-077bb83a2',
+          },
+        },
+      ],
+    },
+
+    {
+      id: 'event',
+      name: 'EVENT & ARENA',
+      shortName: 'EVENT',
+      tagline: 'Arena Management & Combat Regulations',
+      heads: [
+        {
+          id: 'event-head-1',
+          name: 'Devika Chaudhari',
+          role: 'Event Management Head',
+          image: '/team/devika.png',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/devika-choudhari-54453432b/',
+          },
+        },
+        {
+          id: 'event-head-2',
+          name: 'Parth Khade',
+          role: 'Event Management Co-Head',
+          image: '/team/parth.png',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/parth-khade-5a338532b?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+      ],
+      members: [
+        {
+          id: 'event-member-1',
+          name: 'Kanaklata Joshi',
+          role: 'Arena Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/kanaklata-joshi-214b1b424?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'event-member-2',
+          name: 'Nilakshi Talwekar',
+          role: 'Match Marshall',
+          socials: {
+            linkedin: 'https://www.linkedin.com/public-profile/settings/',
+          },
+        },
+        {
+          id: 'event-member-3',
+          name: 'Sara Mahokar',
+          role: 'Pit Crew Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/sara-mahokar-3913723bb?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'event-member-4',
+          name: 'Namrata Tate',
+          role: 'Pit Crew Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/namrata-tate-a63a82430?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'event-member-5',
+          name: 'Rishab Ohol',
+          role: 'Pit Crew Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/rishabh-ohol-192477385?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'event-member-6',
+          name: 'Akshat Menon',
+          role: 'Pit Crew Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/akshat-menon-747666418?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'event-member-7',
+          name: 'Shravani Kaulapure',
+          role: 'Pit Crew Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/shravani-kaulapure-292a6432b?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'event-member-8',
+          name: 'Mukesh Borane',
+          role: 'Pit Crew Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/mukesh-borane-a86b4a375?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'event-member-9',
+          name: 'Prathmesh Kadam',
+          role: 'Pit Crew Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/prathmesh-kadam-275b63420?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+      ],
+    },
+
+    {
+      id: 'problem-statement',
+      name: 'PROBLEM STATEMENT',
+      shortName: 'PROBLEM STATEMENT',
+      tagline: 'Competition Problem Statements & Challenge Engineering',
+      heads: [
+        {
+          id: 'ps-head-1',
+          name: 'Albin Biju',
+          role: 'Problem Statement Head',
+          image: '/team/albin.png',
+          socials: {
+            linkedin: 'http://www.linkedin.com/in/albinbijumathew',
+          },
+        },
+      ],
+      members: [
+        {
+          id: 'ps-member-1',
+          name: 'Anushka Mali',
+          role: 'Problem Statement Coordinator',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/anushka-mali-209651299',
+          },
+        },
+        {
+          id: 'ps-member-2',
+          name: 'Atharva Deshmukh',
+          role: 'Benchmark Lead',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/atharva-deshmukh-dev?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'ps-member-3',
+          name: 'Varsha Jairam',
+          role: 'Benchmark Lead',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/varsha-jairam-6b0738358?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
+          },
+        },
+      ],
+    },
+
+    {
+      id: 'design',
+      name: 'DESIGN & MEDIA',
+      shortName: 'DESIGN',
+      tagline: 'Aesthetic Direction & Visual Identity',
+      heads: [
+        {
+          id: 'design-head-1',
+          name: 'Prachi Gareja',
+          role: 'Design Head',
+          image: '/team/prachi.png',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/prachi-gereja-05441132b?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'design-head-2',
+          name: 'Soham Sejwal',
+          role: 'Design Co-Head',
+          image: '/team/soham.png',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/soham-shejwal?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+      ],
+      members: [
+        {
+          id: 'design-member-1',
+          name: 'Arya Kadam',
+          role: 'UI/UX Designer',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/aryan-kadam-023b20397?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'design-member-2',
+          name: 'Siddhi Agrawal',
+          role: '3D & Motion Designer',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/siddhi-agrawal-228233378?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+      ],
+    },
+
+    {
+      id: 'web',
+      name: 'WEB DEVELOPMENT',
+      shortName: 'WEB',
+      tagline: 'Digital Infrastructure & Live Telemetries',
+      heads: [
+        {
+          id: 'web-head-1',
+          name: 'Riddhi Sonawane',
+          role: 'Web & Systems Head',
+          image: '/team/riddhi.png',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/riddhisonawane?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'web-head-2',
+          name: 'Yadnesh Borole',
+          role: 'Web & Systems Co-Head',
+          image: '/team/yadnesh.png',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/yadnyesh-borole-51aa0532a/',
+          },
+        },
+      ],
+      members: [
+        {
+          id: 'web-member-1',
+          name: 'Veer Shah',
+          role: 'Frontend Engineer',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/veershah1152',
+          },
+        },
+        {
+          id: 'web-member-2',
+          name: 'Arya Kukkadwal',
+          role: 'Fullstack Developer',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/arya-kukkadwal-17b998391?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+        {
+          id: 'web-member-3',
+          name: 'Varad Yadav',
+          role: 'Fullstack Developer',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/varad-yadav',
+          },
+        },
+        {
+          id: 'web-member-4',
+          name: 'Muinasraf Momin',
+          role: 'Fullstack Developer',
+          socials: {},
+        },
+      ],
+    },
+
+    {
+      id: 'content',
+      name: 'CONTENT & SOCIAL MEDIA',
+      shortName: 'CONTENT',
+      tagline: 'Match Highlights, Cinematics & Coverage',
+      heads: [
+        {
+          id: 'content-head-1',
+          name: 'Tanaj Manyar',
+          role: 'Social Media Lead',
+          image: '/team/tanaj.png',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/tanaj-manyar-59a05932b?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
+      ],
+      members: [
+        {
+          id: 'content-member-1',
+          name: 'Sujal Padir',
+          role: 'Cinematographer',
+          socials: {
+            linkedin: 'https://linkedin.com',
+          },
+        },
+        {
+          id: 'content-member-1',
+          name: 'Girish Mule',
+          role: 'Cinematographer',
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/girish-mule-b4a17b434?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
       ],
@@ -275,68 +491,37 @@ export const teamData = {
           id: 'doc-head-1',
           name: 'Rajat Poddar',
           role: 'Documentation Head',
-          image: 'https://picsum.photos/id/65/400/400',
-          description: 'Authoring official competition rulebooks, engineering blueprints, and technical dossiers.',
+          image: '/team/rajat.png',
           socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
+            linkedin: 'https://www.linkedin.com/in/rajat-poddar-b0ab38208?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
       ],
       members: [
         {
           id: 'doc-member-1',
-          name: 'Ananya Rao',
+          name: 'Anisha Nandi',
           role: 'Technical Writer',
-          image: 'https://picsum.photos/id/1027/400/400',
-          description: 'Publishing post-match telemetry analysis and engineering archives.',
           socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
+            linkedin: 'https://www.linkedin.com/in/anisha-nandi-028b52352?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
       ],
     },
 
     {
-      id: 'content',
-      name: 'CONTENT & SOCIAL MEDIA',
-      shortName: 'CONTENT',
-      tagline: 'Match Highlights, Cinematics & Coverage',
+      id: 'cad',
+      name: 'CAD/CAM',
+      shortName: 'CAD/CAM',
+      tagline: '----',
       heads: [
         {
-          id: 'content-head-1',
-          name: 'Suyash Shinde',
-          role: 'Content Head',
-          image: 'https://picsum.photos/id/177/400/400',
-          description: 'Producing high-octane battle bot reels, bot breakdown series, and match coverage.',
+          id: 'cad-head-1',
+          name: 'Sarthak Thete',
+          role: 'CAD Head',
+          image: '/team/sarthak.png',
           socials: {
             linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
-          },
-        },
-        {
-          id: 'content-head-2',
-          name: 'Tanaj Manyar',
-          role: 'Social Media Lead',
-          image: 'https://picsum.photos/id/65/400/400',
-          description: 'Managing official tournament announcements and live match streaming updates.',
-          socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
-          },
-        },
-      ],
-      members: [
-        {
-          id: 'content-member-1',
-          name: 'Sahil Kadam',
-          role: 'Cinematographer',
-          image: 'https://picsum.photos/id/1012/400/400',
-          description: 'Operating high-speed 240fps cameras for arena impact slow-motion captures.',
-          socials: {
-            linkedin: 'https://linkedin.com',
-            instagram: 'https://instagram.com',
           },
         },
       ],
