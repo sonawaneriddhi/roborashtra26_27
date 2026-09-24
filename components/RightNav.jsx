@@ -90,8 +90,8 @@ export default function RightNav({ className = '' }) {
                     flex items-center gap-2.5 sm:gap-3.5 px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 md:py-3.5 rounded-xl border backdrop-blur-md transition-all duration-300
                     ${
                       isActive
-                        ? 'bg-white/95 border-rust shadow-[0_4px_24px_rgba(200,75,39,0.22)] scale-[1.03]'
-                        : 'bg-[#FAF8F5]/92 border-black/10 shadow-[0_2px_14px_rgba(0,0,0,0.05)] hover:border-rust/60 hover:bg-white hover:shadow-[0_4px_24px_rgba(200,75,39,0.18)]'
+                        ? 'bg-panel border-rust shadow-[0_4px_24px_rgba(200,75,39,0.3)] scale-[1.03]'
+                        : 'bg-[#101826]/85 border-white/10 shadow-[0_2px_14px_rgba(0,0,0,0.3)] hover:border-rust/60 hover:bg-panel hover:shadow-[0_4px_24px_rgba(200,75,39,0.2)]'
                     }
                   `}
                 >
@@ -111,7 +111,7 @@ export default function RightNav({ className = '' }) {
                   {/* Uppercase section title with wide letter-spacing */}
                   <span
                     className={`font-mono text-xs sm:text-sm font-semibold tracking-widest2 uppercase transition-colors ${
-                      isActive ? 'text-rust' : 'text-textDark group-hover:text-rust'
+                      isActive ? 'text-rust' : 'text-white group-hover:text-rust'
                     }`}
                   >
                     {item.label}
@@ -133,7 +133,7 @@ export default function RightNav({ className = '' }) {
                   className={`w-full h-[1px] mt-2 transition-colors duration-300 ${
                     isActive
                       ? 'bg-rust/60'
-                      : 'bg-black/10 group-hover:bg-rust/40'
+                      : 'bg-white/10 group-hover:bg-rust/40'
                   }`}
                 />
               </Link>

@@ -182,7 +182,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative h-[100svh] min-h-[640px] w-full bg-[#F1EDE3] text-textDark select-none overflow-hidden border-b border-black/10 flex flex-col justify-between"
+      className="relative h-[100svh] min-h-[640px] w-full bg-[#0A0F1A] text-white select-none overflow-hidden border-b border-white/10 flex flex-col justify-between"
     >
       {/* Header Navigation with Logo Emblem, ROBORASHTRA Brand & Menu Button */}
       <motion.header
@@ -204,14 +204,14 @@ export default function Hero() {
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <span className="font-orbitron font-extrabold text-base sm:text-xl md:text-2xl tracking-wider text-textDark">
+              <span className="font-orbitron font-extrabold text-base sm:text-xl md:text-2xl tracking-wider text-white">
                 ROBO<span className="text-rust">RASHTRA</span>
               </span>
-              <span className="hidden sm:inline-block font-mono text-[9px] tracking-widest px-2 py-0.5 rounded-full border bg-black/5 text-rust border-black/10">
+              <span className="hidden sm:inline-block font-mono text-[9px] tracking-widest px-2 py-0.5 rounded-full border bg-white/5 text-rust border-white/10">
                 2026-27
               </span>
             </div>
-            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest uppercase text-textMuted">
+            <span className="font-mono text-[9px] sm:text-[10px] tracking-widest uppercase text-slate">
               ROBOTICS CLUB
             </span>
           </div>
@@ -224,7 +224,7 @@ export default function Hero() {
             aria-label="Open menu"
             aria-haspopup="true"
             aria-expanded={menuOpen}
-            className="font-mono text-xs font-semibold tracking-wider px-4 py-2 rounded-xl backdrop-blur-md transition-all duration-200 flex items-center gap-2 text-textDark border border-black/20 hover:border-rust hover:text-rust bg-white/70 hover:bg-white shadow-sm active:scale-[0.98]"
+            className="font-mono text-xs font-semibold tracking-wider px-4 py-2 rounded-xl backdrop-blur-md transition-all duration-200 flex items-center gap-2 text-white border border-white/20 hover:border-rust hover:text-rust bg-white/10 hover:bg-white/15 shadow-sm active:scale-[0.98]"
           >
             <div className="flex flex-col gap-1 w-3.5">
               <span className="block h-0.5 w-full bg-current rounded-full" />
@@ -238,15 +238,15 @@ export default function Hero() {
       {/* Fullscreen Navigation Menu */}
       <FullscreenMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      {/* Subtle Editorial Background Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.035)_1px,transparent_1px)] bg-[size:44px_44px] pointer-events-none" />
+      {/* Blueprint Technical Grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(90,110,130,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(90,110,130,0.14)_1px,transparent_1px)] bg-[size:44px_44px] pointer-events-none" />
 
-      {/* Soft Ambient Radial Warm Tint */}
+      {/* Atmospheric Ambient Radial Glows */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(circle at 50% 35%, rgba(200, 75, 39, 0.08), transparent 65%), radial-gradient(circle at 80% 80%, rgba(0, 0, 0, 0.03), transparent 65%)',
+            'radial-gradient(circle at 50% 38%, rgba(58, 110, 165, 0.18), transparent 60%), radial-gradient(circle at 80% 75%, rgba(184, 74, 50, 0.12), transparent 55%), radial-gradient(circle at 20% 80%, rgba(10, 15, 26, 0.8), transparent 70%)',
         }}
       />
 
@@ -312,23 +312,23 @@ export default function Hero() {
             className="hidden lg:flex flex-col w-full max-w-[340px] xl:max-w-[370px] pointer-events-auto select-none"
           >
             {/* Header Label */}
-            <div className="flex items-center justify-between pb-2 mb-2 border-b border-black/10">
+            <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
               <div className="flex items-center gap-2">
                 <Compass className="w-3.5 h-3.5 text-rust" />
-                <span className="font-mono text-[11px] tracking-wider font-semibold text-textDark uppercase">
+                <span className="font-mono text-[11px] tracking-wider font-semibold text-white uppercase">
                   CLUB DIVISIONS
                 </span>
               </div>
             </div>
 
             {/* Division Selector Tabs */}
-            <div className="grid grid-cols-2 gap-1 p-1 bg-black/5 rounded-xl border border-black/10 mb-3">
+            <div className="grid grid-cols-2 gap-1 p-1 bg-white/5 rounded-xl border border-white/10 mb-3">
               <button
                 onClick={() => setActiveTab('roborashtra')}
                 className={`py-1.5 px-3 rounded-lg font-mono text-[11px] tracking-wider font-semibold transition-all ${
                   activeTab === 'roborashtra'
-                    ? 'bg-white text-textDark shadow-sm'
-                    : 'text-textMuted hover:text-textDark'
+                    ? 'bg-panel text-white shadow-sm border border-white/10'
+                    : 'text-slate hover:text-white'
                 }`}
               >
                 ROBORASHTRA
@@ -337,8 +337,8 @@ export default function Hero() {
                 onClick={() => setActiveTab('robohawk')}
                 className={`py-1.5 px-3 rounded-lg font-mono text-[11px] tracking-wider font-semibold transition-all ${
                   activeTab === 'robohawk'
-                    ? 'bg-white text-textDark shadow-sm'
-                    : 'text-textMuted hover:text-textDark'
+                    ? 'bg-panel text-white shadow-sm border border-white/10'
+                    : 'text-slate hover:text-white'
                 }`}
               >
                 ROBOHAWK
@@ -354,43 +354,43 @@ export default function Hero() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.2 }}
-                  className="bg-white/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-black/10 shadow-sm space-y-3"
+                  className="bg-panel/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/10 shadow-lg space-y-3"
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[10px] tracking-wider text-rust font-bold uppercase">
                       GROUND COMBAT &amp; ARENA
                     </span>
-                    <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-black/5 text-textDark font-medium">
+                    <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-white/5 text-white/80 font-medium border border-white/10">
                       STATE ARENA
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="font-display font-bold text-lg text-textDark tracking-tight">
+                    <h3 className="font-display font-bold text-lg text-white tracking-tight">
                       Roborashtra Arena
                     </h3>
-                    <p className="text-xs text-textMuted leading-relaxed mt-1 font-body">
+                    <p className="text-xs text-slate leading-relaxed mt-1 font-body">
                       Our collegiate ground robotics division where teams design, fabricate, and wire 15kg and 30kg combat battlebots, line followers, and autonomous obstacle-course rovers.
                     </p>
                   </div>
 
                   {/* Real Engineering Specs */}
-                  <div className="grid grid-cols-2 gap-2 pt-2 border-t border-black/10 font-mono text-[10px]">
-                    <div className="p-2 bg-black/[0.03] rounded-lg">
-                      <span className="text-textMuted block text-[8px] uppercase tracking-wider">ROBOT CLASSES</span>
-                      <span className="font-semibold text-textDark">15KG &amp; 30KG BOTS</span>
+                  <div className="grid grid-cols-2 gap-2 pt-2 border-t border-white/10 font-mono text-[10px]">
+                    <div className="p-2 bg-white/[0.03] border border-white/5 rounded-lg">
+                      <span className="text-slate block text-[8px] uppercase tracking-wider">ROBOT CLASSES</span>
+                      <span className="font-semibold text-white">15KG &amp; 30KG BOTS</span>
                     </div>
-                    <div className="p-2 bg-black/[0.03] rounded-lg">
-                      <span className="text-textMuted block text-[8px] uppercase tracking-wider">CHASSIS</span>
-                      <span className="font-semibold text-textDark">ALUMINUM &amp; STEEL</span>
+                    <div className="p-2 bg-white/[0.03] border border-white/5 rounded-lg">
+                      <span className="text-slate block text-[8px] uppercase tracking-wider">CHASSIS</span>
+                      <span className="font-semibold text-white">ALUMINUM &amp; STEEL</span>
                     </div>
-                    <div className="p-2 bg-black/[0.03] rounded-lg">
-                      <span className="text-textMuted block text-[8px] uppercase tracking-wider">TEAMS</span>
-                      <span className="font-semibold text-textDark">COLLEGIATE CIRUCT</span>
+                    <div className="p-2 bg-white/[0.03] border border-white/5 rounded-lg">
+                      <span className="text-slate block text-[8px] uppercase tracking-wider">TEAMS</span>
+                      <span className="font-semibold text-white">COLLEGIATE CIRUCT</span>
                     </div>
-                    <div className="p-2 bg-black/[0.03] rounded-lg">
-                      <span className="text-textMuted block text-[8px] uppercase tracking-wider">WORKSHOP BAY</span>
-                      <span className="font-semibold text-textDark">BLOCK C, PCCOER</span>
+                    <div className="p-2 bg-white/[0.03] border border-white/5 rounded-lg">
+                      <span className="text-slate block text-[8px] uppercase tracking-wider">WORKSHOP BAY</span>
+                      <span className="font-semibold text-white">BLOCK C, PCCOER</span>
                     </div>
                   </div>
                 </motion.div>
@@ -401,43 +401,43 @@ export default function Hero() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.2 }}
-                  className="bg-white/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-black/10 shadow-sm space-y-3"
+                  className="bg-panel/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/10 shadow-lg space-y-3"
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[10px] tracking-wider text-rust font-bold uppercase">
                       AERIAL ROBOTICS WING
                     </span>
-                    <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-black/5 text-textDark font-medium">
+                    <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-white/5 text-white/80 font-medium border border-white/10">
                       UAV &amp; DRONES
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="font-display font-bold text-lg text-textDark tracking-tight">
+                    <h3 className="font-display font-bold text-lg text-white tracking-tight">
                       Robohawk Fleet
                     </h3>
-                    <p className="text-xs text-textMuted leading-relaxed mt-1 font-body">
+                    <p className="text-xs text-slate leading-relaxed mt-1 font-body">
                       Our dedicated UAV division researching autonomous flight stabilization, custom carbon-fiber quadcopters, high-speed FPV pilot racing, and precision payload drops.
                     </p>
                   </div>
 
                   {/* Real Drone Specs */}
-                  <div className="grid grid-cols-2 gap-2 pt-2 border-t border-black/10 font-mono text-[10px]">
-                    <div className="p-2 bg-black/[0.03] rounded-lg">
-                      <span className="text-textMuted block text-[8px] uppercase tracking-wider">PLATFORM</span>
-                      <span className="font-semibold text-textDark">CUSTOM CARBON UAV</span>
+                  <div className="grid grid-cols-2 gap-2 pt-2 border-t border-white/10 font-mono text-[10px]">
+                    <div className="p-2 bg-white/[0.03] border border-white/5 rounded-lg">
+                      <span className="text-slate block text-[8px] uppercase tracking-wider">PLATFORM</span>
+                      <span className="font-semibold text-white">CUSTOM CARBON UAV</span>
                     </div>
-                    <div className="p-2 bg-black/[0.03] rounded-lg">
-                      <span className="text-textMuted block text-[8px] uppercase tracking-wider">TELEMETRY</span>
-                      <span className="font-semibold text-textDark">5.8GHZ FPV LINK</span>
+                    <div className="p-2 bg-white/[0.03] border border-white/5 rounded-lg">
+                      <span className="text-slate block text-[8px] uppercase tracking-wider">TELEMETRY</span>
+                      <span className="font-semibold text-white">5.8GHZ FPV LINK</span>
                     </div>
-                    <div className="p-2 bg-black/[0.03] rounded-lg">
-                      <span className="text-textMuted block text-[8px] uppercase tracking-wider">AUTONOMY</span>
-                      <span className="font-semibold text-textDark">WAYPOINT MISSIONS</span>
+                    <div className="p-2 bg-white/[0.03] border border-white/5 rounded-lg">
+                      <span className="text-slate block text-[8px] uppercase tracking-wider">AUTONOMY</span>
+                      <span className="font-semibold text-white">WAYPOINT MISSIONS</span>
                     </div>
-                    <div className="p-2 bg-black/[0.03] rounded-lg">
-                      <span className="text-textMuted block text-[8px] uppercase tracking-wider">FOCUS</span>
-                      <span className="font-semibold text-textDark">PILOT &amp; SENSORS</span>
+                    <div className="p-2 bg-white/[0.03] border border-white/5 rounded-lg">
+                      <span className="text-slate block text-[8px] uppercase tracking-wider">FOCUS</span>
+                      <span className="font-semibold text-white">PILOT &amp; SENSORS</span>
                     </div>
                   </div>
                 </motion.div>
@@ -463,11 +463,11 @@ export default function Hero() {
           {/* Button 1: Problem Statement */}
           <Link
             href="/problem-statements"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3 rounded-xl font-mono text-xs tracking-wider font-semibold uppercase bg-white/95 hover:bg-white text-textDark border border-black/20 hover:border-rust shadow-sm hover:shadow transition-all duration-200 active:scale-[0.98] group"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3 rounded-xl font-mono text-xs tracking-wider font-semibold uppercase bg-white/10 hover:bg-white/15 text-white border border-white/20 hover:border-rust shadow-sm hover:shadow transition-all duration-200 active:scale-[0.98] group backdrop-blur-md"
           >
             <FileText className="w-4 h-4 text-rust" />
             <span>PROBLEM STATEMENT</span>
-            <ArrowUpRight className="w-4 h-4 text-textMuted group-hover:text-rust group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+            <ArrowUpRight className="w-4 h-4 text-slate group-hover:text-rust group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
           </Link>
 
           {/* Button 2: Register */}
@@ -487,11 +487,11 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-3 font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-textDark/80 border-t border-black/10 pt-3.5 pointer-events-auto"
+          className="flex flex-col md:flex-row md:items-end justify-between gap-3 font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-white/80 border-t border-white/10 pt-3.5 pointer-events-auto"
         >
           <div>
-            <p className="font-semibold text-textDark">ROBORASHTRA &amp; ROBOHAWK</p>
-            <p className="text-textMuted text-[9px] sm:text-[10px]">PIMPRI CHINCHWAD COLLEGE OF ENGINEERING &amp; RESEARCH, PUNE</p>
+            <p className="font-semibold text-white">ROBORASHTRA &amp; ROBOHAWK</p>
+            <p className="text-slate text-[9px] sm:text-[10px]">PIMPRI CHINCHWAD COLLEGE OF ENGINEERING &amp; RESEARCH, PUNE</p>
           </div>
 
           {/* Social Links */}
@@ -501,7 +501,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube Channel"
-              className="inline-flex items-center gap-1.5 text-textMuted hover:text-rust transition-colors"
+              className="inline-flex items-center gap-1.5 text-slate hover:text-rust transition-colors"
             >
               <YouTubeIcon className="w-3.5 h-3.5 text-rust" />
               <span>YOUTUBE</span>
@@ -511,7 +511,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram Profile"
-              className="inline-flex items-center gap-1.5 text-textMuted hover:text-rust transition-colors"
+              className="inline-flex items-center gap-1.5 text-slate hover:text-rust transition-colors"
             >
               <InstagramIcon className="w-3.5 h-3.5 text-rust" />
               <span>INSTAGRAM</span>
@@ -521,7 +521,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn Page"
-              className="inline-flex items-center gap-1.5 text-textMuted hover:text-rust transition-colors"
+              className="inline-flex items-center gap-1.5 text-slate hover:text-rust transition-colors"
             >
               <LinkedInIcon className="w-3.5 h-3.5 text-rust" />
               <span>LINKEDIN</span>
@@ -529,7 +529,7 @@ export default function Hero() {
             <a
               href="mailto:hq@roborashtra.club"
               aria-label="Email Contact"
-              className="inline-flex items-center gap-1.5 text-textMuted hover:text-rust transition-colors"
+              className="inline-flex items-center gap-1.5 text-slate hover:text-rust transition-colors"
             >
               <MailIcon className="w-3.5 h-3.5 text-rust" />
               <span>EMAIL</span>
