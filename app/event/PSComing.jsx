@@ -266,7 +266,7 @@ export default function PSComing() {
               },
             },
           }}
-          className="font-display font-bold text-3xl min-[380px]:text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.08] text-white"
+          className="font-mono font-black text-3xl min-[380px]:text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-[0.08em] uppercase leading-[1.08] text-white"
           style={{ transform: 'translateZ(40px)' }}
         >
           {words.map((word, i) => {

@@ -88,7 +88,7 @@ export default function Countdown({ targetDate = DEFAULT_EVENT_DATE }) {
       <div className="relative z-10 max-w-5xl mx-auto px-2 sm:px-6 flex flex-col items-center text-center my-auto w-full pointer-events-none">
         {/* HERO TITLE */}
         <div className="mb-4 sm:mb-6 max-w-3xl pointer-events-auto mt-2 sm:mt-6">
-          <h1 className="font-cinzel text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight tracking-tight drop-shadow-[0_6px_30px_rgba(0,0,0,0.9)]">
+          <h1 className="font-mono text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white/90 leading-tight tracking-[0.12em] uppercase drop-shadow-[0_6px_30px_rgba(0,0,0,0.9)]">
             The Arena Awaits
           </h1>
         </div>
@@ -101,10 +101,10 @@ export default function Countdown({ targetDate = DEFAULT_EVENT_DATE }) {
         {/* BOTTOM ACTION & REGISTRATION STRIP */}
         <div className="mt-5 sm:mt-8 w-full flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 max-w-3xl bg-[#091120]/85 backdrop-blur-xl rounded-2xl p-4 sm:p-5 border border-cyan-500/30 shadow-[0_16px_50px_rgba(0,0,0,0.85),0_0_24px_rgba(51,204,221,0.12)] pointer-events-auto">
           <div className="text-center sm:text-left">
-            <h4 className="font-cinzel text-sm sm:text-lg text-white font-semibold leading-tight">
+            <h4 className="font-mono text-sm sm:text-lg text-white/90 font-bold leading-tight tracking-[0.12em] uppercase">
               Ready to deploy your machine?
             </h4>
-            <p className="font-mono text-[10px] sm:text-xs text-[#8A9EB5] tracking-wider mt-0.5">
+            <p className="font-mono text-[10px] sm:text-xs text-white/50 tracking-[0.18em] uppercase mt-0.5">
               Registrations for Combat, Autonomous SLAM, and FPV fleets are open.
             </p>
           </div>

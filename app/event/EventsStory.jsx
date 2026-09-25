@@ -113,7 +113,7 @@ function Card({ index, progress, reduced }) {
 
           {/* Center Content: High legibility */}
           <div className="my-auto space-y-3">
-            <h3 className="font-serifEd text-2xl sm:text-3xl leading-[1.08] text-textDark font-medium">
+            <h3 className="font-mono text-2xl sm:text-3xl leading-[1.08] text-textDark font-black tracking-[0.06em] uppercase">
               {events[index].title}
             </h3>
             <p className="text-[13px] sm:text-[14px] text-textDark/85 leading-relaxed">
@@ -171,10 +171,10 @@ export default function EventsStory() {
     return (
       <section id="events" className="bg-[#F1EDE3] text-textDark py-24 px-6 md:px-12 border-t border-b border-black/10">
         <div className="max-w-7xl mx-auto mb-12">
-          <p className="font-mono text-[11px] tracking-widest2 uppercase text-textMuted mb-2">
+          <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#FF9F1C] mb-2">
             Events / 03
           </p>
-          <h2 className="font-serifEd text-5xl md:text-6xl text-textDark">
+          <h2 className="font-mono text-5xl md:text-6xl text-textDark tracking-[0.08em] uppercase font-black">
             The Arena
           </h2>
         </div>
@@ -198,11 +198,11 @@ export default function EventsStory() {
         {/* Section Title — Stays visible throughout scroll without fading */}
         <div className="w-full max-w-7xl flex flex-col md:flex-row md:items-end justify-between gap-3 md:gap-4 shrink-0 z-30 pointer-events-none">
           <div>
-            <p className="font-mono text-[11px] tracking-widest2 uppercase text-textMuted mb-1">
+            <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#FF9F1C] mb-1">
               Events / 03
             </p>
             <h2
-              className="font-serifEd leading-[0.9] text-textDark"
+              className="font-mono leading-[0.9] text-textDark tracking-[0.08em] uppercase font-black"
               style={{ fontSize: 'clamp(2rem, 5vw, 4.5rem)' }}
             >
               The Arena
@@ -248,7 +248,7 @@ export default function EventsStory() {
                     />
                   </div>
                   <div className="space-y-3">
-                    <h3 className="font-serifEd text-2xl leading-[1.08] text-textDark font-medium">
+                    <h3 className="font-mono text-2xl leading-[1.08] text-textDark font-black tracking-[0.06em] uppercase">
                       {events[i].title}
                     </h3>
                     <p className="text-[13px] text-textDark/85 leading-relaxed">

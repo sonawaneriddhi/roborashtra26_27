@@ -176,7 +176,7 @@ function LeftEdgeRoulette({ units, selectedId, onSelectUnit, onStep }) {
               {/* Unit Number Header */}
               <div className="flex items-center justify-between">
                 <span
-                  className={`font-orbitron text-xs sm:text-sm tracking-widest font-bold ${
+                  className={`font-mono text-xs sm:text-sm tracking-[0.18em] font-bold uppercase ${
                     isActive ? 'text-black/80' : 'text-[#FFFFFF]'
                   }`}
                 >
@@ -187,7 +187,7 @@ function LeftEdgeRoulette({ units, selectedId, onSelectUnit, onStep }) {
               {/* Main Unit Title */}
               <div className="my-auto">
                 <h4
-                  className={`font-orbitron font-bold text-[10px] sm:text-[10px] md:text-[10px] lg:text-[10px] uppercase tracking-wider leading-none ${
+                  className={`font-mono font-black text-[10px] sm:text-[10px] md:text-[10px] lg:text-[10px] uppercase tracking-[0.12em] leading-none ${
                     isActive ? 'text-[#FFFFFF]' : 'text-[#FFFFFF]'
                   }`}
                 >
@@ -222,7 +222,7 @@ function LeftEdgeRoulette({ units, selectedId, onSelectUnit, onStep }) {
             <ChevronDown className="w-4 h-4" />
           </button>
         </div>
-        <span className="font-orbitron text-[10px] sm:text-[11px] tracking-widest uppercase text-[#727272] font-bold select-none">
+        <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-white/50 font-bold select-none">
           NAVIGATE SQUADS
         </span>
       </div>
@@ -249,7 +249,7 @@ function InitialsAvatar({ name }) {
       }}
       aria-hidden="true"
     >
-      <span className="font-orbitron font-bold text-white text-2xl sm:text-3xl tracking-wider">
+      <span className="font-mono font-bold text-white text-2xl sm:text-3xl tracking-[0.18em] uppercase">
         {initials}
       </span>
     </div>
@@ -287,17 +287,17 @@ function HeadCard({ head, index }) {
         </div>
 
         {/* Compact Head Info */}
-        <h4 className="font-orbitron text-[13px] min-[360px]:text-[15px] sm:text-lg md:text-xl font-semibold text-[#F5F7FA] leading-tight mb-0.5 group-hover:text-[#FFB86C] transition-colors line-clamp-1">
+        <h4 className="font-mono text-[13px] min-[360px]:text-[15px] sm:text-lg md:text-xl font-black text-white/90 leading-tight mb-0.5 tracking-[0.06em] uppercase group-hover:text-[#FF9F1C] transition-colors line-clamp-1">
           {head.name}
         </h4>
-        <p className="font-orbitron text-[7.5px] min-[360px]:text-[8.5px] sm:text-[10px] text-[#FF9F43] tracking-wider uppercase font-bold mb-1 sm:mb-1.5 line-clamp-1">
+        <p className="font-mono text-[7.5px] min-[360px]:text-[8.5px] sm:text-[10px] text-[#FF9F1C] tracking-[0.18em] uppercase font-bold mb-1 sm:mb-1.5 line-clamp-1">
           {head.role}
         </p>
       </div>
 
       {/* Social / Contact Links */}
-      <div className="relative z-10 pt-1.5 sm:pt-2 border-t border-[#FF8A00]/15 flex items-center justify-between text-[#D7DFEA]">
-        <span className="font-orbitron text-[7px] min-[360px]:text-[8px] sm:text-[9px] uppercase tracking-wider text-[#94A3B8]">
+      <div className="relative z-10 pt-1.5 sm:pt-2 border-t border-[#FF9F1C]/15 flex items-center justify-between text-[#D7DFEA]">
+        <span className="font-mono text-[7px] min-[360px]:text-[8px] sm:text-[9px] uppercase tracking-[0.18em] text-white/40">
           CONNECT
         </span>
         <a
@@ -332,11 +332,11 @@ function MemberCard({ member, index }) {
     >
       {/* Member Details */}
       <div className="min-w-0 pr-1">
-        <h5 className="font-orbitron text-[13px] font-medium text-[#F5F7FA] leading-snug truncate group-hover:text-[#FFB86C] transition-colors">
+        <h5 className="font-mono text-[13px] font-black text-white/90 leading-snug truncate tracking-[0.06em] uppercase group-hover:text-[#FF9F1C] transition-colors">
           {member.name}
         </h5>
         {member.role && (
-          <p className="font-orbitron text-[7.5px] min-[360px]:text-[8px] sm:text-[9.5px] text-[#A8B3C6] tracking-wider uppercase truncate">
+          <p className="font-mono text-[7.5px] min-[360px]:text-[8px] sm:text-[9.5px] text-white/40 tracking-[0.18em] uppercase truncate">
             {member.role}
           </p>
         )}
@@ -468,11 +468,11 @@ export default function Team() {
             <div className="flex items-center justify-between px-2 mb-1.5">
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#FF8A00] animate-pulse" />
-                <span className="font-orbitron text-[9px] sm:text-[10px] tracking-widest text-[#FF8A00] font-bold uppercase">
+                <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em] text-[#FF9F1C] font-bold uppercase">
                   CREW SQUADS
                 </span>
               </div>
-              <span className="font-orbitron text-[8px] sm:text-[9px] text-[#777777] tracking-wider uppercase">
+              <span className="font-mono text-[8px] sm:text-[9px] text-white/40 tracking-[0.18em] uppercase">
                 {allUnits.length} SQUADS ACTIVE
               </span>
             </div>
@@ -485,7 +485,7 @@ export default function Team() {
                     <button
                       key={unit.id}
                       onClick={() => setSelectedUnitId(unit.id)}
-                      className={`shrink-0 rounded-full px-3 py-1 font-orbitron text-[9.5px] min-[360px]:text-[10px] sm:text-[11px] tracking-wider font-bold uppercase transition-all duration-200 min-h-[32px] sm:min-h-[36px] touch-manipulation ${
+                      className={`shrink-0 rounded-full px-3 py-1 font-mono text-[9.5px] min-[360px]:text-[10px] sm:text-[11px] tracking-[0.18em] font-bold uppercase transition-all duration-200 min-h-[32px] sm:min-h-[36px] touch-manipulation ${
                         isActive
                           ? 'bg-[#FF8A00] text-[#111111] shadow-[0_4px_14px_rgba(255,138,0,0.35)]'
                           : 'bg-white text-[#111111] border border-black/8'
@@ -517,7 +517,7 @@ export default function Team() {
               {/* Header Bar: Active Squad Title */}
               <div className="relative lg:sticky top-0 z-30 bg-black/95 backdrop-blur-md pt-1 pb-2 sm:pb-3 mb-3 sm:mb-5 border-b border-[#D4AF37]/40">
                 <div className="flex items-center gap-2 sm:gap-3">
-                  <span className="font-orbitron text-[10px] sm:text-xs font-bold text-[#FF8A00] tracking-widest px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[#FF8A00]/10 border border-[#FF8A00]/20">
+                  <span className="font-mono text-[10px] sm:text-xs font-bold text-[#FF9F1C] tracking-[0.18em] uppercase px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[#FF9F1C]/10 border border-[#FF9F1C]/20">
                     {activeUnit.number || '01'}
                   </span>
                   <motion.h2
@@ -525,7 +525,7 @@ export default function Team() {
                     initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.25 }}
-                    className="font-orbitron text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold text-[#D4AF37] leading-none"
+                    className="font-mono text-xl sm:text-2xl md:text-3xl lg:text-5xl font-black text-white/90 leading-none tracking-[0.12em] uppercase"
                   >
                     {activeUnit.name}
                   </motion.h2>
@@ -547,7 +547,7 @@ export default function Team() {
                   {activeUnit.heads && activeUnit.heads.length > 0 && (
                     <div>
                       <div className="flex items-center gap-3 mb-2.5 sm:mb-3.5">
-                        <span className="font-orbitron text-[10px] sm:text-xs tracking-widest uppercase text-[#FFA800] font-bold shrink-0">
+                        <span className="font-mono text-[10px] sm:text-xs tracking-[0.18em] uppercase text-[#FF9F1C] font-bold shrink-0">
                           {activeUnit.id === 'lead' ? 'EXECUTIVE LEADS' : 'UNIT HEADS'}
                         </span>
                         <div className="h-[1.5px] bg-[#FF8A00] flex-1 opacity-80" />
@@ -565,7 +565,7 @@ export default function Team() {
                   {activeUnit.id !== 'lead' && activeUnit.id !== 'cad' && (
                     <div>
                       <div className="flex items-center gap-3 mb-2.5 sm:mb-3.5">
-                        <span className="font-orbitron text-[10px] sm:text-xs tracking-widest uppercase text-[#FFA800] font-bold shrink-0">
+                        <span className="font-mono text-[10px] sm:text-xs tracking-[0.18em] uppercase text-[#FF9F1C] font-bold shrink-0">
                           UNIT MEMBERS
                         </span>
                         <div className="h-[1.5px] bg-[#FF8A00] flex-1 opacity-80" />
@@ -579,7 +579,7 @@ export default function Team() {
                         </div>
                       ) : (
                         <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-black/8 shadow-sm text-center">
-                          <p className="font-orbitron text-[10px] sm:text-xs tracking-widest uppercase text-[#777777]">
+                          <p className="font-mono text-[10px] sm:text-xs tracking-[0.18em] uppercase text-white/40">
                             [ UNIT RECRUITS CURRENTLY IN INDUCTION LAB ]
                           </p>
                         </div>
