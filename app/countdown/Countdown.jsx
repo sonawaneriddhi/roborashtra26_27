@@ -115,7 +115,7 @@ export default function Countdown({ targetDate = DEFAULT_EVENT_DATE }) {
               href="https://unstop.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#FF9F1C] hover:bg-[#FFAE33] text-black font-mono text-xs font-bold tracking-widest uppercase px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl shadow-[0_0_20px_rgba(255,159,28,0.4)] transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="inline-flex items-center gap-2 bg-[#f4382d] hover:bg-[#FFAE33] text-black font-mono text-xs font-bold tracking-widest uppercase px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl shadow-[0_0_20px_rgba(255,159,28,0.4)] transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <span>REGISTER TEAM</span>
               <ArrowRight className="w-3.5 h-3.5" />

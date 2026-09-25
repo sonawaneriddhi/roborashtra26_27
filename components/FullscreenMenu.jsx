@@ -10,9 +10,9 @@ const links = [
   { label: 'HOME', href: '/' },
   { label: 'GALLERY', href: '/gallery' },
   { label: 'PROBLEM STATEMENTS', href: '/event' },
-  { label: 'SPONSOR', href: '/sponsor' },
+  { label: 'SPONSORS', href: '/sponsor' },
   { label: 'TEAM', href: '/team' },
-  { label: 'ROADMAP', href: '/roadmap' },
+  { label: 'JOURNEY', href: '/roadmap' },
   { label: 'COUNTDOWN', href: '/countdown' },
   { label: 'REGISTER', href: 'https://unstop.com/' },
 ]

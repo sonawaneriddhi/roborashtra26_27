@@ -428,9 +428,10 @@ export default function Hero() {
                     <span className="font-orbitron text-[18px] tracking-wider text-cyan-400 font-bold uppercase">
                       Robohawk
                     </span>
+                    {/*}
                     <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 font-medium">
                       DRONES
-                    </span>
+                    </span>*/}
                   </div>
 
                   <div>
@@ -455,9 +456,11 @@ export default function Hero() {
                     <span className="font-orbitron text-[18px] tracking-wider text-cyan-400 font-bold uppercase">
                       Roborashtra
                     </span>
+                    {/*}
                     <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 font-medium">
                       NATIONAL EVENT
-                    </span>
+                      
+                    </span>*/}
                   </div>
 
                   <div>
@@ -497,7 +500,7 @@ export default function Hero() {
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3 rounded-xl font-orbitron text-xs tracking-wider font-bold uppercase backdrop-blur-xl bg-slate-950/75 hover:bg-slate-900 text-white border border-white/20 hover:border-cyan-400 shadow-[0_4px_20px_rgba(0,0,0,0.6)] hover:shadow-[0_0_25px_rgba(6,182,212,0.35)] transition-all duration-300 active:scale-[0.98] group"
           >
             <FileText className="w-4 h-4 text-cyan-400 transition-transform group-hover:scale-110" />
-            <span>PROBLEM STATEMENT</span>
+            <span>PROBLEM STATEMENTS</span>
             <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
           </Link>
 
