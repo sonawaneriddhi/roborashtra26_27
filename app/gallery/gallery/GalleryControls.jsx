@@ -14,8 +14,8 @@ export default function GalleryControls({
     <div className="pointer-events-none absolute inset-0 flex flex-col justify-between z-10">
 
       {/* Top Editorial Header — positioned below Navbar safely */}
-      <div className="flex items-center justify-center pt-[72px] sm:pt-[80px] md:pt-[88px] px-4">
-        <h2 className="font-mono text-[50px] sm:text-lg md:text-xl text-white/80 tracking-[0.18em] uppercase leading-none">
+      <div className="flex items-center justify-center pt-[120px] sm:pt-[140px] md:pt-[160px] px-8">
+        <h2 className="font-orbitron font-semibold text-[16px] sm:text-[20px] md:text-[24px] lg:text-[28px] xl:text-[32px] tracking-[0.18em] uppercase leading-none milestone-glitter">
           MAPPING OUR MILESTONES
         </h2>
       </div>

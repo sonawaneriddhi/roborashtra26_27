@@ -13,6 +13,15 @@ let cameoGlowTextureCache = null
 const photoTextureCache = new Map()
 const photoLoadingCache = new Map()
 
+function rotatePhotoTexture(texture, rotation = 0) {
+  if (!rotation) return texture
+
+  texture.center.set(0.5, 0.5)
+  texture.rotation = rotation
+  texture.needsUpdate = true
+  return texture
+}
+
 // Procedural high-tech blueprint fallback texture
 function generateProceduralTexture(
   title = '',
@@ -316,11 +325,12 @@ export default function PhotoCard({
     let timeoutId
 
     const cacheKey = photo.src
+    const photoRotation = photo.rotate ?? 0
 
     // Use already-loaded texture
     if (photoTextureCache.has(cacheKey)) {
       setTexture(
-        photoTextureCache.get(cacheKey)
+        rotatePhotoTexture(photoTextureCache.get(cacheKey), photoRotation)
       )
       return
     }
@@ -331,7 +341,7 @@ export default function PhotoCard({
         .get(cacheKey)
         .then((loadedTex) => {
           if (active && loadedTex) {
-            setTexture(loadedTex)
+            setTexture(rotatePhotoTexture(loadedTex, photoRotation))
           }
         })
 
@@ -350,6 +360,7 @@ export default function PhotoCard({
           loader.setCrossOrigin('anonymous')
 
           const applyTextureSettings = (loadedTex) => {
+            rotatePhotoTexture(loadedTex, photoRotation)
             loadedTex.generateMipmaps = true
             loadedTex.minFilter = THREE.LinearMipmapLinearFilter
             loadedTex.magFilter = THREE.LinearFilter

@@ -129,7 +129,7 @@ export default function Navbar() {
             >
               <div className="relative h-9 sm:h-10 md:h-12 w-auto flex items-center justify-center">
                 <Image
-                  src="/img55.png"
+                  src="/logo/wblogo.png"
                   alt="Logo A - Roborashtra"
                   width={140}
                   height={56}
