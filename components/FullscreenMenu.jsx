@@ -82,7 +82,7 @@ export default function FullscreenMenu({
             <Link href="/" className="group flex items-center gap-3.5 sm:gap-4 select-none">
           <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_16px_rgba(56,189,248,0.45)]">
             <Image
-              src="/logo/logo.png"
+              src="/logo/emblem-bright.png"
               alt="Roborashtra Emblem"
               fill
               className="object-contain"

@@ -3,19 +3,21 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { facultyMembers } from '@/data/faculty'
-import { RotateCw, ExternalLink } from 'lucide-react'
-
-// Custom Crisp SVG Icons for Social Channels
-function LinkedInIcon({ className = 'w-4 h-4' }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64c-.88 0-1.6.72-1.6 1.6s.72 1.6 1.6 1.6 1.6-.72 1.6-1.6-.72-1.6-1.6-1.6Z" />
-    </svg>
-  )
-}
+import { RotateCw, ExternalLink, Mail } from 'lucide-react'
 
 /**
- * 3D Flippable Faculty Member Card
+ * app/team/Faculty.jsx
+ * ────────────────────
+ * Faculty Mentorship Showcase Section.
+ * Renders interactive 3D flippable faculty profile cards with:
+ * - Keyboard navigation (Space/Enter to flip, ARIA expanded state)
+ * - Front face: High-resolution portrait, title, and designation
+ * - Back face: Departmental biography, credentials, direct mail and profile actions
+ * - Kinetic scroll parallax and HUD targeting corner accents
+ *
+ * @param {Object} props
+ * @param {import('@/data/faculty').FacultyMember} props.faculty - Faculty member data
+ * @param {number} props.index - Card position index
  */
 function FacultyCard({ faculty, index }) {
   const [isFlipped, setIsFlipped] = useState(false)
@@ -47,14 +49,14 @@ function FacultyCard({ faculty, index }) {
       <motion.div
         role="button"
         tabIndex={0}
-        aria-label={`Faculty card for ${faculty.name}. Press Enter or Space to ${isFlipped ? 'view details' : 'view social connections'}.`}
+        aria-label={`Faculty card for ${faculty.name}. Press Enter or Space to ${isFlipped ? 'view details' : 'view contact details'}.`}
         aria-expanded={isFlipped}
         onClick={handleCardClick}
         onKeyDown={handleKeyDown}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ duration: 0.65, ease: [0.23, 1, 0.32, 1] }}
         style={{ transformStyle: 'preserve-3d' }}
-        className="group relative w-full h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-4 focus-visible:ring-offset-black rounded-xl sm:rounded-2xl"
+        className="group relative w-full h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#22D3EE] focus-visible:ring-offset-4 focus-visible:ring-offset-black rounded-xl sm:rounded-2xl"
       >
         {/* FRONT FACE */}
         <div
@@ -62,19 +64,19 @@ function FacultyCard({ faculty, index }) {
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
           }}
-          className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#121824]/95 via-[#0b101c]/95 to-[#070a13]/98 border border-white/15 p-2 min-[360px]:p-2.5 sm:p-3 md:p-3.5 flex flex-col justify-between shadow-[0_16px_50px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-all duration-500 group-hover:border-amber/50 group-hover:shadow-[0_0_35px_rgba(255,159,28,0.2)] group-hover:-translate-y-1"
+          className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#121824]/95 via-[#0b101c]/95 to-[#070a13]/98 border border-white/15 p-2 min-[360px]:p-2.5 sm:p-3 md:p-3.5 flex flex-col justify-between shadow-[0_16px_50px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-all duration-500 group-hover:border-[#22D3EE]/50 group-hover:shadow-[0_0_35px_rgba(34,211,238,0.25)] group-hover:-translate-y-1"
         >
           {/* Precision Corner Crosshairs */}
-          <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-amber/70 pointer-events-none" />
-          <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-amber/70 pointer-events-none" />
-          <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-amber/70 pointer-events-none" />
-          <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-amber/70 pointer-events-none" />
+          <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#22D3EE]/70 pointer-events-none" />
+          <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-[#22D3EE]/70 pointer-events-none" />
+          <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-[#22D3EE]/70 pointer-events-none" />
+          <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-[#22D3EE]/70 pointer-events-none" />
 
           {/* Top Header & Faculty Portrait */}
           <div className="flex flex-col h-full justify-between">
             <div className="flex flex-col flex-1">
               <div className="flex items-center justify-between mb-1 sm:mb-1.5">
-                <span className="font-mono text-[6.5px] min-[360px]:text-[7.5px] sm:text-[9px] tracking-wider sm:tracking-widest uppercase px-2 py-0.5 rounded-full bg-amber/10 text-amber font-bold border border-amber/30 truncate shadow-[0_0_10px_rgba(255,159,28,0.12)]">
+                <span className="font-mono text-[6.5px] min-[360px]:text-[7.5px] sm:text-[9px] tracking-wider sm:tracking-widest uppercase px-2 py-0.5 rounded-full bg-[#22D3EE]/10 text-[#22D3EE] font-bold border border-[#22D3EE]/30 truncate shadow-[0_0_10px_rgba(34,211,238,0.15)]">
                   {faculty.badge}
                 </span>
               </div>
@@ -92,7 +94,7 @@ function FacultyCard({ faculty, index }) {
 
               {/* Centered & Prominent Faculty Name in the middle */}
               <div className="flex-1 flex items-center justify-center px-1 py-1 sm:py-2 text-center">
-                <h3 className="font-serifEd text-[13.5px] min-[360px]:text-[15px] min-[390px]:text-[16px] sm:text-xl md:text-2xl lg:text-[1.65rem] text-ivory font-semibold leading-snug group-hover:text-amber transition-colors text-center">
+                <h3 className="font-serifEd text-[13.5px] min-[360px]:text-[15px] min-[390px]:text-[16px] sm:text-xl md:text-2xl lg:text-[1.65rem] text-ivory font-semibold leading-snug group-hover:text-[#22D3EE] transition-colors text-center">
                   {faculty.name}
                 </h3>
               </div>
@@ -100,11 +102,11 @@ function FacultyCard({ faculty, index }) {
 
             {/* Bottom Interactive Flip Prompt */}
             <div className="pt-1.5 sm:pt-2 border-t border-white/10 flex items-center justify-between font-mono text-[7px] min-[360px]:text-[8px] sm:text-[9.5px] tracking-wider text-ivory/60">
-              <span className="group-hover:text-amber transition-colors uppercase font-medium">
+              <span className="group-hover:text-[#22D3EE] transition-colors uppercase font-medium">
                 CONNECT
               </span>
 
-              <div className="flex items-center gap-1 sm:gap-1.5 text-amber bg-amber/10 px-2 py-0.5 sm:py-1 rounded-full border border-amber/30 group-hover:bg-amber group-hover:text-blueprintDeep transition-all shadow-xs">
+              <div className="flex items-center gap-1 sm:gap-1.5 text-[#22D3EE] bg-[#22D3EE]/10 px-2 py-0.5 sm:py-1 rounded-full border border-[#22D3EE]/30 group-hover:bg-[#22D3EE] group-hover:text-[#060A12] transition-all shadow-xs">
                 <span className="font-bold uppercase text-[6.5px] min-[360px]:text-[7.5px] sm:text-[9px]">
                   FLIP
                 </span>
@@ -121,18 +123,18 @@ function FacultyCard({ faculty, index }) {
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
-          className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#121824]/98 via-[#0b101c]/98 to-[#070a13]/98 border border-amber/40 p-2 min-[360px]:p-2.5 sm:p-3 md:p-3.5 flex flex-col justify-between shadow-[0_16px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+          className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#121824]/98 via-[#0b101c]/98 to-[#070a13]/98 border border-[#22D3EE]/40 p-2 min-[360px]:p-2.5 sm:p-3 md:p-3.5 flex flex-col justify-between shadow-[0_16px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl"
         >
           {/* Precision Corner Crosshairs */}
-          <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-amber/70 pointer-events-none" />
-          <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-amber/70 pointer-events-none" />
-          <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-amber/70 pointer-events-none" />
-          <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-amber/70 pointer-events-none" />
+          <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#22D3EE]/70 pointer-events-none" />
+          <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-[#22D3EE]/70 pointer-events-none" />
+          <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-[#22D3EE]/70 pointer-events-none" />
+          <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-[#22D3EE]/70 pointer-events-none" />
 
           {/* Back Header */}
           <div>
             <div className="flex items-center justify-between mb-1 sm:mb-1.5 pb-1 border-b border-white/10">
-              <span className="font-mono text-[6.5px] sm:text-[8px] tracking-wider uppercase text-amber font-bold">
+              <span className="font-mono text-[6.5px] sm:text-[8px] tracking-wider uppercase text-[#22D3EE] font-bold">
                 COMMUNICATIONS
               </span>
             </div>
@@ -141,7 +143,7 @@ function FacultyCard({ faculty, index }) {
               {faculty.name}
             </h3>
 
-            <p className="font-mono text-[7px] min-[360px]:text-[7.5px] sm:text-[10px] text-amber tracking-wider uppercase mb-0.5 font-bold">
+            <p className="font-mono text-[7px] min-[360px]:text-[7.5px] sm:text-[10px] text-[#22D3EE] tracking-wider uppercase mb-0.5 font-bold">
               {faculty.designation}
             </p>
 
@@ -162,7 +164,7 @@ function FacultyCard({ faculty, index }) {
 
             {/* ABOUT / CAREER DESCRIPTION */}
             <div className="px-0.5">
-              <p className="font-mono text-[6px] min-[360px]:text-[6.5px] sm:text-[7.5px] uppercase tracking-[0.16em] text-amber font-bold mb-0.5">
+              <p className="font-mono text-[6px] min-[360px]:text-[6.5px] sm:text-[7.5px] uppercase tracking-[0.16em] text-[#22D3EE] font-bold mb-0.5">
                 ABOUT
               </p>
 
@@ -172,27 +174,25 @@ function FacultyCard({ faculty, index }) {
             </div>
           </div>
 
-          {/* Clickable Social Media Links */}
+          {/* Clickable Email Contact */}
           <div className="space-y-1 my-auto pt-1 sm:pt-1.5">
             <a
-              href={faculty.socials?.linkedin || 'https://linkedin.com'}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`mailto:${faculty.email}`}
               onClick={(e) => e.stopPropagation()}
-              aria-label={`Connect with ${faculty.name} on LinkedIn`}
-              className="group/link flex items-center justify-between w-full p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-white/5 hover:bg-[#0A66C2]/20 border border-white/10 hover:border-[#0A66C2]/50 transition-all text-ivory"
+              aria-label={`Send email to ${faculty.name} (${faculty.email})`}
+              className="group/link flex items-center justify-between w-full p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-white/5 hover:bg-[#22D3EE]/15 border border-white/10 hover:border-[#22D3EE]/50 transition-all text-ivory"
             >
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-md bg-[#0A66C2]/20 text-[#0A66C2] flex items-center justify-center group-hover/link:bg-[#0A66C2] group-hover/link:text-white transition-colors">
-                  <LinkedInIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                <div className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 rounded-md bg-[#22D3EE]/20 text-[#22D3EE] flex items-center justify-center group-hover/link:bg-[#22D3EE] group-hover/link:text-[#060A12] transition-colors">
+                  <Mail className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 </div>
 
-                <span className="font-mono text-[8px] sm:text-[10px] tracking-wide">
-                  LinkedIn
+                <span className="font-mono text-[6.5px] min-[360px]:text-[7.5px] sm:text-[9.5px] tracking-tight truncate text-ivory group-hover/link:text-[#22D3EE] transition-colors">
+                  {faculty.email}
                 </span>
               </div>
 
-              <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-ivory/40 group-hover/link:text-ivory transition-colors" />
+              <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0 text-ivory/40 group-hover/link:text-ivory transition-colors" />
             </a>
           </div>
 
@@ -200,7 +200,7 @@ function FacultyCard({ faculty, index }) {
           <div className="pt-1 sm:pt-1.5 border-t border-white/10 flex items-center justify-between font-mono text-[7px] min-[360px]:text-[7.5px] sm:text-[8.5px] tracking-wider text-ivory/60">
             <span>RETURN</span>
 
-            <div className="flex items-center gap-1 text-amber bg-amber/10 px-2 py-0.5 rounded-full border border-amber/30 group-hover:bg-amber group-hover:text-blueprintDeep transition-all shadow-xs">
+            <div className="flex items-center gap-1 text-[#22D3EE] bg-[#22D3EE]/10 px-2 py-0.5 rounded-full border border-[#22D3EE]/30 group-hover:bg-[#22D3EE] group-hover:text-[#060A12] transition-all shadow-xs">
               <span className="font-bold uppercase text-[6.5px] min-[360px]:text-[7px] sm:text-[8px]">
                 BACK
               </span>
@@ -243,41 +243,71 @@ export default function Faculty() {
     restDelta: 0.001,
   })
 
-  // Unified "ROBORASHTRA" Text Movement (moves to top and stays visible)
+  // Unified "ROBORASHTRA" Text Movement (moves to top and dims to watermark)
   const titleY = useTransform(
     smoothProgress,
-    [0.1, 0.45],
-    ['0vh', '-31vh']
+    [0.08, 0.40],
+    ['0vh', '-42vh']
   )
 
   const titleScale = useTransform(
     smoothProgress,
-    [0.1, 0.45],
-    [1, 0.65]
+    [0.08, 0.40],
+    [1, 0.6]
+  )
+
+  const titleOpacity = useTransform(
+    smoothProgress,
+    [0.08, 0.40],
+    [1, 1]
+  )
+
+  // Faculty Mentorship Title Animation (rises and reveals above the cards)
+  const headerOpacity = useTransform(
+    smoothProgress,
+    [0.12, 0.36],
+    [0, 1]
+  )
+
+  const headerY = useTransform(
+    smoothProgress,
+    [0.12, 0.36],
+    [32, 0]
+  )
+
+  const headerScale = useTransform(
+    smoothProgress,
+    [0.12, 0.36],
+    [0.92, 1]
+  )
+
+  const headerPointerEvents = useTransform(
+    smoothProgress,
+    (v) => (v > 0.16 ? 'auto' : 'none')
   )
 
   // Center Faculty Cards
   const cardsOpacity = useTransform(
     smoothProgress,
-    [0.30, 0.58],
+    [0.20, 0.48],
     [0, 1]
   )
 
   const cardsScale = useTransform(
     smoothProgress,
-    [0.30, 0.65],
-    [0.9, 1]
+    [0.20, 0.52],
+    [0.92, 1]
   )
 
   const cardsY = useTransform(
     smoothProgress,
-    [0.30, 0.65],
-    [40, 0]
+    [0.20, 0.52],
+    [36, 0]
   )
 
   const cardsPointerEvents = useTransform(
     smoothProgress,
-    (v) => (v > 0.35 ? 'auto' : 'none')
+    (v) => (v > 0.25 ? 'auto' : 'none')
   )
 
   // Scroll Indicator Prompt
@@ -293,8 +323,14 @@ export default function Faculty() {
       <section
         id="faculty"
         aria-label="Faculty Mentorship"
-        className="w-full bg-[#070707] text-ivory py-20 px-4 sm:px-8 md:px-12 border-t border-b border-white/10"
+        className="w-full bg-[#070707] text-ivory pt-24 sm:pt-28 pb-16 px-4 sm:px-8 md:px-12 border-t border-b border-white/10"
       >
+        <div className="max-w-5xl mx-auto mb-6 sm:mb-8 text-center">
+          <h2 className="font-display font-extrabold text-2xl sm:text-3xl md:text-4xl text-white tracking-[0.14em] uppercase">
+            FACULTY MENTORSHIP
+          </h2>
+          <div className="w-16 sm:w-24 h-0.5 bg-gradient-to-r from-transparent via-[#22D3EE] to-transparent mx-auto mt-2 opacity-80" />
+        </div>
         <div className="flex flex-row justify-center items-center gap-3 sm:gap-8 max-w-5xl mx-auto">
           {facultyMembers.map((faculty, i) => (
             <FacultyCard
@@ -326,16 +362,9 @@ export default function Faculty() {
           className="absolute inset-0 pointer-events-none opacity-30"
           style={{
             background:
-              'radial-gradient(circle at 50% 50%, rgba(255, 159, 28, 0.08), transparent 60%)',
+              'radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.08), transparent 60%)',
           }}
         />
-
-        {/* Top Header */}
-        <div className="absolute top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-40">
-          <h2 className="font-mono text-sm sm:text-base md:text-lg text-paperWhite tracking-[0.12em] uppercase whitespace-nowrap leading-none">
-            FACULTY MENTORSHIP.
-          </h2>
-        </div>
 
         {/* CINEMATIC WATERMARK TYPOGRAPHY */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
@@ -343,6 +372,7 @@ export default function Faculty() {
             style={{
               y: titleY,
               scale: titleScale,
+              opacity: titleOpacity,
               transformOrigin: 'center center',
             }}
             className="flex items-center justify-center font-display font-extrabold tracking-tighter leading-none select-none text-[#FAF8F5] will-change-transform text-center"
@@ -358,24 +388,44 @@ export default function Faculty() {
           </motion.div>
         </div>
 
-        {/* EMERGING FACULTY PROFILE CARDS */}
-        <motion.div
-          style={{
-            opacity: cardsOpacity,
-            scale: cardsScale,
-            y: cardsY,
-            pointerEvents: cardsPointerEvents,
-          }}
-          className="relative z-20 flex flex-row items-center justify-center gap-2.5 min-[360px]:gap-3.5 sm:gap-6 md:gap-8 lg:gap-10 w-full px-2 sm:px-4 mt-12 sm:mt-14 md:mt-16 overflow-x-hidden"
-        >
-          {facultyMembers.map((faculty, idx) => (
-            <FacultyCard
-              key={faculty.id}
-              faculty={faculty}
-              index={idx}
-            />
-          ))}
-        </motion.div>
+        {/* CENTER STAGE: FACULTY MENTORSHIP TITLE & FACULTY PROFILE CARDS */}
+        <div className="relative z-20 flex flex-col items-center justify-center w-full px-2 sm:px-4 mt-8 sm:mt-12 md:mt-14">
+
+          {/* Section Title — Positioned directly above the Faculty Cards */}
+          <motion.div
+            style={{
+              opacity: headerOpacity,
+              y: headerY,
+              scale: headerScale,
+              pointerEvents: headerPointerEvents,
+            }}
+            className="text-center mb-3 sm:mb-5 md:mb-6"
+          >
+            <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white tracking-[0.14em] uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
+              FACULTY MENTORSHIP
+            </h2>
+            <div className="w-16 sm:w-24 h-0.5 bg-gradient-to-r from-transparent via-[#22D3EE] to-transparent mx-auto mt-1.5 sm:mt-2 opacity-80" />
+          </motion.div>
+
+          {/* Emerging Faculty Profile Cards Row */}
+          <motion.div
+            style={{
+              opacity: cardsOpacity,
+              scale: cardsScale,
+              y: cardsY,
+              pointerEvents: cardsPointerEvents,
+            }}
+            className="flex flex-row items-center justify-center gap-2.5 min-[360px]:gap-3.5 sm:gap-6 md:gap-8 lg:gap-10 w-full overflow-x-hidden"
+          >
+            {facultyMembers.map((faculty, idx) => (
+              <FacultyCard
+                key={faculty.id}
+                faculty={faculty}
+                index={idx}
+              />
+            ))}
+          </motion.div>
+        </div>
 
         {/* BOTTOM SCROLL INDICATOR */}
         <motion.div

@@ -1,24 +1,49 @@
 /**
  * teamData.js
  * ────────────
- * Comprehensive Team Data for ROBORASHTRA.
- * All data is modular and scalable. To add new teams, heads, or members,
- * simply edit this file without altering any component animation logic.
+ * Comprehensive Team Directory Data for ROBORASHTRA.
+ * All data is modular and scalable. Teams contain designated heads and crew members.
  *
  * Images are delivered via Cloudinary.
- * public_id pattern: roborashtra/team/<squad>/<firstname>
+ * Public ID pattern: `roborashtra/team/<squad>/<firstname>`
  *
- * Fallback: When NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME is not set (local dev),
- * getCloudinaryUrl() returns '' and the HeadCard will render an
- * initials-based CSS placeholder automatically.
+ * Fallback: When NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME is not set,
+ * getCloudinaryUrl() returns '' and components render initials-based CSS fallbacks.
+ *
+ * @typedef {Object} SocialLinks
+ * @property {string} [linkedin] - LinkedIn profile URL
+ * @property {string} [github] - GitHub profile URL
+ * @property {string} [instagram] - Instagram profile URL
+ *
+ * @typedef {Object} Member
+ * @property {string} id - Unique identifier
+ * @property {string} name - Full name
+ * @property {string} role - Team role/designation
+ * @property {SocialLinks} [socials] - Social media links
+ *
+ * @typedef {Object} Head
+ * @property {string} id - Unique identifier
+ * @property {string} name - Full name
+ * @property {string} role - Lead role
+ * @property {string} image - Cloudinary portrait URL
+ * @property {SocialLinks} [socials] - Social media links
+ *
+ * @typedef {Object} TeamUnit
+ * @property {string} id - Slug identifier
+ * @property {string} name - Full display title
+ * @property {string} shortName - Abbreviated title for navigation tabs
+ * @property {Head[]} heads - Squad leads/heads
+ * @property {Member[]} members - Squad crew members
  */
 
 import { getCloudinaryUrl } from '@/lib/cloudinary'
 
 /**
- * Build a portrait URL for a team head.
- * 400×400 fill with face-aware gravity, auto format & quality.
- * Falls back to empty string when cloud name is not configured.
+ * Builds an optimized Cloudinary delivery URL for team portraits.
+ * Applies face-aware gravity, auto format, and retina DPR.
+ *
+ * @param {string} publicId - Cloudinary asset path
+ * @returns {string} Optimized image URL or empty string if unconfigured
  */
 function portrait(publicId) {
   return getCloudinaryUrl(publicId, {
@@ -443,21 +468,21 @@ export const teamData = {
       heads: [
         {
           id: 'web-head-1',
-          name: 'Riddhi Sonawane',
-          role: 'Web & Systems Head',
-          image: portrait('roborashtra/team/web/riddhi'),
+          name: 'Yadnyesh Borole',
+          role: 'Web Development Head',
+          image: portrait('roborashtra/team/web/yadnesh'),
           socials: {
-            linkedin:
-              'https://www.linkedin.com/in/riddhisonawane?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+            linkedin: 'https://www.linkedin.com/in/yadnyesh-borole-51aa0532a/',
           },
         },
         {
           id: 'web-head-2',
-          name: 'Yadnesh Borole',
-          role: 'Web & Systems Co-Head',
-          image: portrait('roborashtra/team/web/yadnesh'),
+          name: 'Riddhi Sonawane',
+          role: 'Web Development Co-Head',
+          image: portrait('roborashtra/team/web/riddhi'),
           socials: {
-            linkedin: 'https://www.linkedin.com/in/yadnyesh-borole-51aa0532a/',
+            linkedin:
+              'https://www.linkedin.com/in/riddhisonawane?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
       ],

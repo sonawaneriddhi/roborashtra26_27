@@ -342,9 +342,9 @@ export default function RoadmapSection() {
                 TIMELINE ARCHIVE
               </span>
             </div>
-            <h2 className="font-serifEd leading-none tracking-tight text-white font-bold text-base sm:text-2xl lg:text-3xl">
+            <h2 className="font-mono leading-none tracking-[0.18em] text-white/80 font-black text-base sm:text-2xl lg:text-3xl uppercase">
               <span>ROBORASHTRA </span>
-              <span className="text-amber-400 font-serifEd italic font-normal">Journey</span>
+              <span className="text-amber-400">JOURNEY</span>
             </h2>
           </motion.div>
 
@@ -477,7 +477,7 @@ export default function RoadmapSection() {
 
                       {/* Title & Ghost Step Number */}
                       <div className="flex items-start justify-between gap-3 mb-2">
-                        <h3 className="font-serifEd text-xl xl:text-2xl leading-[1.15] text-white tracking-tight font-bold">
+                        <h3 className="font-mono text-xl xl:text-2xl leading-[1.15] text-white/90 tracking-[0.08em] uppercase font-black">
                           {item.title}
                         </h3>
                         <span
@@ -760,7 +760,7 @@ export default function RoadmapSection() {
 
                         {/* Title & Ghost Step */}
                         <div className="flex items-start justify-between gap-2">
-                          <h3 className="font-serifEd text-base sm:text-lg xl:text-xl leading-snug text-white font-bold">
+                          <h3 className="font-mono text-base sm:text-lg xl:text-xl leading-snug text-white/90 tracking-[0.08em] uppercase font-black">
                             {item.title}
                           </h3>
                           <span

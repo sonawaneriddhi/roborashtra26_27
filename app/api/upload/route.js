@@ -58,7 +58,7 @@ export async function POST(request) {
       )
     }
 
-    // ── Uncomment when cloudinary SDK is installed ───────────────────────────
+    // ── Uncomment when cloudinary SDK is installeds ───────────────────────────
     // const timestamp = Math.round(Date.now() / 1000)
     //
     // const paramsToSign = {

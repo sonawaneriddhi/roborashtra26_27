@@ -1,5 +1,18 @@
 'use client'
 
+/**
+ * app/gallery/Gallery.jsx
+ * ───────────────────────
+ * Interactive 3D Cylindrical Photo Ring Gallery.
+ *
+ * Capabilities:
+ * - Organic 3D ring projection with deterministic dispersion noise
+ * - Real-time inertia drag and momentum physics with velocity damping
+ * - Continuous ambient camera oscillation and breathing float
+ * - Modal spotlight with keyboard traversal and metadata display
+ * - Accessibility support via prefers-reduced-motion queries
+ */
+
 import { useState, useEffect, useRef } from 'react'
 import { ChevronRight, ChevronLeft } from 'lucide-react'
 import GalleryScene from './gallery/GalleryScene'
@@ -8,16 +21,6 @@ import ExpandedPhoto from './gallery/ExpandedPhoto'
 import { galleryPhotos } from '@/data/galleryPhotos'
 import LunarParticles from 'components/LunarParticles'
 
-/**
- * Gallery - Production-quality messy 3D ring photo gallery with natural drag physics.
- * Features:
- * - Chaotic organic 3D ring arrangement with controlled deterministic noise
- * - Real 3D physics drag with momentum inertia and damping
- * - Subtle camera parallax and continuous breathing float
- * - Spotlight modal with rich metadata and keyboard navigation
- * - prefers-reduced-motion accessibility support
- * - Interactive navigation arrow buttons for intuitive rotating on desktop & mobile
- */
 export default function Gallery() {
   const [selectedPhoto, setSelectedPhoto] = useState(null)
   const [hasInteracted, setHasInteracted] = useState(false)
@@ -60,16 +63,12 @@ export default function Gallery() {
       id="gallery"
       className="relative w-full h-screen h-[100dvh] min-h-[600px] bg-[#070b14] select-none overflow-hidden"
     >
+      <div className="pointer-events-none absolute inset-0 z-10">
+        <LunarParticles />
+      </div>
 
-      
-        <div className="pointer-events-none absolute inset-0 z-10">
-          <LunarParticles />
-        </div>
-            
       {/* Fullscreen 3D Stage */}
       <div className="relative h-full w-full overflow-hidden bg-[#070b14]">
-
-
         {/* Background Gradients & Vignette */}
         <div className="absolute inset-0 bg-blueprintGrid bg-grid opacity-30 pointer-events-none" />
         <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#070b14]/60 to-[#070b14] pointer-events-none" />

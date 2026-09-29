@@ -1,35 +1,53 @@
+/**
+ * data/events.js
+ * ──────────────
+ * Flagship Competitive & Exhibition Events for ROBORASHTRA.
+ *
+ * @typedef {Object} RoboEvent
+ * @property {number} id - Numeric event ID
+ * @property {string} code - Two-digit formatted identifier
+ * @property {string} category - Competition domain / genre
+ * @property {string} title - Official event title
+ * @property {string} tagline - Event motto / subtitle
+ * @property {string} description - Detailed mission and challenge summary
+ * @property {string|null} rulebook - Downloadable rulebook URL (null if upcoming)
+ * @property {string} availableFrom - Release date indicator
+ */
+
 export const events = [
   {
     id: 1,
     code: '01',
-    category: 'NAVIGATION',
-    title: 'AUTONOMOUS SPRINT',
+    category: 'ENGINEERING EXHIBITION',
+    title: 'YANTRAUTSAV',
+    tagline: 'INNOVATE. AUTOMATE. DOMINATE.',
     description:
-      'Build a rover that clears an unmapped obstacle course in under 90 seconds, using only onboard sensors — no remote input allowed.',
-    objective: 'Fastest clean run through a randomized obstacle field.',
-    cta: 'VIEW EVENT →',
-    href: '#events',
+      'An engineering and robotics exhibition where students transform ideas into functional projects, prototypes and innovative solutions.',
+    rulebook: null,
+    availableFrom: '29 SEPT',
   },
+
   {
     id: 2,
     code: '02',
-    category: 'MANIPULATION',
-    title: 'GRIP & STACK',
+    category: 'SEARCH & RESCUE ROBOTICS',
+    title: 'RESCUE OLYMPICS',
+    tagline: 'SEARCH. RESCUE. SURVIVE.',
     description:
-      'Design an arm that identifies, picks, and stacks five irregular objects by shape — fastest and cleanest stack wins.',
-    objective: 'Precision manipulation under a strict time limit.',
-    cta: 'VIEW EVENT →',
-    href: '#events',
+      'A high-intensity robotics challenge where teams navigate extraterrestrial environments, collect resources, construct structures and complete missions under pressure.',
+    rulebook: null,
+    availableFrom: '29 SEPT',
   },
+
   {
     id: 3,
     code: '03',
-    category: 'COMBAT',
-    title: 'LAST BOT STANDING',
+    category: 'ROBOTIC SHOWDOWN',
+    title: 'ORBITAL CLASH',
+    tagline: 'ONE CORE. TWO CONTENDERS. NO ROOM FOR ERROR.',
     description:
-      'A 3-minute elimination bout, 15kg class. Survive, disable, or out-point your opponent inside the arena.',
-    objective: 'Single-elimination combat, judged on damage and control.',
-    cta: 'VIEW EVENT →',
-    href: '#events',
+      'An intense robotic showdown where two teams compete for control of the Core through precision, strategy, speed and tactical decision-making.',
+    rulebook: null,
+    availableFrom: '29 SEPT',
   },
 ]

@@ -1,10 +1,18 @@
 'use client'
 
+/**
+ * app/event/PSComing.jsx
+ * ──────────────────────
+ * Problem Statement "Coming Soon" Interactive Teaser.
+ * Features weightless space physics with cursor-coupled parallax layers,
+ * deterministic twinkle starfields, and spring-damped 3D perspective shifts.
+ */
+
 import { useState, useRef } from 'react'
 import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from 'framer-motion'
 import MoonOrb from './MoonOrb'
 
-// Deterministic starfield for zero hydration mismatch
+// Deterministic starfield array avoids SSR/client hydration differences
 const SPACE_STARS = Array.from({ length: 90 }, (_, i) => ({
   id: i,
   x: ((i * 137.508 + 23) % 100).toFixed(2),
@@ -266,7 +274,7 @@ export default function PSComing() {
               },
             },
           }}
-          className="font-display font-bold text-3xl min-[380px]:text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.08] text-white"
+          className="font-mono font-black text-3xl min-[380px]:text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-[0.08em] uppercase leading-[1.08] text-white"
           style={{ transform: 'translateZ(40px)' }}
         >
           {words.map((word, i) => {
@@ -293,11 +301,10 @@ export default function PSComing() {
                   textShadow: '0 0 25px rgba(79,195,255,0.75)',
                   transition: { duration: 0.2 },
                 }}
-                className={`inline-block mr-[0.25em] last:mr-0 cursor-pointer transition-colors duration-200 ${
-                  isSoon
-                    ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#4FC3FF] via-[#7DD3FC] to-[#FF9F1C] drop-shadow-[0_0_20px_rgba(79,195,255,0.35)]'
-                    : ''
-                }`}
+                className={`inline-block mr-[0.25em] last:mr-0 cursor-pointer transition-colors duration-200 ${isSoon
+                  ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#4FC3FF] via-[#7DD3FC] to-[#FF9F1C] drop-shadow-[0_0_20px_rgba(79,195,255,0.35)]'
+                  : ''
+                  }`}
               >
                 {word}
               </motion.span>

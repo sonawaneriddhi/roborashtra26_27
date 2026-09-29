@@ -1,14 +1,22 @@
 'use client'
 
+/**
+ * app/countdown/FlipCountdown.jsx
+ * ────────────────────────────────
+ * Mechanical Split-Flap Countdown Timer.
+ * Synchronizes client clock, avoids SSR hydration mismatch, and drives
+ * animated `FlipUnit` components for Days, Hours, Minutes, and Seconds.
+ *
+ * @param {Object} props
+ * @param {string|Date} [props.targetDate] - Target timestamp
+ * @param {boolean} [props.dark=true] - Theme variant toggle
+ */
+
 import { useState, useEffect, useMemo } from 'react'
 import FlipUnit from '@/components/FlipUnit'
 
 const DEFAULT_TARGET_DATE = '2027-02-01T00:00:00+05:30'
 
-/**
- * Premium Mechanical Flip-Clock Countdown Component
- * Computes DAYS, HOURS, MINUTES, and SECONDS, flipping every single second in real time.
- */
 export default function FlipCountdown({ targetDate = DEFAULT_TARGET_DATE, dark = true }) {
   const [mounted, setMounted] = useState(false)
   const [now, setNow] = useState(null)

@@ -2,7 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
 
+  output: 'export',
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         // Cloudinary CDN – used for all team portraits and gallery images

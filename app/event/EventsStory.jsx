@@ -1,5 +1,17 @@
 'use client'
 
+/**
+ * app/event/EventsStory.jsx
+ * ─────────────────────────
+ * Scroll-driven 3D Event Showcase with Card Splitting & Flipping Choreography.
+ *
+ * Animation Phases:
+ * 1. Initial State (0.00 -> 0.18): 3 cards merge into a seamless panoramic robot image.
+ * 2. Lateral Separation (0.18 -> 0.50): Cards smoothly split outward along the X-axis.
+ * 3. 3D Inverted Flip (0.48 -> 0.80): Cards flip 180° around the Y-axis with inward bottom
+ *    tilting (Z-axis) to reveal event descriptions and downloadable rulebooks.
+ */
+
 import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { events } from '@/data/events'
@@ -7,11 +19,19 @@ import { events } from '@/data/events'
 const HERO_IMAGE = '/robot.jpg'
 const BG_POSITIONS = ['0% 50%', '50% 50%', '100% 50%']
 
-// Inverted tilt: bottom angles inward toward the center, top flares slightly out
-const TILT_Z = [-3.5, 0, 3.5] 
-const TILT_Y_BACK = [174, 180, 186] // 3D card inward face angle
-const SPREAD_VW = [-3.8, 0, 3.8] // Clean card separation gap for larger cards
+// Inverted tilt geometry: bottom angles inward toward the center, top flares slightly outward
+const TILT_Z = [-3.5, 0, 3.5]
+const TILT_Y_BACK = [174, 180, 186] // Inward 3D facing angle on back face
+const SPREAD_VW = [-3.8, 0, 3.8] // Lateral separation distance in viewport width units
 
+/**
+ * Individual 3D Flip Card.
+ *
+ * @param {Object} props
+ * @param {number} props.index - Card index (0, 1, 2)
+ * @param {import('framer-motion').MotionValue<number>} props.progress - Scroll progress value (0 to 1)
+ * @param {boolean} props.reduced - Accessibility flag for reduced motion preferences
+ */
 function Card({ index, progress, reduced }) {
   // Phase 2: Split apart smoothly (0.18 -> 0.50)
   const splitX = useTransform(progress, [0.18, 0.50], [0, SPREAD_VW[index]])
@@ -42,13 +62,13 @@ function Card({ index, progress, reduced }) {
   const outerStyle = reduced
     ? { transform: `translateX(${[-4, 0, 4][index]}%)`, perspective: 1600 }
     : {
-        x,
-        scale: cardScale,
-        rotateZ,
-        rotateX,
-        transformOrigin: '50% 100%',
-        perspective: 1600,
-      }
+      x,
+      scale: cardScale,
+      rotateZ,
+      rotateX,
+      transformOrigin: '50% 100%',
+      perspective: 1600,
+    }
 
   const innerStyle = reduced
     ? { transform: 'rotateY(180deg)', transformStyle: 'preserve-3d' }
@@ -113,7 +133,7 @@ function Card({ index, progress, reduced }) {
 
           {/* Center Content: High legibility */}
           <div className="my-auto space-y-3">
-            <h3 className="font-serifEd text-2xl sm:text-3xl leading-[1.08] text-textDark font-medium">
+            <h3 className="font-mono text-2xl sm:text-3xl leading-[1.08] text-textDark font-black tracking-[0.06em] uppercase">
               {events[index].title}
             </h3>
             <p className="text-[13px] sm:text-[14px] text-textDark/85 leading-relaxed">
@@ -171,10 +191,10 @@ export default function EventsStory() {
     return (
       <section id="events" className="bg-[#F1EDE3] text-textDark py-24 px-6 md:px-12 border-t border-b border-black/10">
         <div className="max-w-7xl mx-auto mb-12">
-          <p className="font-mono text-[11px] tracking-widest2 uppercase text-textMuted mb-2">
+          <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#FF9F1C] mb-2">
             Events / 03
           </p>
-          <h2 className="font-serifEd text-5xl md:text-6xl text-textDark">
+          <h2 className="font-mono text-5xl md:text-6xl text-textDark tracking-[0.08em] uppercase font-black">
             The Arena
           </h2>
         </div>
@@ -198,11 +218,11 @@ export default function EventsStory() {
         {/* Section Title — Stays visible throughout scroll without fading */}
         <div className="w-full max-w-7xl flex flex-col md:flex-row md:items-end justify-between gap-3 md:gap-4 shrink-0 z-30 pointer-events-none">
           <div>
-            <p className="font-mono text-[11px] tracking-widest2 uppercase text-textMuted mb-1">
+            <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#FF9F1C] mb-1">
               Events / 03
             </p>
             <h2
-              className="font-serifEd leading-[0.9] text-textDark"
+              className="font-mono leading-[0.9] text-textDark tracking-[0.08em] uppercase font-black"
               style={{ fontSize: 'clamp(2rem, 5vw, 4.5rem)' }}
             >
               The Arena
@@ -248,7 +268,7 @@ export default function EventsStory() {
                     />
                   </div>
                   <div className="space-y-3">
-                    <h3 className="font-serifEd text-2xl leading-[1.08] text-textDark font-medium">
+                    <h3 className="font-mono text-2xl leading-[1.08] text-textDark font-black tracking-[0.06em] uppercase">
                       {events[i].title}
                     </h3>
                     <p className="text-[13px] text-textDark/85 leading-relaxed">

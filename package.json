@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "next build && node scripts/prune-out-images.mjs && wrangler pages deploy --branch veer",
+    "deploy:prod": "next build && node scripts/prune-out-images.mjs && wrangler pages deploy --branch main"
   },
   "dependencies": {
     "@fontsource/cinzel": "^5.3.0",
