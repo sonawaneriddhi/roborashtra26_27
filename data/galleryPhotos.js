@@ -112,7 +112,7 @@ export const galleryPhotos = [
   {
     id: 'photo-07',
     publicId: 'roborashtra/gallery/DSC00991',
-    src: galleryUrl('roborashtra/gallery/DSC00991'),
+    src: '/gallery/rotated/DSC00991.webp',
     title: 'FPV High-G Obstacle Course',
     category: 'Telemetry',
     date: 'APR 2026',
@@ -123,7 +123,7 @@ export const galleryPhotos = [
   {
     id: 'photo-08',
     publicId: 'roborashtra/gallery/DSC00995',
-    src: galleryUrl('roborashtra/gallery/DSC00995'),
+    src: '/gallery/rotated/DSC00995.webp',
     title: 'Armature Calibration Run',
     category: 'Actuation',
     date: 'MAY 2026',

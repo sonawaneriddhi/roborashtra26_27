@@ -13,6 +13,16 @@
   --font-serif-ed: 'Cormorant Garamond', serif;
 }
 
+.milestone-glitter {
+  color: #d7efff;
+  letter-spacing: 0.18em;
+  text-shadow:
+    0 0 1px #ffffff,
+    0 0 5px rgba(191, 219, 254, 0.95),
+    0 0 12px rgba(59, 130, 246, 0.8),
+    0 0 24px rgba(30, 64, 175, 0.5);
+}
+
 html {
   overflow-x: clip;
   -webkit-text-size-adjust: 100%;
