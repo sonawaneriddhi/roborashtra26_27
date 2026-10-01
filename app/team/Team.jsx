@@ -131,17 +131,51 @@ function LeftEdgeRoulette({
 
   return (
     <div className="relative w-full flex flex-col justify-center select-none py-2">
-      {/* Orbitron font */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
-        .font-orbitron {
-          font-family: 'Orbitron', sans-serif;
-        }
-      `}</style>
+      {/* =====================================================
+          HALF-CIRCLE / CARD AREA
+      ====================================================== */}
 
       <div className="relative w-full h-[400px] sm:h-[440px] lg:h-[480px] flex items-center">
-        {/* Circular guide */}
+
+        {/* =====================================================
+            NAVIGATION
+        ====================================================== */}
+
+        <div className="absolute left-[-80px] sm:left-[-100px] lg:left-[-140px] top-1/2 -translate-y-1/2 z-[70] flex items-center gap-3.5">
+
+          <div className="flex items-center gap-1 bg-white rounded-xl p-1 border border-black/8 shadow-sm">
+
+            <button
+              type="button"
+              onClick={() => onStep?.(-1)}
+              aria-label="Previous squad"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg hover:bg-[#F7F4ED] hover:text-[#22D3EE] text-[#111111] flex items-center justify-center transition-colors cursor-pointer"
+              title="Previous squad"
+            >
+              <ChevronUp className="w-4 h-4" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onStep?.(1)}
+              aria-label="Next squad"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg hover:bg-[#F7F4ED] hover:text-[#22D3EE] text-[#111111] flex items-center justify-center transition-colors cursor-pointer"
+              title="Next squad"
+            >
+              <ChevronDown className="w-4 h-4" />
+            </button>
+
+          </div>
+
+          <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-white/50 font-bold select-none whitespace-nowrap">
+            NAVIGATE SQUADS
+          </span>
+
+        </div>
+
+        {/* CIRCULAR GUIDE */}
+
         <div
           style={{
             position: 'absolute',
@@ -154,7 +188,8 @@ function LeftEdgeRoulette({
           className="rounded-full border border-dashed border-[#22D3EE]/10 pointer-events-none"
         />
 
-        {/* Cyan connection line */}
+        {/* CYAN CONNECTION LINE */}
+
         <div
           style={{
             position: 'absolute',
@@ -164,6 +199,8 @@ function LeftEdgeRoulette({
           }}
           className="h-[1.5px] bg-gradient-to-r from-transparent via-[#22D3EE]/20 to-[#22D3EE]/60 pointer-events-none"
         />
+
+        {/* CARDS */}
 
         {units.map((unit, idx) => {
           const cardAngle = idx * angleStep + displayAngle
@@ -228,7 +265,9 @@ function LeftEdgeRoulette({
                   : 'bg-black text-white border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.25)] hover:border-[#22D3EE]/30 hover:shadow-[0_6px_26px_rgba(0,0,0,0.35)]'
               }`}
             >
+
               <div className="flex flex-col items-center justify-center h-full w-full text-center gap-1 overflow-hidden">
+
                 <span
                   className={`font-mono text-[11px] sm:text-xs tracking-[0.2em] font-bold uppercase ${
                     isActive
@@ -241,7 +280,7 @@ function LeftEdgeRoulette({
                 </span>
 
                 <h4
-                  className="font-orbitron font-bold text-[15px] sm:text-[17px] md:text-[19px] lg:text-[21px] uppercase tracking-[0.01em] leading-[1.05] text-center w-full px-1 whitespace-normal text-white"
+                  className="font-orbitron font-bold text-[13px] sm:text-[15px] md:text-[17px] lg:text-[18px] uppercase tracking-[0.01em] leading-[1.05] text-center w-full px-1 whitespace-normal text-white"
                   style={{
                     wordBreak: 'normal',
                     overflowWrap: 'normal',
@@ -257,39 +296,13 @@ function LeftEdgeRoulette({
                     unit.shortName || unit.name
                   )}
                 </h4>
+
               </div>
+
             </motion.div>
           )
         })}
-      </div>
 
-      {/* Navigation */}
-      <div className="relative z-[70] flex items-center gap-3.5 pl-4 sm:pl-8 mt-3 sm:mt-5">
-        <div className="flex items-center gap-1 bg-white rounded-xl p-1 border border-black/8 shadow-sm">
-          <button
-            type="button"
-            onClick={() => onStep?.(-1)}
-            aria-label="Previous squad"
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg hover:bg-[#F7F4ED] hover:text-[#22D3EE] text-[#111111] flex items-center justify-center transition-colors cursor-pointer"
-            title="Previous squad"
-          >
-            <ChevronUp className="w-4 h-4" />
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onStep?.(1)}
-            aria-label="Next squad"
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg hover:bg-[#F7F4ED] hover:text-[#22D3EE] text-[#111111] flex items-center justify-center transition-colors cursor-pointer"
-            title="Next squad"
-          >
-            <ChevronDown className="w-4 h-4" />
-          </button>
-        </div>
-
-        <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-white/50 font-bold select-none">
-          NAVIGATE SQUADS
-        </span>
       </div>
     </div>
   )
@@ -340,6 +353,7 @@ function HeadCard({ head, index }) {
 
       <div className="relative z-10">
         <div className="relative aspect-[4/4] w-full rounded-lg sm:rounded-xl overflow-hidden mb-2 sm:mb-3 bg-[#0B1320] border border-[#22D3EE]/15 shadow-inner">
+
           {hasImage ? (
             <img
               src={head.image}
@@ -351,6 +365,7 @@ function HeadCard({ head, index }) {
           ) : (
             <InitialsAvatar name={head.name} />
           )}
+
         </div>
 
         <h4 className="font-mono text-[13px] min-[360px]:text-[15px] sm:text-lg md:text-xl font-black text-white/90 leading-tight mb-0.5 tracking-[0.06em] uppercase group-hover:text-[#22D3EE] transition-colors line-clamp-1">
@@ -363,6 +378,7 @@ function HeadCard({ head, index }) {
       </div>
 
       <div className="relative z-10 pt-1.5 sm:pt-2 border-t border-[#22D3EE]/15 flex items-center justify-between text-[#D7DFEA]">
+
         <span className="font-mono text-[7px] min-[360px]:text-[8px] sm:text-[9px] uppercase tracking-[0.18em] text-white/40">
           CONNECT
         </span>
@@ -379,6 +395,7 @@ function HeadCard({ head, index }) {
         >
           <LinkedInIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
         </a>
+
       </div>
     </motion.div>
   )
@@ -398,6 +415,7 @@ function MemberCard({ member, index }) {
       className="group w-full rounded-xl sm:rounded-2xl p-2 min-[360px]:p-2.5 sm:p-3 border border-[#22D3EE]/20 bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.1),_rgba(9,13,20,0.96)_35%,_rgba(3,5,10,1)_100%)] shadow-[0_0_18px_rgba(0,0,0,0.45)] hover:shadow-[0_0_24px_rgba(34,211,238,0.14)] hover:border-[#22D3EE]/35 transition-all duration-200 flex items-center justify-between gap-2 select-none"
     >
       <div className="min-w-0 pr-1">
+
         <h5 className="font-mono text-[13px] font-black text-white/90 leading-snug truncate tracking-[0.06em] uppercase group-hover:text-[#22D3EE] transition-colors">
           {member.name}
         </h5>
@@ -407,9 +425,11 @@ function MemberCard({ member, index }) {
             {member.role}
           </p>
         )}
+
       </div>
 
       <div className="flex items-center shrink-0">
+
         <a
           href={
             member.socials?.linkedin ||
@@ -422,6 +442,7 @@ function MemberCard({ member, index }) {
         >
           <LinkedInIcon className="w-3.5 h-3.5" />
         </a>
+
       </div>
     </motion.div>
   )
@@ -439,8 +460,8 @@ export default function Team() {
     const leadUnit = {
       id: 'lead',
       number: '01',
-      name: 'LEAD',
-      shortName: 'LEAD',
+      name: 'LEADS',
+      shortName: 'LEADS',
       description:
         'The executive presidential council orchestrating autonomous kinematics development, battle arena protocols, and state championship operations.',
       heads: teamData.leads,
@@ -490,11 +511,21 @@ export default function Team() {
       id="team"
       ref={sectionRef}
       aria-label="Roborashtra Crew Directory"
-      className="relative w-full text-white min-h-screen py-8 sm:py-12 lg:py-0 lg:h-[200vh]"
+
+      /*
+        MOBILE:
+        Removed min-h-screen so the section ends naturally
+        after the actual cards instead of leaving a blank area.
+
+        DESKTOP:
+        Kept the tall sticky runway, slightly increased to 360vh
+        so desktop scrolling feels slower/smoother.
+      */
+      className="relative w-full text-white min-h-0 py-8 sm:py-12 lg:py-0 lg:min-h-0 lg:h-[360vh] overflow-visible"
     >
+
       {/* =====================================================
           EXISTING GLOBAL BACKGROUND
-          THIS STAYS FOR SECTION 1 + SECTION 2
       ====================================================== */}
 
       <style>{`
@@ -618,10 +649,27 @@ export default function Team() {
 
       {/* =====================================================
           3RD / FINAL SECTION
-          ONLY THIS SECTION GETS THE NEW BACKGROUND
       ====================================================== */}
 
-      <div className="relative lg:sticky top-0 min-h-screen lg:h-[100svh] w-full overflow-visible lg:overflow-hidden flex flex-col justify-start lg:justify-center items-center py-4 lg:py-0 border-t border-b border-white/10 isolate">
+      {/* 3RD SECTION BACKGROUND — STRETCHES TO THE BOTTOM */}
+      <div
+        className="absolute left-0 right-0 top-0 bottom-0 z-[-10] pointer-events-none"
+        style={{
+          background: `
+            radial-gradient(
+              ellipse at 50% 45%,
+              rgba(11, 37, 85, 0.98) 0%,
+              rgba(7, 23, 53, 0.99) 36%,
+              rgba(5, 13, 34, 1) 70%,
+              rgba(2, 6, 17, 1) 100%
+            )
+          `,
+        }}
+      />
+
+      <div
+        className="relative lg:sticky top-0 h-auto min-h-0 lg:min-h-screen lg:h-[100svh] w-full overflow-visible lg:overflow-hidden flex flex-col justify-start lg:justify-center items-center py-4 lg:py-0 border-0 lg:border-t lg:border-b lg:border-white/10 isolate"
+      >
 
         {/* =====================================================
             NEW 3RD SECTION BACKGROUND
@@ -789,19 +837,11 @@ export default function Team() {
           }}
         />
 
-        {/* =====================================================
-            SUBTLE RADAR / ROBOT CORE
-        ====================================================== */}
+        {/* RADAR / ROBOT CORE */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[560px] pointer-events-none z-[2] hidden md:block">
 
-        <div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[560px] pointer-events-none z-[2] hidden md:block"
-        >
-          {/* Outer ring */}
-          <div
-            className="robot-ring absolute left-1/2 top-1/2 w-[560px] h-[560px] rounded-full border border-[#00f0ff]/[0.045]"
-          />
+          <div className="robot-ring absolute left-1/2 top-1/2 w-[560px] h-[560px] rounded-full border border-[#00f0ff]/[0.045]" />
 
-          {/* Middle ring */}
           <div
             className="robot-ring absolute left-1/2 top-1/2 w-[430px] h-[430px] rounded-full border border-[#1e6bff]/[0.07]"
             style={{
@@ -809,7 +849,6 @@ export default function Team() {
             }}
           />
 
-          {/* Inner ring */}
           <div
             className="robot-ring absolute left-1/2 top-1/2 w-[290px] h-[290px] rounded-full border border-[#00f0ff]/[0.08]"
             style={{
@@ -817,7 +856,6 @@ export default function Team() {
             }}
           />
 
-          {/* Core glow */}
           <div
             className="robot-core absolute left-1/2 top-1/2 w-[190px] h-[190px] rounded-full blur-[38px]"
             style={{
@@ -826,16 +864,11 @@ export default function Team() {
             }}
           />
 
-          {/* Tiny center */}
-          <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full bg-[#00f0ff] shadow-[0_0_18px_rgba(0,240,255,0.7)] opacity-40"
-          />
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full bg-[#00f0ff] shadow-[0_0_18px_rgba(0,240,255,0.7)] opacity-40" />
+
         </div>
 
-        {/* =====================================================
-            CURVED ENERGY TRAILS
-        ====================================================== */}
-
+        {/* CURVED ENERGY TRAILS */}
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none z-[3]"
           viewBox="0 0 1440 900"
@@ -843,6 +876,7 @@ export default function Team() {
           aria-hidden="true"
         >
           <defs>
+
             <filter
               id="teamCyanTrailGlow"
               x="-50%"
@@ -878,6 +912,7 @@ export default function Team() {
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
+
           </defs>
 
           {/* Cyan trail */}
@@ -924,11 +959,10 @@ export default function Team() {
               animationDelay: '-8s',
             }}
           />
+
         </svg>
 
-        {/* =====================================================
-            SPARSE PARTICLES
-        ====================================================== */}
+        {/* SPARSE PARTICLES */}
 
         <div
           className="robot-particle absolute z-[4] left-[10%] top-[20%] w-[2px] h-[2px] rounded-full pointer-events-none"
@@ -983,10 +1017,7 @@ export default function Team() {
           }}
         />
 
-        {/* =====================================================
-            VIGNETTE
-        ====================================================== */}
-
+        {/* VIGNETTE */}
         <div
           className="absolute inset-0 z-[5] pointer-events-none"
           style={{
@@ -1009,23 +1040,31 @@ export default function Team() {
 
           {/* MOBILE NAV */}
           <div className="lg:hidden sticky top-2 z-40 bg-[#020509]/95 backdrop-blur-md py-1.5 w-full mb-3 rounded-xl border border-[#22D3EE]/15 shadow-lg">
+
             <div className="flex items-center justify-between px-2 mb-1.5">
+
               <div className="flex items-center gap-1.5">
+
                 <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE] animate-pulse" />
 
                 <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em] text-[#22D3EE] font-bold uppercase">
                   CREW SQUADS
                 </span>
+
               </div>
 
               <span className="font-mono text-[8px] sm:text-[9px] text-white/50 tracking-[0.18em] uppercase">
                 {allUnits.length} SQUADS ACTIVE
               </span>
+
             </div>
 
             <div className="w-full overflow-x-auto no-scrollbar">
+
               <div className="flex gap-1.5 sm:gap-2 px-1 pb-1 min-w-max mx-auto justify-start">
+
                 {allUnits.map((unit) => {
+
                   const isActive =
                     unit.id === selectedUnitId
 
@@ -1045,15 +1084,20 @@ export default function Team() {
                     </button>
                   )
                 })}
+
               </div>
+
             </div>
           </div>
 
           {/* MAIN GRID */}
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-10 pt-16 sm:pt-20 lg:pt-16 items-start lg:items-center">
 
             {/* DESKTOP ROULETTE */}
+
             <div className="hidden lg:flex lg:col-span-5 xl:col-span-4 w-full flex-col justify-center">
+
               <LeftEdgeRoulette
                 units={allUnits}
                 selectedId={selectedUnitId}
@@ -1062,14 +1106,19 @@ export default function Team() {
                 }
                 onStep={handleStep}
               />
+
             </div>
 
             {/* RIGHT CONTENT */}
+
             <div className="lg:col-span-7 xl:col-span-8 px-1.5 sm:px-4 md:px-8 lg:pr-10 lg:pl-2 w-full max-h-none overflow-visible overscroll-contain no-scrollbar">
 
               {/* ACTIVE UNIT HEADER */}
+
               <div className="relative lg:sticky top-0 z-30 pt-1 pb-2 sm:pb-3 mb-3 sm:mb-5 border-b border-[#22D3EE]/40">
+
                 <div className="flex items-center gap-2 sm:gap-3">
+
                   <span className="font-mono text-[10px] sm:text-xs font-bold text-[#22D3EE] tracking-[0.18em] uppercase px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[#22D3EE]/10 border border-[#22D3EE]/20">
                     {activeUnit.number || '01'}
                   </span>
@@ -1083,10 +1132,13 @@ export default function Team() {
                   >
                     {activeUnit.name}
                   </motion.h2>
+
                 </div>
+
               </div>
 
               <AnimatePresence mode="wait">
+
                 <motion.div
                   key={activeUnit.id}
                   initial={{ opacity: 0, x: 16 }}
@@ -1100,10 +1152,13 @@ export default function Team() {
                 >
 
                   {/* HEADS */}
+
                   {activeUnit.heads &&
                     activeUnit.heads.length > 0 && (
                       <div>
+
                         <div className="flex items-center gap-3 mb-2.5 sm:mb-3.5">
+
                           <span className="font-mono text-[10px] sm:text-xs tracking-[0.18em] uppercase text-[#22D3EE] font-bold shrink-0">
                             {activeUnit.id === 'lead'
                               ? 'EXECUTIVE LEADS'
@@ -1111,9 +1166,11 @@ export default function Team() {
                           </span>
 
                           <div className="h-[1.5px] bg-[#22D3EE] flex-1 opacity-80" />
+
                         </div>
 
                         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 min-[360px]:gap-2.5 sm:gap-3.5">
+
                           {activeUnit.heads.map(
                             (head, i) => (
                               <HeadCard
@@ -1123,25 +1180,33 @@ export default function Team() {
                               />
                             )
                           )}
+
                         </div>
+
                       </div>
                     )}
 
                   {/* MEMBERS */}
+
                   {activeUnit.id !== 'lead' &&
                     activeUnit.id !== 'cad' && (
                       <div>
+
                         <div className="flex items-center gap-3 mb-2.5 sm:mb-3.5">
+
                           <span className="font-mono text-[10px] sm:text-xs tracking-[0.18em] uppercase text-[#22D3EE] font-bold shrink-0">
                             UNIT MEMBERS
                           </span>
 
                           <div className="h-[1.5px] bg-[#22D3EE] flex-1 opacity-80" />
+
                         </div>
 
                         {activeUnit.members &&
                         activeUnit.members.length > 0 ? (
+
                           <div className="grid grid-cols-1 min-[440px]:grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-1.5 sm:gap-2">
+
                             {activeUnit.members.map(
                               (member, i) => (
                                 <MemberCard
@@ -1151,26 +1216,38 @@ export default function Team() {
                                 />
                               )
                             )}
+
                           </div>
+
                         ) : (
+
                           <div className="bg-black/60 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/10 shadow-sm text-center">
+
                             <p className="font-mono text-[10px] sm:text-xs tracking-[0.18em] uppercase text-white/40">
                               [
                               UNIT RECRUITS CURRENTLY IN
                               INDUCTION LAB ]
                             </p>
+
                           </div>
+
                         )}
+
                       </div>
                     )}
 
                 </motion.div>
+
               </AnimatePresence>
 
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
   )
 }
