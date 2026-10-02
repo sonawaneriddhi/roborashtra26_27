@@ -37,7 +37,7 @@ export const teamData = {
     {
       id: 'lead-1',
       name: 'Shivraj Patil',
-      role: 'Club President & Lead',
+      role: 'Club President ',
       image: portrait('roborashtra/team/lead/shivrajpatil'),
       phone: '9322349300',
       email: 'roborashtra_pr@gmail.com',
@@ -49,7 +49,7 @@ export const teamData = {
     {
       id: 'lead-2',
       name: 'Sarthak Gadhave',
-      role: 'Management & Ops Lead',
+      role: 'Management Lead',
       image: portrait('roborashtra/team/lead/sarthakgadhave'),
       phone: '9822547765',
       email: 'roborashtra_pr@gmail.com',
@@ -60,7 +60,7 @@ export const teamData = {
     {
       id: 'lead-3',
       name: 'Rushikesh Sonaje',
-      role: 'Finance & Treasury Lead',
+      role: 'Finance Lead',
       image: portrait('roborashtra/team/lead/rushikeshsonaje'),
       phone: '9146447449',
       email: 'roborashtra_pr@gmail.com',
@@ -74,13 +74,13 @@ export const teamData = {
   teams: [
     {
       id: 'workshop',
-      name: 'WORKSHOP & HARDWARE',
+      name: 'WORKSHOP',
       shortName: 'WORKSHOP',
       heads: [
         {
           id: 'workshop-head-1',
           name: 'Dhananjay',
-          role: 'Workshop & Fabrication Head',
+          role: 'Workshop Head',
           image: portrait('roborashtra/team/workshop/dhananjay'),
           socials: {
             linkedin: 'https://linkedin.com',
@@ -154,7 +154,7 @@ export const teamData = {
 
     {
       id: 'pr',
-      name: 'PR & OUTREACH',
+      name: 'Public Relations',
       shortName: 'PR',
       heads: [
         {
@@ -178,15 +178,7 @@ export const teamData = {
               'https://www.linkedin.com/in/vedika-katke-663572432?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
-        {
-          id: 'pr-member-2',
-          name: 'Anuja Pandey',
-          role: 'Crew',
-          socials: {
-            linkedin:
-              'https://www.linkedin.com/in/anuja-pandey-44a27b419?utm_source=share_via&utm_content=profile&utm_medium=member_android',
-          },
-        },
+
         {
           id: 'pr-member-3',
           name: 'Manisi Khushi',
@@ -242,7 +234,7 @@ export const teamData = {
 
     {
       id: 'event',
-      name: 'EVENT & ARENA',
+      name: 'MANAGEMENT',
       shortName: 'EVENT',
       heads: [
         {
@@ -396,7 +388,7 @@ export const teamData = {
 
     {
       id: 'design',
-      name: 'DESIGN & MEDIA',
+      name: 'DESIGN ',
       shortName: 'DESIGN',
       heads: [
         {
@@ -423,7 +415,7 @@ export const teamData = {
       members: [
         {
           id: 'design-member-1',
-          name: 'Arya Kadam',
+          name: 'Aryan Kadam',
           role: 'Crew',
           socials: {
             linkedin:
@@ -450,7 +442,7 @@ export const teamData = {
         {
           id: 'web-head-1',
           name: 'Riddhi Sonawane',
-          role: 'Web & Systems Head',
+          role: 'Web Head',
           image: portrait('roborashtra/team/web/riddhi'),
           socials: {
             linkedin:
@@ -459,8 +451,8 @@ export const teamData = {
         },
         {
           id: 'web-head-2',
-          name: 'Yadnesh Borole',
-          role: 'Web & Systems Co-Head',
+          name: 'Yadnyesh Borole',
+          role: 'Web Co-Head',
           image: portrait('roborashtra/team/web/yadnesh'),
           socials: {
             linkedin: 'https://www.linkedin.com/in/yadnyesh-borole-51aa0532a/',
@@ -514,7 +506,7 @@ export const teamData = {
       members: [
         {
           id: 'content-member-1',
-          name: 'Sujal Padir',
+          name: 'Atharv Dangare',
           role: 'Crew',
           socials: {
             linkedin: 'https://linkedin.com',
@@ -522,11 +514,11 @@ export const teamData = {
         },
         {
           id: 'content-member-2',
-          name: 'Girish Mule',
+          name: 'Mrungandha Pawar',
           role: 'Crew',
           socials: {
-            linkedin:
-              'https://www.linkedin.com/in/girish-mule-b4a17b434?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+            linkedin: 'https://linkedin.com',
+
           },
         },
       ],
@@ -534,7 +526,7 @@ export const teamData = {
 
     {
       id: 'documentation',
-      name: 'DOCUMENTATION & RESEARCH',
+      name: 'DOCUMENTATION',
       shortName: 'DOCS',
       heads: [
         {
