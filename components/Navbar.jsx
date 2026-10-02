@@ -170,9 +170,7 @@ export default function Navbar() {
               PROBLEM STATEMENTS
             </Link>
             <a
-              href="https://unstop.com/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/problem-statements"
               className="hover:text-rust transition-colors"
             >
               REGISTER
