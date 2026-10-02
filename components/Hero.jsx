@@ -63,8 +63,8 @@ function MailIcon({ className = 'w-3.5 h-3.5' }) {
   )
 }
 
-// Preload the custom GLTF model asset
-useGLTF.preload('/models/3d-metal-robot.glb')
+// Preload the custom GLTF model asset with local Draco decoders
+useGLTF.preload('/models/3d-metal-robot.glb', '/draco/')
 
 // Responsive Rig for Canvas
 function ResponsiveRig({ children, isMobile }) {
@@ -88,7 +88,7 @@ function ResponsiveRig({ children, isMobile }) {
 
 // GLTF 3D Custom Metal Robot Model Component
 function CustomGLTFModel({ onInteractiveClick, isMobile }) {
-  const { scene } = useGLTF('/models/3d-metal-robot.glb')
+  const { scene } = useGLTF('/models/3d-metal-robot.glb', '/draco/')
   const robotGroup = useRef()
   const clickSpinRef = useRef(0)
   const globalMouse = useRef({ x: 0, y: 0 })
@@ -340,7 +340,7 @@ export default function Hero() {
     useState(false)
 
   const [activeTab, setActiveTab] =
-    useState('roborashtra')
+    useState('robohawk')
 
   const [menuOpen, setMenuOpen] =
     useState(false)
@@ -732,9 +732,9 @@ export default function Hero() {
                   )
                 }
                 className={`py-1.5 px-3 rounded-lg font-orbitron text-[11px] tracking-wider font-bold transition-all ${activeTab ===
-                    'robohawk'
-                    ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)]'
-                    : 'text-slate-400 hover:text-white'
+                  'robohawk'
+                  ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)]'
+                  : 'text-slate-400 hover:text-white'
                   }`}
               >
                 ROBOHAWK
@@ -747,9 +747,9 @@ export default function Hero() {
                   )
                 }
                 className={`py-1.5 px-3 rounded-lg font-orbitron text-[11px] tracking-wider font-bold transition-all ${activeTab ===
-                    'roborashtra'
-                    ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)]'
-                    : 'text-slate-400 hover:text-white'
+                  'roborashtra'
+                  ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)]'
+                  : 'text-slate-400 hover:text-white'
                   }`}
               >
                 ROBORASHTRA
@@ -906,7 +906,7 @@ export default function Hero() {
             <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 transition-transform group-hover:scale-110 shrink-0" />
 
             <span>
-              PROBLEM STATEMENT
+              PROBLEM STATEMENTS
             </span>
 
             <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 group-hover:text-cyan-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 hidden xs:inline-block sm:inline-block" />
