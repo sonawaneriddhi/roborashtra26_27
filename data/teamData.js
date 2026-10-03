@@ -64,6 +64,8 @@ export const teamData = {
       name: 'Shivraj Patil',
       role: 'Club President',
       image: portrait('roborashtra/team/lead/shivrajpatil'),
+      phone: '9322349300',
+      email: 'roborashtra_pr@gmail.com',
       socials: {
         linkedin:
           'https://www.linkedin.com/in/shivraj-patil-6b205532b?utm_source=share_via&utm_content=profile&utm_medium=member_android',
@@ -74,6 +76,8 @@ export const teamData = {
       name: 'Sarthak Gadhave',
       role: 'Management Lead',
       image: portrait('roborashtra/team/lead/sarthakgadhave'),
+      phone: '9822547765',
+      email: 'roborashtra_pr@gmail.com',
       socials: {
         linkedin: 'https://linkedin.com',
       },
@@ -83,6 +87,8 @@ export const teamData = {
       name: 'Rushikesh Sonaje',
       role: 'Finance Lead',
       image: portrait('roborashtra/team/lead/rushikeshsonaje'),
+      phone: '9146447449',
+      email: 'roborashtra_pr@gmail.com',
       socials: {
         linkedin:
           'https://www.linkedin.com/in/rushikesh-sonaje-a752b232b?utm_source=share_via&utm_content=profile&utm_medium=member_android',

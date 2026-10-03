@@ -37,6 +37,25 @@ export default function Home() {
     }
   }, [shouldPlayIntro, loaded])
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        document.documentElement.classList.add('mobile-no-scroll')
+        document.body.classList.add('mobile-no-scroll')
+      } else {
+        document.documentElement.classList.remove('mobile-no-scroll')
+        document.body.classList.remove('mobile-no-scroll')
+      }
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => {
+      document.documentElement.classList.remove('mobile-no-scroll')
+      document.body.classList.remove('mobile-no-scroll')
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
   const handleLoadingFinish = useCallback(() => {
     setLoaded(true)
     sessionStorage.setItem('roborashtra_intro_shown', 'true')
@@ -60,7 +79,7 @@ export default function Home() {
     <>
       {shouldPlayIntro && <LoadingScreen onFinish={handleLoadingFinish} />}
       <div
-        className={`transition-opacity duration-700 ${
+        className={`h-[100dvh] max-h-[100dvh] md:h-auto overflow-hidden transition-opacity duration-700 ${
           loaded ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >

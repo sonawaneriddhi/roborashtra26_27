@@ -36,6 +36,16 @@ body {
   background-position: -1px -1px;
 }
 
+/* Disable vertical scrolling and overscroll bounce on mobile view for home page */
+html.mobile-no-scroll,
+body.mobile-no-scroll {
+  overflow: hidden !important;
+  height: 100% !important;
+  max-height: 100dvh !important;
+  overscroll-behavior: none !important;
+  touch-action: manipulation;
+}
+
 /* First-visit initial black screen curtain */
 #initial-blackout {
   display: none;
