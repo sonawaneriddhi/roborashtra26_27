@@ -63,8 +63,8 @@ function MailIcon({ className = 'w-3.5 h-3.5' }) {
   )
 }
 
-// Preload the custom GLTF model asset
-useGLTF.preload('/models/3d-metal-robot.glb')
+// Preload the custom GLTF model asset with local Draco decoders
+useGLTF.preload('/models/3d-metal-robot.glb', '/draco/')
 
 // Responsive Rig for Canvas
 function ResponsiveRig({ children, isMobile }) {
@@ -88,7 +88,7 @@ function ResponsiveRig({ children, isMobile }) {
 
 // GLTF 3D Custom Metal Robot Model Component
 function CustomGLTFModel({ onInteractiveClick, isMobile }) {
-  const { scene } = useGLTF('/models/3d-metal-robot.glb')
+  const { scene } = useGLTF('/models/3d-metal-robot.glb', '/draco/')
   const robotGroup = useRef()
   const clickSpinRef = useRef(0)
   const globalMouse = useRef({ x: 0, y: 0 })
@@ -340,7 +340,7 @@ export default function Hero() {
     useState(false)
 
   const [activeTab, setActiveTab] =
-    useState('roborashtra')
+    useState('robohawk')
 
   const [menuOpen, setMenuOpen] =
     useState(false)
@@ -437,41 +437,19 @@ export default function Hero() {
 
         <Link
           href="/"
-          className="group flex items-center gap-3.5 sm:gap-4 select-none"
+          className="group flex items-center select-none"
+          aria-label="Roborashtra Home"
         >
-
-          <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_16px_rgba(56,189,248,0.45)]">
-
+          <div className="relative h-8 sm:h-10 md:h-12 w-auto max-w-[62vw] sm:max-w-none flex items-center">
             <Image
-              src="/logo/emblem-bright.png"
-              alt="Roborashtra Emblem"
-              fill
-              className="object-contain"
+              src="/header.png"
+              alt="Robo Rashtra '27"
+              width={320}
+              height={48}
               priority
+              className="h-8 sm:h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_16px_rgba(56,189,248,0.3)]"
             />
-
           </div>
-
-          <div className="flex flex-col">
-
-            <div className="flex items-center gap-2">
-
-              <span className="font-orbitron font-black text-base sm:text-xl md:text-2xl tracking-wider text-white">
-                ROBO<span className="text-cyan-400">RASHTRA</span>
-              </span>
-
-              <span className="hidden sm:inline-block font-orbitron font-bold text-[9px] tracking-widest px-2.5 py-0.5 rounded-full border bg-cyan-950/50 text-cyan-300 border-cyan-500/40 shadow-[0_0_12px_rgba(6,182,212,0.25)]">
-                2026-27
-              </span>
-
-            </div>
-
-            <span className="font-orbitron font-semibold text-[9px] sm:text-[10px] tracking-[0.28em] uppercase text-slate-400 group-hover:text-cyan-400/80 transition-colors">
-              ROBOTICS CLUB
-            </span>
-
-          </div>
-
         </Link>
 
         {/* Menu */}
@@ -732,9 +710,9 @@ export default function Hero() {
                   )
                 }
                 className={`py-1.5 px-3 rounded-lg font-orbitron text-[11px] tracking-wider font-bold transition-all ${activeTab ===
-                    'robohawk'
-                    ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)]'
-                    : 'text-slate-400 hover:text-white'
+                  'robohawk'
+                  ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)]'
+                  : 'text-slate-400 hover:text-white'
                   }`}
               >
                 ROBOHAWK
@@ -747,9 +725,9 @@ export default function Hero() {
                   )
                 }
                 className={`py-1.5 px-3 rounded-lg font-orbitron text-[11px] tracking-wider font-bold transition-all ${activeTab ===
-                    'roborashtra'
-                    ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)]'
-                    : 'text-slate-400 hover:text-white'
+                  'roborashtra'
+                  ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)]'
+                  : 'text-slate-400 hover:text-white'
                   }`}
               >
                 ROBORASHTRA
@@ -906,7 +884,7 @@ export default function Hero() {
             <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 transition-transform group-hover:scale-110 shrink-0" />
 
             <span>
-              PROBLEM STATEMENT
+              PROBLEM STATEMENTS
             </span>
 
             <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 group-hover:text-cyan-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 hidden xs:inline-block sm:inline-block" />
@@ -916,9 +894,7 @@ export default function Hero() {
           {/* Register */}
 
           <a
-            href="https://unstop.com/"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/problem-statements"
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2.5 px-3 sm:px-8 py-2.5 sm:py-3 rounded-xl font-orbitron text-[10px] sm:text-xs tracking-wider font-black uppercase bg-gradient-to-r from-rust via-orange-600 to-amber-500 hover:from-orange-600 hover:to-amber-400 text-white border border-orange-400/40 shadow-[0_0_25px_rgba(234,88,12,0.45)] hover:shadow-[0_0_35px_rgba(234,88,12,0.75)] transition-all duration-300 active:scale-[0.98] group whitespace-nowrap"
           >
 
@@ -1039,3 +1015,4 @@ export default function Hero() {
     </section>
   )
 }
+

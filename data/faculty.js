@@ -47,21 +47,21 @@ export const facultyMembers = [
     description:
       'Spearheading autonomous kinematics architectures, ROS 2 deployment, and national combat robotics mentorship for over 12 years.',
     image: facultyPortrait('roborashtra/team/faculty/pallavikulkarni', '/team/pallavikulkarni.png'),
-    badge: 'FACULTY DIRECTOR',
-    credentials: 'Ph.D. Robotics (IITB) · IEEE Senior Member',
+    badge: 'FACULTY COORDINATOR',
+    credentials: 'M.Tech. (Computer Engineering)',
     email: 'pallavi.kulkarni@pccoer.in',
   },
   {
     id: 'faculty-02',
     name: 'Prof. Vrushali Deore',
-    designation: 'Faculty Coordinator',
+    designation: 'Faculty Co-Coordinator',
     department: 'Department of Computer Science Engineering',
 
     description:
       'Leading embedded vision pipelines, high-speed FPV dynamics, and precision manipulator telemetry across all competitive fleets.',
     image: facultyPortrait('roborashtra/team/faculty/vrushalideore', '/team/vrushalideore.png'),
-    badge: 'CHIEF COORDINATOR',
-    credentials: 'M.Tech AI & Automation · 8+ Years Industry Mentorship',
+    badge: 'FACULTY CO-COORDINATOR',
+    credentials: 'M.E. Computer',
     email: 'vrushali.deore@pccoer.in',
   },
 ]

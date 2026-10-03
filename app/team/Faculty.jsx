@@ -36,9 +36,9 @@ function FacultyCard({ faculty, index }) {
   // Short professional descriptions for the card back
   const facultyAbout =
     faculty.name.includes('Vrushali')
-      ? '5+ years of experience in Computer Engineering, with a focus on teaching, student mentoring and academic coordination. Actively involved in NBA activities and departmental responsibilities.'
+      ? '5+ years of experience in Computer Engineering, with a focus on teaching'
       : faculty.name.includes('Pallavi')
-        ? '20+ years of experience in Computer Engineering, with expertise in Computer Networks, Data Mining & Warehousing, Software Engineering and OOD. Actively involved in academic publications, software development and student mentoring.'
+        ? '16+ years of experience of Teaching in Computer Engineering, with additional to 4 years of Industrial experience'
         : 'Experienced faculty member contributing to teaching, student mentoring and academic activities.'
 
   return (

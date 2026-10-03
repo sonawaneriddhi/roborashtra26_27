@@ -158,7 +158,6 @@ function LeftEdgeRoulette({
 
   return (
     <div className="relative w-full flex flex-col justify-center select-none py-2">
-
       <div className="relative w-full h-[400px] sm:h-[440px] lg:h-[480px] flex items-center">
         {/* Circular guide */}
         <div
@@ -241,47 +240,30 @@ function LeftEdgeRoulette({
                 opacity,
                 zIndex,
               }}
-<<<<<<< HEAD
-              className={`w-[150px] sm:w-[170px] md:w-[195px] lg:w-[215px] h-[92px] sm:h-[102px] md:h-[114px] lg:h-[124px] rounded-2xl p-2 sm:p-4 md:p-3.5 flex flex-col justify-between cursor-pointer transition-all duration-300 ${isActive
-                ? 'bg-[#22D3EE] text-[#050B14] shadow-[0_10px_35px_rgba(34,211,238,0.35)] border-2 border-[#22D3EE]'
-                : 'bg-black text-[#FFFFFF] border border-black/8 shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:border-[#22D3EE]/30 hover:shadow-[0_6px_26px_rgba(0,0,0,0.08)]'
-                }`}
-=======
               className={`w-[150px] sm:w-[170px] md:w-[195px] lg:w-[215px] h-[92px] sm:h-[102px] md:h-[114px] lg:h-[124px] rounded-2xl p-3 flex items-center justify-center cursor-pointer transition-all duration-300 ${
                 isActive
                   ? 'bg-[#22D3EE] text-white shadow-[0_10px_35px_rgba(34,211,238,0.35)] border-2 border-[#22D3EE]'
                   : 'bg-black text-white border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.25)] hover:border-[#22D3EE]/30 hover:shadow-[0_6px_26px_rgba(0,0,0,0.35)]'
               }`}
->>>>>>> veer
             >
               <div className="flex flex-col items-center justify-center h-full w-full text-center gap-1 overflow-hidden">
                 <span
-<<<<<<< HEAD
-                  className={`font-mono text-xs sm:text-sm tracking-[0.18em] font-bold uppercase ${isActive ? 'text-black/80' : 'text-[#FFFFFF]'
-                    }`}
-=======
                   className={`font-mono text-[11px] sm:text-xs tracking-[0.2em] font-bold uppercase ${
                     isActive
                       ? 'text-white/60'
                       : 'text-white/50'
                   }`}
->>>>>>> veer
                 >
                   {unit.number ||
                     String(idx + 1).padStart(2, '0')}
                 </span>
 
                 <h4
-<<<<<<< HEAD
-                  className={`font-mono font-black text-[10px] sm:text-[10px] md:text-[10px] lg:text-[10px] uppercase tracking-[0.12em] leading-none ${isActive ? 'text-[#FFFFFF]' : 'text-[#FFFFFF]'
-                    }`}
-=======
                   className="font-orbitron font-bold text-[15px] sm:text-[17px] md:text-[19px] lg:text-[21px] uppercase tracking-[0.01em] leading-[1.05] text-center w-full px-1 whitespace-normal text-white"
                   style={{
                     wordBreak: 'normal',
                     overflowWrap: 'normal',
                   }}
->>>>>>> veer
                 >
                   {unit.shortName === 'PROBLEM STATEMENT' ? (
                     <>
@@ -355,28 +337,15 @@ function InitialsAvatar({ name }) {
   )
 }
 
-function HeadCard({ head, index }) {
+function HeadCard({ head, index, totalHeads = 0 }) {
   const [imgError, setImgError] = useState(false)
   const [showContact, setShowContact] = useState(false)
-  const cardRef = useRef(null)
 
   const hasImage = !!head.image && !imgError
-
-  // Close contact overlay when clicking outside
-  useEffect(() => {
-    if (!showContact) return
-    const handler = (e) => {
-      if (cardRef.current && !cardRef.current.contains(e.target)) {
-        setShowContact(false)
-      }
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [showContact])
+  const hasContact = Boolean(head.phone || head.email)
 
   return (
     <motion.div
-      ref={cardRef}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -6 }}
@@ -385,61 +354,97 @@ function HeadCard({ head, index }) {
         delay: index * 0.05,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="group relative overflow-hidden rounded-xl sm:rounded-2xl p-2.5 min-[360px]:p-3 sm:p-4 border border-[#22D3EE]/20 bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.12),_rgba(8,11,18,0.96)_45%,_rgba(2,4,8,1)_100%)] shadow-[0_0_24px_rgba(0,0,0,0.55)] hover:shadow-[0_0_28px_rgba(34,211,238,0.18)] hover:border-[#22D3EE]/45 transition-all duration-300 flex flex-col justify-between select-none"
+      className={`group relative overflow-hidden rounded-xl sm:rounded-2xl p-2.5 min-[360px]:p-3 sm:p-4 border border-[#22D3EE]/20 bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.12),_rgba(8,11,18,0.96)_45%,_rgba(2,4,8,1)_100%)] shadow-[0_0_24px_rgba(0,0,0,0.55)] hover:shadow-[0_0_28px_rgba(34,211,238,0.18)] hover:border-[#22D3EE]/45 transition-all duration-300 flex flex-col justify-between select-none ${
+        totalHeads === 3 && index === 2
+          ? 'col-span-2 sm:col-span-1 max-w-[280px] sm:max-w-none mx-auto w-full'
+          : ''
+      }`}
     >
       <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.03),transparent_50%,rgba(34,211,238,0.05))] pointer-events-none" />
 
-      {/* Contact overlay */}
+      {/* Contact Overlay Modal */}
       <AnimatePresence>
         {showContact && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 6 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92, y: 6 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0 z-30 rounded-xl sm:rounded-2xl bg-[#020408]/95 backdrop-blur-md border border-[#22D3EE]/30 flex flex-col items-center justify-center gap-3 p-4"
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.94 }}
+            transition={{ duration: 0.2 }}
+            className="absolute inset-0 z-30 rounded-xl sm:rounded-2xl bg-[#030712]/95 backdrop-blur-md border border-[#22D3EE]/40 p-3 sm:p-4 flex flex-col justify-between shadow-2xl"
           >
-            {/* Close */}
-            <button
-              type="button"
-              onClick={() => setShowContact(false)}
-              className="absolute top-2.5 right-2.5 w-6 h-6 rounded-md bg-white/5 hover:bg-[#22D3EE]/15 text-white/50 hover:text-[#22D3EE] flex items-center justify-center transition-colors"
-              aria-label="Close contact"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-
-            <p className="font-mono text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#22D3EE] font-bold mb-1">
-              Contact
-            </p>
-
-            {/* Phone */}
-            {head.phone && (
-              <a
-                href={`tel:${head.phone}`}
-                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg bg-[#0F172A] hover:bg-[#22D3EE]/10 border border-[#22D3EE]/15 hover:border-[#22D3EE]/40 transition-all group/link"
-                aria-label={`Call ${head.name}`}
+            {/* Top row */}
+            <div className="flex items-center justify-between pb-1.5 border-b border-white/10">
+              <span className="font-mono text-[8px] sm:text-[9px] tracking-[0.2em] text-[#22D3EE] font-bold uppercase">
+                CONTACT DETAILS
+              </span>
+              <button
+                type="button"
+                onClick={() => setShowContact(false)}
+                className="w-6 h-6 rounded-md bg-white/5 hover:bg-[#22D3EE]/20 text-white/70 hover:text-[#22D3EE] flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Close contact info"
               >
-                <Phone className="w-3.5 h-3.5 text-[#22D3EE] shrink-0" />
-                <span className="font-mono text-[11px] sm:text-[12px] text-white/80 group-hover/link:text-white tracking-wide transition-colors truncate">
-                  {head.phone}
-                </span>
-              </a>
-            )}
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
 
-            {/* Email */}
-            {head.email && (
-              <a
-                href={`mailto:${head.email}`}
-                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg bg-[#0F172A] hover:bg-[#22D3EE]/10 border border-[#22D3EE]/15 hover:border-[#22D3EE]/40 transition-all group/link"
-                aria-label={`Email ${head.name}`}
+            {/* Middle: Details */}
+            <div className="flex flex-col gap-2 my-auto py-1">
+              <div>
+                <h5 className="font-mono text-xs sm:text-sm font-black text-white uppercase tracking-wide truncate">
+                  {head.name}
+                </h5>
+                <p className="font-mono text-[8px] sm:text-[9px] text-[#22D3EE] uppercase tracking-wider font-semibold">
+                  {head.role}
+                </p>
+              </div>
+
+              {head.phone && (
+                <a
+                  href={`tel:${head.phone}`}
+                  className="flex items-center gap-2 p-1.5 sm:p-2 rounded-lg bg-[#0B1320] hover:bg-[#22D3EE]/15 border border-[#22D3EE]/20 hover:border-[#22D3EE]/50 transition-all text-white group/contactLink"
+                  aria-label={`Call ${head.name} at ${head.phone}`}
+                >
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-md bg-[#22D3EE]/20 text-[#22D3EE] flex items-center justify-center shrink-0">
+                    <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  </div>
+                  <div className="min-w-0 text-left">
+                    <p className="text-[6.5px] sm:text-[7.5px] font-mono text-white/50 uppercase tracking-wider">Phone</p>
+                    <p className="text-[10.5px] sm:text-[11.5px] font-mono font-bold text-white group-hover/contactLink:text-[#22D3EE] transition-colors truncate">
+                      {head.phone}
+                    </p>
+                  </div>
+                </a>
+              )}
+
+              {head.email && (
+                <a
+                  href={`mailto:${head.email}`}
+                  className="flex items-center gap-2 p-1.5 sm:p-2 rounded-lg bg-[#0B1320] hover:bg-[#22D3EE]/15 border border-[#22D3EE]/20 hover:border-[#22D3EE]/50 transition-all text-white group/contactLink"
+                  aria-label={`Email ${head.name} at ${head.email}`}
+                >
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-md bg-[#22D3EE]/20 text-[#22D3EE] flex items-center justify-center shrink-0">
+                    <Mail className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  </div>
+                  <div className="min-w-0 text-left">
+                    <p className="text-[6.5px] sm:text-[7.5px] font-mono text-white/50 uppercase tracking-wider">Email</p>
+                    <p className="text-[9.5px] sm:text-[10.5px] font-mono text-white/90 group-hover/contactLink:text-[#22D3EE] transition-colors truncate">
+                      {head.email}
+                    </p>
+                  </div>
+                </a>
+              )}
+            </div>
+
+            {/* Bottom: Close */}
+            <div className="pt-1.5 border-t border-white/10 text-center">
+              <button
+                type="button"
+                onClick={() => setShowContact(false)}
+                className="w-full py-1 rounded-md bg-white/5 hover:bg-white/10 text-white/50 hover:text-white font-mono text-[8px] uppercase tracking-wider transition-colors cursor-pointer"
               >
-                <Mail className="w-3.5 h-3.5 text-[#22D3EE] shrink-0" />
-                <span className="font-mono text-[9px] sm:text-[10px] text-white/80 group-hover/link:text-white tracking-wide transition-colors truncate">
-                  {head.email}
-                </span>
-              </a>
-            )}
+                Close
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -468,20 +473,23 @@ function HeadCard({ head, index }) {
         </p>
       </div>
 
-      <div className="relative z-10 pt-1.5 sm:pt-2 border-t border-[#22D3EE]/15 flex items-center justify-between text-[#D7DFEA]">
-        {/* Contact button */}
-        {(head.phone || head.email) && (
+      <div className="relative z-10 pt-1.5 sm:pt-2 border-t border-[#22D3EE]/15 flex items-center justify-between text-[#D7DFEA] gap-1.5">
+        {hasContact ? (
           <button
             type="button"
             onClick={() => setShowContact(true)}
-            className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#22D3EE]/10 hover:bg-[#22D3EE]/20 border border-[#22D3EE]/25 hover:border-[#22D3EE]/50 text-[#22D3EE] transition-all duration-200 cursor-pointer"
+            className="flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg bg-[#22D3EE]/10 hover:bg-[#22D3EE]/25 border border-[#22D3EE]/30 hover:border-[#22D3EE]/60 text-[#22D3EE] transition-all duration-200 cursor-pointer"
             aria-label={`Contact ${head.name}`}
           >
             <Phone className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-            <span className="font-mono text-[7px] sm:text-[8px] uppercase tracking-[0.15em] font-bold">
-              Contact
+            <span className="font-mono text-[7px] min-[360px]:text-[8px] sm:text-[9px] uppercase tracking-[0.15em] font-bold">
+              CONTACT
             </span>
           </button>
+        ) : (
+          <span className="font-mono text-[7px] min-[360px]:text-[8px] sm:text-[9px] uppercase tracking-[0.18em] text-white/40">
+            CONNECT
+          </span>
         )}
 
         <a
@@ -491,7 +499,7 @@ function HeadCard({ head, index }) {
           }
           target="_blank"
           rel="noopener noreferrer"
-          className="w-6 h-6 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-[#0F172A] hover:bg-[#22D3EE]/15 text-[#F8FAFC] hover:text-[#22D3EE] border border-[#22D3EE]/20 flex items-center justify-center transition-colors"
+          className="w-6 h-6 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-[#0F172A] hover:bg-[#22D3EE]/15 text-[#F8FAFC] hover:text-[#22D3EE] border border-[#22D3EE]/20 flex items-center justify-center transition-colors shrink-0"
           aria-label={`${head.name} LinkedIn`}
         >
           <LinkedInIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
@@ -609,35 +617,6 @@ export default function Team() {
       aria-label="Roborashtra Crew Directory"
       className="relative w-full text-white min-h-screen py-8 sm:py-12 lg:py-0 lg:h-[200vh]"
     >
-<<<<<<< HEAD
-      {/* Injecting CSS Keyframes directly inside JSX */}
-      <style>{`
-    @keyframes spacePan {
-      from {
-        background-position: 0px 0px, 0px 0px;
-      }
-      to {
-        background-position: 600px 1200px, 300px 600px;
-      }
-    }
-    .jsx-moving-stars {
-      animation: spacePan 60s linear infinite;
-    }
-  `}</style>
-
-      {/* FIXED BACKGROUND LAYER: Moving, high-brightness stars */}
-      <div
-        className="fixed inset-0 bg-[#020408] -z-10 pointer-events-none jsx-moving-stars"
-        style={{
-          backgroundImage: `
-        radial-gradient(circle at center, #ffffff 2px, transparent 2.5px),
-        radial-gradient(circle at center, #ffffff 1px, transparent 2px)
-      `,
-          backgroundSize: '120px 120px, 180px 180px',
-          filter: 'drop-shadow(0 0 1px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.4))'
-        }}
-      />
-=======
       {/* =====================================================
           EXISTING GLOBAL BACKGROUND
           THIS STAYS FOR SECTION 1 + SECTION 2
@@ -648,7 +627,6 @@ export default function Team() {
           0% {
             transform: translateX(0) skewX(-18deg);
           }
->>>>>>> veer
 
           100% {
             transform: translateX(420%) skewX(-18deg);
@@ -1179,13 +1157,6 @@ export default function Team() {
                   return (
                     <button
                       key={unit.id}
-<<<<<<< HEAD
-                      onClick={() => setSelectedUnitId(unit.id)}
-                      className={`shrink-0 rounded-full px-3 py-1 font-mono text-[9.5px] min-[360px]:text-[10px] sm:text-[11px] tracking-[0.18em] font-bold uppercase transition-all duration-200 min-h-[32px] sm:min-h-[36px] touch-manipulation ${isActive
-                        ? 'bg-[#22D3EE] text-[#050B14] shadow-[0_4px_14px_rgba(34,211,238,0.35)]'
-                        : 'bg-black text-white/80 border border-white/15 hover:border-[#22D3EE]/40 hover:text-white'
-                        }`}
-=======
                       onClick={() =>
                         setSelectedUnitId(unit.id)
                       }
@@ -1194,7 +1165,6 @@ export default function Team() {
                           ? 'bg-[#22D3EE] text-[#050B14] shadow-[0_4px_14px_rgba(34,211,238,0.35)]'
                           : 'bg-black/70 text-white/80 border border-white/15 hover:border-[#22D3EE]/40 hover:text-white'
                       }`}
->>>>>>> veer
                     >
                       {unit.shortName || unit.name}
                     </button>
@@ -1207,11 +1177,7 @@ export default function Team() {
           {/* MAIN GRID */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-10 pt-16 sm:pt-20 lg:pt-16 items-start lg:items-center">
 
-<<<<<<< HEAD
-            {/* LEFT: PARTIALLY HIDDEN CIRCULAR ROULETTE (Touches Left Edge) — desktop only */}
-=======
             {/* DESKTOP ROULETTE */}
->>>>>>> veer
             <div className="hidden lg:flex lg:col-span-5 xl:col-span-4 w-full flex-col justify-center">
               <LeftEdgeRoulette
                 units={allUnits}
@@ -1243,10 +1209,6 @@ export default function Team() {
                     {activeUnit.name}
                   </motion.h2>
                 </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> veer
               </div>
 
               <AnimatePresence mode="wait">

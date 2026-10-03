@@ -139,18 +139,18 @@ export default function Navbar() {
               className="flex items-center gap-2 sm:gap-2.5 group select-none"
               aria-label="Roborashtra Home"
             >
-              <div className="relative h-9 sm:h-10 md:h-12 w-auto flex items-center justify-center">
+              <div className="relative h-7 sm:h-8 md:h-9 w-auto flex items-center justify-center">
                 <Image
                   src="/logo/wblogo.png"
                   alt="Logo A - Roborashtra"
-                  width={140}
-                  height={56}
+                  width={80}
+                  height={80}
                   priority
-                  className="h-9 sm:h-10 md:h-12 w-auto max-h-12 object-contain mix-blend-multiply transition-all duration-300 group-hover:scale-105 group-hover:opacity-90"
+                  className="h-7 sm:h-8 md:h-9 w-auto max-h-9 object-contain mix-blend-multiply transition-all duration-300 group-hover:scale-105 group-hover:opacity-90"
                 />
               </div>
-              <span className="font-orbitron text-base sm:text-lg md:text-xl tracking-wide text-textDark group-hover:text-rust transition-colors hidden min-[440px]:inline-block">
-                Roborashtra
+              <span className="font-orbitron text-xs sm:text-sm md:text-base tracking-wide text-textDark group-hover:text-rust transition-colors hidden min-[440px]:inline-block">
+                ROBORASHTRA
               </span>
             </Link>
           </div>
@@ -185,14 +185,14 @@ export default function Navbar() {
               MENU
             </button>
 
-            <div className="relative h-9 sm:h-10 md:h-12 w-auto flex items-center justify-center">
+            <div className="relative h-7 sm:h-8 md:h-9 w-auto flex items-center justify-center">
               <Image
                 src="/logo-b.png"
                 alt="Logo B"
                 width={140}
                 height={56}
                 priority
-                className="h-9 sm:h-10 md:h-12 w-auto max-h-12 object-contain mix-blend-multiply transition-all duration-300 hover:scale-105 hover:opacity-90 cursor-pointer"
+                className="h-7 sm:h-8 md:h-9 w-auto max-h-9 object-contain mix-blend-multiply transition-all duration-300 hover:scale-105 hover:opacity-90 cursor-pointer"
               />
             </div>
           </div>
