@@ -16,6 +16,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { ChevronRight, ChevronLeft } from 'lucide-react'
 import GalleryScene from './gallery/GalleryScene'
+import MobileGalleryGrid from './MobileGalleryGrid'
 import GalleryControls from './gallery/GalleryControls'
 import ExpandedPhoto from './gallery/ExpandedPhoto'
 import { galleryPhotos } from '@/data/galleryPhotos'
@@ -61,7 +62,7 @@ export default function Gallery() {
   return (
     <section
       id="gallery"
-      className="relative w-full h-screen h-[100dvh] min-h-[600px] bg-[#070b14] select-none overflow-hidden"
+      className="relative w-full h-[100dvh] min-h-[600px] bg-[#070b14] select-none overflow-hidden"
     >
       <div className="pointer-events-none absolute inset-0 z-10">
         <LunarParticles />
@@ -76,7 +77,7 @@ export default function Gallery() {
         <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#070b14] to-transparent pointer-events-none" />
 
         {/* 3D Scene Layer */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 hidden sm:block">
           <GalleryScene
             photos={galleryPhotos}
             selectedPhoto={selectedPhoto}
@@ -87,11 +88,30 @@ export default function Gallery() {
           />
         </div>
 
+        <div className="absolute inset-0 z-0 overflow-y-auto sm:hidden">
+          <div className="sticky top-0 z-20 h-[76px] border-b border-white/10 bg-[#070b14]/95 px-5 pt-5 backdrop-blur-md">
+            <div
+              role="heading"
+              aria-level="2"
+              className="font-orbitron text-left text-[15px] font-semibold leading-tight tracking-[0.1em] text-[#d7efff]"
+            >
+              <span className="block">MAPPING OUR</span>
+              <span className="block">MILESTONES</span>
+            </div>
+          </div>
+          <MobileGalleryGrid
+            photos={galleryPhotos}
+            onSelectPhoto={handleSelectPhoto}
+          />
+        </div>
+
         {/* Editorial HUD Overlay */}
-        <GalleryControls
-          hasInteracted={hasInteracted}
-          totalPhotos={galleryPhotos.length}
-        />
+        <div className="hidden sm:block">
+          <GalleryControls
+            hasInteracted={hasInteracted}
+            totalPhotos={galleryPhotos.length}
+          />
+        </div>
 
         {/* Spotlight Expanded Photo Modal */}
         <ExpandedPhoto
@@ -103,7 +123,7 @@ export default function Gallery() {
 
         {/* ── Interactive Navigation Controls ── */}
         {/* Right Arrow Button (Next Photo Orbit) */}
-        <div className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 z-20 pointer-events-auto">
+        <div className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 z-20 pointer-events-auto hidden sm:block">
           <button
             onClick={handleRotateNext}
             aria-label="Rotate gallery to next items"
@@ -114,7 +134,7 @@ export default function Gallery() {
         </div>
 
         {/* Left Arrow Button (Previous Photo Orbit) */}
-        <div className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 z-20 pointer-events-auto">
+        <div className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 z-20 pointer-events-auto hidden sm:block">
           <button
             onClick={handleRotatePrev}
             aria-label="Rotate gallery to previous items"
