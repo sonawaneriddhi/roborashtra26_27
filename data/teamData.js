@@ -104,11 +104,11 @@ export const teamData = {
       heads: [
         {
           id: 'workshop-head-1',
-          name: 'Dhananjay',
+          name: 'Dhananjay Chavan',
           role: 'Workshop Head',
           image: portrait('roborashtra/team/workshop/dhananjay'),
           socials: {
-            linkedin: 'https://linkedin.com',
+            linkedin: 'https://www.linkedin.com/in/dhananjay-chavan-244901328?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
       ],
@@ -227,7 +227,7 @@ export const teamData = {
           name: 'Aditya Kadam',
           role: 'Crew',
           socials: {
-            linkedin: 'https://linkedin.com',
+            linkedin: 'https://www.linkedin.com/in/aditya-kadam-908203429',
           },
         },
         {
@@ -598,7 +598,7 @@ export const teamData = {
           role: 'CAD Head',
           image: portrait('roborashtra/team/cad/sarthak'),
           socials: {
-            linkedin: 'https://linkedin.com',
+            linkedin: 'https://www.linkedin.com/in/sarthak-thete-40432132b?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
           },
         },
       ],
