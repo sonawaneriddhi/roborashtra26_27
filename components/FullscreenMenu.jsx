@@ -14,7 +14,7 @@ const links = [
   { label: 'TEAM', href: '/team' },
   { label: 'JOURNEY', href: '/roadmap' },
   { label: 'COUNTDOWN', href: '/countdown' },
-  { label: 'REGISTER', href: 'https://unstop.com/' },
+  { label: 'REGISTER', href: '/problem-statements' },
 ]
 
 const listVariants = {

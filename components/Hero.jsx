@@ -906,7 +906,7 @@ export default function Hero() {
             <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 transition-transform group-hover:scale-110 shrink-0" />
 
             <span>
-              PROBLEM STATEMENT
+              PROBLEM STATEMENTS
             </span>
 
             <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 group-hover:text-cyan-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 hidden xs:inline-block sm:inline-block" />
@@ -916,7 +916,7 @@ export default function Hero() {
           {/* Register */}
 
           <a
-            href="https://unstop.com/"
+            href="/problem-statements"
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2.5 px-3 sm:px-8 py-2.5 sm:py-3 rounded-xl font-orbitron text-[10px] sm:text-xs tracking-wider font-black uppercase bg-gradient-to-r from-rust via-orange-600 to-amber-500 hover:from-orange-600 hover:to-amber-400 text-white border border-orange-400/40 shadow-[0_0_25px_rgba(234,88,12,0.45)] hover:shadow-[0_0_35px_rgba(234,88,12,0.75)] transition-all duration-300 active:scale-[0.98] group whitespace-nowrap"

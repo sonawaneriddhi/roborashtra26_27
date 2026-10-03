@@ -539,21 +539,13 @@ export const teamData = {
       members: [
         {
           id: 'content-member-1',
-          name: 'Sujal Padir',
+          name: 'Mrugandha Pawar',
           role: 'Crew',
           socials: {
             linkedin: 'https://linkedin.com',
           },
         },
-        {
-          id: 'content-member-2',
-          name: 'Girish Mule',
-          role: 'Crew',
-          socials: {
-            linkedin:
-              'https://www.linkedin.com/in/girish-mule-b4a17b434?utm_source=share_via&utm_content=profile&utm_medium=member_android',
-          },
-        },
+        
       ],
     },
 

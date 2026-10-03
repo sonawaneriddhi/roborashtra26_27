@@ -47,7 +47,7 @@ export const facultyMembers = [
     description:
       'Spearheading autonomous kinematics architectures, ROS 2 deployment, and national combat robotics mentorship for over 12 years.',
     image: facultyPortrait('roborashtra/team/faculty/pallavikulkarni', '/team/pallavikulkarni.png'),
-    badge: 'FACULTY DIRECTOR',
+    badge: 'FACULTY COORDINATOR',
     credentials: 'Ph.D. Robotics (IITB) · IEEE Senior Member',
     email: 'pallavi.kulkarni@pccoer.in',
   },
@@ -60,7 +60,7 @@ export const facultyMembers = [
     description:
       'Leading embedded vision pipelines, high-speed FPV dynamics, and precision manipulator telemetry across all competitive fleets.',
     image: facultyPortrait('roborashtra/team/faculty/vrushalideore', '/team/vrushalideore.png'),
-    badge: 'CHIEF COORDINATOR',
+    badge: 'FACULTY Co-COORDINATOR',
     credentials: 'M.Tech AI & Automation · 8+ Years Industry Mentorship',
     email: 'vrushali.deore@pccoer.in',
   },
