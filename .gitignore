@@ -47,3 +47,5 @@ temp.*
 *.pem
 GIT_GUIDE.md
 
+domain bill.pdf
+scripts

@@ -123,9 +123,8 @@ export default function Countdown({ targetDate = DEFAULT_EVENT_DATE }) {
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-3 shrink-0">
             {/* Registration CTA */}
             <Link
-              href="https://unstop.com/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/problem-statements"
+              
               className="inline-flex items-center gap-2 bg-[#f4382d] hover:bg-[#FFAE33] text-black font-mono text-xs font-bold tracking-widest uppercase px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl shadow-[0_0_20px_rgba(255,159,28,0.4)] transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <span>REGISTER TEAM</span>

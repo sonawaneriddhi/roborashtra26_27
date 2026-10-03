@@ -63,8 +63,8 @@ function MailIcon({ className = 'w-3.5 h-3.5' }) {
   )
 }
 
-// Preload the custom GLTF model asset
-useGLTF.preload('/models/3d-metal-robot.glb')
+// Preload the custom GLTF model asset with local Draco decoders
+useGLTF.preload('/models/3d-metal-robot.glb', '/draco/')
 
 // Responsive Rig for Canvas
 function ResponsiveRig({ children, isMobile }) {
@@ -88,7 +88,7 @@ function ResponsiveRig({ children, isMobile }) {
 
 // GLTF 3D Custom Metal Robot Model Component
 function CustomGLTFModel({ onInteractiveClick, isMobile }) {
-  const { scene } = useGLTF('/models/3d-metal-robot.glb')
+  const { scene } = useGLTF('/models/3d-metal-robot.glb', '/draco/')
   const robotGroup = useRef()
   const clickSpinRef = useRef(0)
   const globalMouse = useRef({ x: 0, y: 0 })
@@ -340,7 +340,7 @@ export default function Hero() {
     useState(false)
 
   const [activeTab, setActiveTab] =
-    useState('roborashtra')
+    useState('robohawk')
 
   const [menuOpen, setMenuOpen] =
     useState(false)
@@ -375,7 +375,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative h-[100svh] min-h-[640px] w-full bg-[#030712] text-slate-100 select-none overflow-hidden border-b border-white/10 flex flex-col justify-between"
+      className="relative h-[100dvh] max-h-[100dvh] md:h-[100svh] md:min-h-[640px] md:max-h-none w-full bg-[#030712] text-slate-100 select-none overflow-hidden border-b border-white/10 flex flex-col justify-between"
     >
 
       {/* =========================================================
@@ -430,48 +430,26 @@ export default function Hero() {
           duration: 0.7,
           delay: 0.2,
         }}
-        className="absolute top-0 left-0 right-0 z-40 px-6 sm:px-10 md:px-14 py-6 md:py-8 flex items-center justify-between pointer-events-auto"
+        className="absolute top-0 left-0 right-0 z-40 px-4 sm:px-10 md:px-14 py-3 sm:py-6 md:py-8 flex items-center justify-between pointer-events-auto"
       >
 
         {/* Brand */}
 
         <Link
           href="/"
-          className="group flex items-center gap-3.5 sm:gap-4 select-none"
+          className="group flex items-center select-none"
+          aria-label="Roborashtra Home"
         >
-
-          <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_16px_rgba(56,189,248,0.45)]">
-
+          <div className="relative h-8 sm:h-10 md:h-12 w-auto max-w-[62vw] sm:max-w-none flex items-center">
             <Image
-              src="/logo/emblem-bright.png"
-              alt="Roborashtra Emblem"
-              fill
-              className="object-contain"
+              src="/header.png"
+              alt="Robo Rashtra '27"
+              width={320}
+              height={48}
               priority
+              className="h-8 sm:h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_16px_rgba(56,189,248,0.3)]"
             />
-
           </div>
-
-          <div className="flex flex-col">
-
-            <div className="flex items-center gap-2">
-
-              <span className="font-orbitron font-black text-base sm:text-xl md:text-2xl tracking-wider text-white">
-                ROBO<span className="text-cyan-400">RASHTRA</span>
-              </span>
-
-              <span className="hidden sm:inline-block font-orbitron font-bold text-[9px] tracking-widest px-2.5 py-0.5 rounded-full border bg-cyan-950/50 text-cyan-300 border-cyan-500/40 shadow-[0_0_12px_rgba(6,182,212,0.25)]">
-                2026-27
-              </span>
-
-            </div>
-
-            <span className="font-orbitron font-semibold text-[9px] sm:text-[10px] tracking-[0.28em] uppercase text-slate-400 group-hover:text-cyan-400/80 transition-colors">
-              ROBOTICS CLUB
-            </span>
-
-          </div>
-
         </Link>
 
         {/* Menu */}
@@ -653,7 +631,7 @@ export default function Hero() {
           VIEWPORT UI OVERLAY
       ========================================================== */}
 
-      <div className="relative z-20 h-full flex flex-col justify-between px-5 sm:px-8 md:px-12 pt-24 sm:pt-28 md:pt-32 pb-6 md:pb-8 pointer-events-none">
+      <div className="relative z-20 h-full flex flex-col justify-between px-4 sm:px-8 md:px-12 pt-16 sm:pt-24 md:pt-32 pb-3 sm:pb-6 md:pb-8 pointer-events-none">
 
         {/* Top Eyebrow */}
 
@@ -714,7 +692,7 @@ export default function Hero() {
                 <Compass className="w-3.5 h-3.5 text-cyan-400" />
 
                 <span className="font-orbitron text-[11px] tracking-[0.2em] font-bold text-white uppercase">
-                  CLUB DIVISIONS
+                  CLUB
                 </span>
 
               </div>
@@ -731,12 +709,11 @@ export default function Hero() {
                     'robohawk'
                   )
                 }
-                className={`py-1.5 px-3 rounded-lg font-orbitron text-[11px] tracking-wider font-bold transition-all ${
-                  activeTab ===
+                className={`py-1.5 px-3 rounded-lg font-orbitron text-[11px] tracking-wider font-bold transition-all ${activeTab ===
                   'robohawk'
-                    ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)]'
-                    : 'text-slate-400 hover:text-white'
-                }`}
+                  ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)]'
+                  : 'text-slate-400 hover:text-white'
+                  }`}
               >
                 ROBOHAWK
               </button>
@@ -747,12 +724,11 @@ export default function Hero() {
                     'roborashtra'
                   )
                 }
-                className={`py-1.5 px-3 rounded-lg font-orbitron text-[11px] tracking-wider font-bold transition-all ${
-                  activeTab ===
+                className={`py-1.5 px-3 rounded-lg font-orbitron text-[11px] tracking-wider font-bold transition-all ${activeTab ===
                   'roborashtra'
-                    ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)]'
-                    : 'text-slate-400 hover:text-white'
-                }`}
+                  ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)]'
+                  : 'text-slate-400 hover:text-white'
+                  }`}
               >
                 ROBORASHTRA
               </button>
@@ -764,7 +740,7 @@ export default function Hero() {
             <AnimatePresence mode="wait">
 
               {activeTab ===
-              'robohawk' ? (
+                'robohawk' ? (
 
                 <motion.div
                   key="tab-robohawk"
@@ -870,9 +846,9 @@ export default function Hero() {
 
           <div className="flex-1" />
 
-          {/* Right Navigation */}
+          {/* Right Navigation (Desktop only to prevent mobile overflow) */}
 
-          <div className="pointer-events-auto self-end lg:self-center">
+          <div className="hidden lg:block pointer-events-auto self-end lg:self-center">
             <RightNav />
           </div>
 
@@ -895,40 +871,38 @@ export default function Hero() {
             duration: 0.6,
             delay: 0.6,
           }}
-          className="pointer-events-auto flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 my-2"
+          className="pointer-events-auto flex flex-row items-center justify-center gap-2 sm:gap-5 my-1 sm:my-2 w-full max-w-sm sm:max-w-none mx-auto sm:w-auto"
         >
 
           {/* Problem Statement */}
 
           <Link
             href="/event"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3 rounded-xl font-orbitron text-xs tracking-wider font-bold uppercase backdrop-blur-xl bg-slate-950/75 hover:bg-slate-900 text-white border border-white/20 hover:border-cyan-400 shadow-[0_4px_20px_rgba(0,0,0,0.6)] hover:shadow-[0_0_25px_rgba(6,182,212,0.35)] transition-all duration-300 active:scale-[0.98] group"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2.5 px-3 sm:px-7 py-2.5 sm:py-3 rounded-xl font-orbitron text-[10px] sm:text-xs tracking-wider font-bold uppercase backdrop-blur-xl bg-slate-950/75 hover:bg-slate-900 text-white border border-white/20 hover:border-cyan-400 shadow-[0_4px_20px_rgba(0,0,0,0.6)] hover:shadow-[0_0_25px_rgba(6,182,212,0.35)] transition-all duration-300 active:scale-[0.98] group whitespace-nowrap"
           >
 
-            <FileText className="w-4 h-4 text-cyan-400 transition-transform group-hover:scale-110" />
+            <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 transition-transform group-hover:scale-110 shrink-0" />
 
             <span>
-              PROBLEM STATEMENT
+              PROBLEM STATEMENTS
             </span>
 
-            <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+            <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 group-hover:text-cyan-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 hidden xs:inline-block sm:inline-block" />
 
           </Link>
 
           {/* Register */}
 
           <a
-            href="https://unstop.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3 rounded-xl font-orbitron text-xs tracking-wider font-black uppercase bg-gradient-to-r from-rust via-orange-600 to-amber-500 hover:from-orange-600 hover:to-amber-400 text-white border border-orange-400/40 shadow-[0_0_25px_rgba(234,88,12,0.45)] hover:shadow-[0_0_35px_rgba(234,88,12,0.75)] transition-all duration-300 active:scale-[0.98] group"
+            href="/problem-statements"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2.5 px-3 sm:px-8 py-2.5 sm:py-3 rounded-xl font-orbitron text-[10px] sm:text-xs tracking-wider font-black uppercase bg-gradient-to-r from-rust via-orange-600 to-amber-500 hover:from-orange-600 hover:to-amber-400 text-white border border-orange-400/40 shadow-[0_0_25px_rgba(234,88,12,0.45)] hover:shadow-[0_0_35px_rgba(234,88,12,0.75)] transition-all duration-300 active:scale-[0.98] group whitespace-nowrap"
           >
 
             <span>
               REGISTER NOW
             </span>
 
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform shrink-0" />
 
           </a>
 
@@ -951,16 +925,16 @@ export default function Hero() {
             duration: 0.6,
             delay: 0.7,
           }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-3 border-t border-white/10 pt-3.5 pointer-events-auto"
+          className="flex flex-col md:flex-row md:items-end justify-between gap-2 sm:gap-3 border-t border-white/10 pt-2 sm:pt-3.5 pointer-events-auto"
         >
 
           <div>
 
-            <p className="font-orbitron font-bold text-xs tracking-wider text-white">
+            <p className="font-orbitron font-bold text-[11px] sm:text-xs tracking-wider text-white">
               ROBORASHTRA &amp; ROBOHAWK
             </p>
 
-            <p className="font-mono text-slate-400 text-[9px] sm:text-[10px] tracking-widest uppercase">
+            <p className="font-mono text-slate-400 text-[8px] sm:text-[10px] tracking-widest uppercase">
               PIMPRI CHINCHWAD COLLEGE OF ENGINEERING &amp; RESEARCH, PUNE
             </p>
 
@@ -968,7 +942,7 @@ export default function Hero() {
 
           {/* Social Links */}
 
-          <div className="flex items-center gap-4 sm:gap-6 text-[10px] sm:text-xs">
+          <div className="flex items-center gap-3.5 sm:gap-6 text-[9px] sm:text-xs">
 
             <a
               href="https://www.youtube.com/@RobohawkPCCOER/videos"
@@ -1041,3 +1015,4 @@ export default function Hero() {
     </section>
   )
 }
+
