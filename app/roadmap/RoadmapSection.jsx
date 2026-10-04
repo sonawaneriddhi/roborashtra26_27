@@ -70,6 +70,11 @@ const years = [
     at: 0.05,
     badge: 'DRDO SPONSORED',
     shortBadge: '1ST ED',
+    problemStatements: [
+      'ResQlympics',
+      'CamWarrior',
+      'Blaze Maze Challenge',
+    ],
     details: [
       'Successfully managing RoboRashtra 2k24 national-level event with 290+ registrations',
       'Offered total prize pools exceeding ₹1,00,000 across multiple competitive events',
@@ -85,6 +90,10 @@ const years = [
     at: 0.5,
     badge: 'UNSTOP PARTNER',
     shortBadge: '2ND ED',
+    problemStatements: [
+      'ResQlympics',
+      'Yantra Utsav',
+    ],
     details: [
       'Successfully hosted a massive national-level technical festival partnering with Unstop for seamless execution',
       'Introduced ResQlympic 2.O, pushing competition and course complexity further than the 2024 edition',
@@ -100,6 +109,11 @@ const years = [
     at: 0.95,
     badge: 'TITLE: MITSUBISHI',
     shortBadge: '3RD ED',
+    problemStatements: [
+      'ResQlympics 3.0',
+      'Yantra Utsav',
+      'Chakravyuh',
+    ],
     details: [
       'More than 147+ participated in RoboRashtra 2K26 across various colleges, schools, and universities',
       'Mitsubishi Electric served as the Title Sponsor for RoboRashtra 2K26',
@@ -513,6 +527,29 @@ export default function RoadmapSection() {
                           </li>
                         ))}
                       </ul>
+
+                      {/* Problem Statement Subsection */}
+                      {item.problemStatements && item.problemStatements.length > 0 && (
+                        <div className="mt-3.5 pt-3 border-t border-amber-400/20">
+                          <p className="font-mono text-[10px] xl:text-[11px] uppercase tracking-[0.2em] text-amber-400 font-bold mb-2 flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                            Problem Statement:
+                          </p>
+                          <ol className="space-y-1.5" aria-label="Problem statements">
+                            {item.problemStatements.map((ps, idx) => (
+                              <li
+                                key={ps}
+                                className="flex items-center gap-2 text-[12px] xl:text-[13px] text-white/90 font-mono"
+                              >
+                                <span className="flex items-center justify-center w-4 h-4 rounded-full bg-amber-400/15 border border-amber-400/35 text-[9.5px] font-bold text-amber-300 shrink-0">
+                                  {idx + 1}
+                                </span>
+                                <span className="font-medium tracking-wide">{ps}</span>
+                              </li>
+                            ))}
+                          </ol>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </motion.article>
@@ -793,6 +830,29 @@ export default function RoadmapSection() {
                             </li>
                           ))}
                         </ul>
+
+                        {/* Problem Statement Subsection */}
+                        {item.problemStatements && item.problemStatements.length > 0 && (
+                          <div className="mt-2 pt-2 border-t border-amber-400/20">
+                            <p className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.18em] text-amber-400 font-bold mb-1 flex items-center gap-1">
+                              <span className="w-1 h-1 rounded-full bg-amber-400" />
+                              Problem Statement:
+                            </p>
+                            <ol className="space-y-1">
+                              {item.problemStatements.map((ps, idx) => (
+                                <li
+                                  key={ps}
+                                  className="flex items-center gap-1.5 text-[11px] sm:text-xs text-white/90 font-mono"
+                                >
+                                  <span className="flex items-center justify-center w-3.5 h-3.5 rounded-full bg-amber-400/15 border border-amber-400/30 text-[8px] font-bold text-amber-300 shrink-0">
+                                    {idx + 1}
+                                  </span>
+                                  <span className="font-medium tracking-wide">{ps}</span>
+                                </li>
+                              ))}
+                            </ol>
+                          </div>
+                        )}
                       </div>
 
                       {/* Touch navigation controls */}

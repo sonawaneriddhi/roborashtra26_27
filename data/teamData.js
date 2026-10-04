@@ -79,7 +79,7 @@ export const teamData = {
       phone: '9822547765',
       email: 'roborashtra_pr@gmail.com',
       socials: {
-        linkedin: 'https://linkedin.com',
+        linkedin: 'https://www.linkedin.com/in/sarthak-gadhave-53537b32b?utm_source=share_via&utm_content=profile&utm_medium=member_android',
       },
     },
     {
@@ -192,15 +192,6 @@ export const teamData = {
               'https://www.linkedin.com/in/saloni-sinha-46b123374?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
           },
         },
-        {
-          id: 'pr-member-6',
-          name: 'Vedant Parsewar',
-          role: 'Public Relations Co-Head',
-          socials: {
-            linkedin:
-              'https://www.linkedin.com/in/vedant-parsewar-819993376?utm_source=share_via&utm_content=profile&utm_medium=member_android',
-          },
-        },
       ],
       members: [
         {
@@ -236,6 +227,15 @@ export const teamData = {
           role: 'Crew',
           socials: {
             linkedin: 'https://www.linkedin.com/in/sukrut-suryawanshi',
+          },
+        },
+        {
+          id: 'pr-member-6',
+          name: 'Vedant Parsewar',
+          role: 'Crew',
+          socials: {
+            linkedin:
+              'https://www.linkedin.com/in/vedant-parsewar-819993376?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
         {
@@ -466,17 +466,8 @@ export const teamData = {
       heads: [
         {
           id: 'web-head-1',
-          name: 'Yadnyesh Borole',
-          role: 'Web Development Head',
-          image: portrait('roborashtra/team/web/yadnesh'),
-          socials: {
-            linkedin: 'https://www.linkedin.com/in/yadnyesh-borole-51aa0532a/',
-          },
-        },
-        {
-          id: 'web-head-2',
           name: 'Riddhi Sonawane',
-          role: 'Web Head',
+          role: 'Web Development Head',
           image: portrait('roborashtra/team/web/riddhi'),
           socials: {
             linkedin:
@@ -486,7 +477,7 @@ export const teamData = {
         {
           id: 'web-head-2',
           name: 'Yadnyesh Borole',
-          role: 'Web Co-Head',
+          role: 'Web Development Co-Head',
           image: portrait('roborashtra/team/web/yadnesh'),
           socials: {
             linkedin: 'https://www.linkedin.com/in/yadnyesh-borole-51aa0532a/',

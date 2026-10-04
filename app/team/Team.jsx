@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 /**
  * app/team/Team.jsx
@@ -241,7 +241,7 @@ function LeftEdgeRoulette({
                 : 'bg-black text-[#FFFFFF] border border-black/8 shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:border-[#22D3EE]/30 hover:shadow-[0_6px_26px_rgba(0,0,0,0.08)]'
                 }`}
             >
-              <div className="flex flex-col items-center justify-center h-full w-full text-center gap-1 overflow-hidden">
+              <div className="flex flex-col items-center justify-center h-full w-full text-center gap-1.5 overflow-hidden px-1">
                 <span
                   className={`font-mono text-xs sm:text-sm tracking-[0.18em] font-bold uppercase ${isActive ? 'text-black/80' : 'text-[#FFFFFF]'
                     }`}
@@ -251,7 +251,7 @@ function LeftEdgeRoulette({
                 </span>
 
                 <h4
-                  className={`font-mono font-black text-[10px] sm:text-[10px] md:text-[10px] lg:text-[10px] uppercase tracking-[0.12em] leading-none ${isActive ? 'text-[#FFFFFF]' : 'text-[#FFFFFF]'
+                  className={`font-mono font-black text-[13px] sm:text-[14px] md:text-[16px] lg:text-[17px] xl:text-[18px] uppercase tracking-[0.06em] leading-tight ${isActive ? 'text-[#FFFFFF]' : 'text-[#FFFFFF]'
                     }`}
                 >
                   {unit.shortName === 'PROBLEM STATEMENT' ? (
@@ -259,6 +259,12 @@ function LeftEdgeRoulette({
                       PROBLEM
                       <br />
                       STATEMENT
+                    </>
+                  ) : unit.shortName === 'CONTENT & SOCIAL MEDIA' ? (
+                    <>
+                      CONTENT &
+                      <br />
+                      SOCIAL MEDIA
                     </>
                   ) : (
                     unit.shortName || unit.name
@@ -608,31 +614,23 @@ export default function Team() {
     >
       {/* Injecting CSS Keyframes directly inside JSX */}
       <style>{`
-    @keyframes spacePan {
-      from {
-        background-position: 0px 0px, 0px 0px;
-      }
-      to {
-        background-position: 600px 1200px, 300px 600px;
-      }
-    }
-    .jsx-moving-stars {
-      animation: spacePan 60s linear infinite;
-    }
-  `}</style>
+        @keyframes spacePan {
+          from {
+            background-position: 0px 0px, 0px 0px;
+          }
+          to {
+            background-position: 600px 1200px, 300px 600px;
+          }
+        }
 
-      {/* FIXED BACKGROUND LAYER: Moving, high-brightness stars */}
-      <div
-        className="fixed inset-0 bg-[#020408] -z-10 pointer-events-none jsx-moving-stars"
-        style={{
-          backgroundImage: `
-        radial-gradient(circle at center, #ffffff 2px, transparent 2.5px),
-        radial-gradient(circle at center, #ffffff 1px, transparent 2px)
-      `,
-          backgroundSize: '120px 120px, 180px 180px',
-          filter: 'drop-shadow(0 0 1px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.4))'
-        }}
-      />
+        .jsx-moving-stars {
+          animation: spacePan 60s linear infinite;
+        }
+
+        @keyframes teamScan {
+          0% {
+            transform: translateX(0) skewX(-18deg);
+          }
 
           100% {
             transform: translateX(420%) skewX(-18deg);
@@ -658,6 +656,19 @@ export default function Team() {
           animation: subtleGlow 8s ease-in-out infinite;
         }
       `}</style>
+
+      {/* FIXED BACKGROUND LAYER: Moving, high-brightness stars */}
+      <div
+        className="fixed inset-0 bg-[#020408] -z-10 pointer-events-none jsx-moving-stars"
+        style={{
+          backgroundImage: `
+        radial-gradient(circle at center, #ffffff 2px, transparent 2.5px),
+        radial-gradient(circle at center, #ffffff 1px, transparent 2px)
+      `,
+          backgroundSize: '120px 120px, 180px 180px',
+          filter: 'drop-shadow(0 0 1px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.4))'
+        }}
+      />
 
       {/* Base background */}
       <div className="fixed inset-0 -z-20 bg-[#020509] pointer-events-none" />
@@ -1207,7 +1218,7 @@ export default function Team() {
                     initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.25 }}
-                    className="font-mono text-xl sm:text-2xl md:text-3xl lg:text-5xl font-black text-white/90 leading-none tracking-[0.12em] uppercase"
+                    className="font-mono text-xl sm:text-5xl md:text-3xl lg:text-5xl font-black text-white/90 leading-none tracking-[0.12em] uppercase"
                   >
                     {activeUnit.name}
                   </motion.h2>
