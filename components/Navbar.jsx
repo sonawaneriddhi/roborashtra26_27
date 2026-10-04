@@ -164,7 +164,7 @@ export default function Navbar() {
               PROBLEM STATEMENTS
             </Link>
             <a
-              href="https://unstop.com/"
+              href="/problem-statements"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-rust transition-colors"

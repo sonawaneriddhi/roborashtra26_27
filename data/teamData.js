@@ -62,7 +62,7 @@ export const teamData = {
     {
       id: 'lead-1',
       name: 'Shivraj Patil',
-      role: 'Club President ',
+      role: 'Club President',
       image: portrait('roborashtra/team/lead/shivrajpatil'),
       phone: '9322349300',
       email: 'roborashtra_pr@gmail.com',
@@ -260,7 +260,7 @@ export const teamData = {
     {
       id: 'event',
       name: 'MANAGEMENT',
-      shortName: 'EVENT',
+      shortName: 'MANAGEMENT',
       heads: [
         {
           id: 'event-head-1',
@@ -522,9 +522,9 @@ export const teamData = {
     },
 
     {
-      id: 'content',
+      id: 'CONTENT',
       name: 'CONTENT & SOCIAL MEDIA',
-      shortName: 'CONTENT',
+      shortName: 'CONTENT & SOCIAL MEDIA',
       heads: [
         {
           id: 'content-head-2',
@@ -548,7 +548,7 @@ export const teamData = {
       members: [
         {
           id: 'content-member-1',
-          name: 'Mrungandha Pawar',
+          name: 'Mrugandha Pawar',
           role: 'Crew',
           socials: {
             linkedin: 'https://www.linkedin.com/in/mrugandha-pawar-4227b543a?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
@@ -561,7 +561,7 @@ export const teamData = {
     {
       id: 'documentation',
       name: 'DOCUMENTATION',
-      shortName: 'DOCS',
+      shortName: 'DOCUMENTATION',
       heads: [
         {
           id: 'doc-head-1',

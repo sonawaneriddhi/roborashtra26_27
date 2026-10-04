@@ -64,7 +64,7 @@ function FacultyCard({ faculty, index }) {
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
           }}
-          className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#121824]/95 via-[#0b101c]/95 to-[#070a13]/98 border border-white/15 p-2 min-[360px]:p-2.5 sm:p-3 md:p-3.5 flex flex-col justify-between shadow-[0_16px_50px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-all duration-500 group-hover:border-[#22D3EE]/50 group-hover:shadow-[0_0_35px_rgba(34,211,238,0.25)] group-hover:-translate-y-1"
+          className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#121824]/95 via-[#0b101c]/95 to-[#070a13]/98 border border-white/15 p-2 min-[360px]:p-2.5 sm:p-3 md:p-3.5 flex flex-col justify-between shadow-[0_16px_50px_rgba(0,0,0,0.7)] transition-all duration-500 group-hover:border-[#22D3EE]/50 group-hover:shadow-[0_0_35px_rgba(34,211,238,0.25)] group-hover:-translate-y-1"
         >
           {/* Precision Corner Crosshairs */}
           <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#22D3EE]/70 pointer-events-none" />
@@ -123,7 +123,7 @@ function FacultyCard({ faculty, index }) {
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
-          className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#121824]/98 via-[#0b101c]/98 to-[#070a13]/98 border border-[#22D3EE]/40 p-2 min-[360px]:p-2.5 sm:p-3 md:p-3.5 flex flex-col justify-between shadow-[0_16px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+          className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#121824]/98 via-[#0b101c]/98 to-[#070a13]/98 border border-[#22D3EE]/40 p-2 min-[360px]:p-2.5 sm:p-3 md:p-3.5 flex flex-col justify-between shadow-[0_16px_50px_rgba(0,0,0,0.8)]"
         >
           {/* Precision Corner Crosshairs */}
           <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#22D3EE]/70 pointer-events-none" />
@@ -230,7 +230,7 @@ export default function Faculty() {
     return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
 
-  // Track 300vh scroll progress
+  // Track Faculty scroll progress
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
@@ -243,11 +243,11 @@ export default function Faculty() {
     restDelta: 0.001,
   })
 
-  // Unified "ROBORASHTRA" Text Movement (moves to top and dims to watermark)
+  // Unified "ROBORASHTRA" Text Movement
   const titleY = useTransform(
     smoothProgress,
     [0.08, 0.40],
-    ['0vh', '-42vh']
+    ['0vh', '-36vh']
   )
 
   const titleScale = useTransform(
@@ -262,7 +262,7 @@ export default function Faculty() {
     [1, 1]
   )
 
-  // Faculty Mentorship Title Animation (rises and reveals above the cards)
+  // Faculty Mentorship Title Animation
   const headerOpacity = useTransform(
     smoothProgress,
     [0.12, 0.36],
@@ -329,8 +329,10 @@ export default function Faculty() {
           <h2 className="font-display font-extrabold text-2xl sm:text-3xl md:text-4xl text-white tracking-[0.14em] uppercase">
             FACULTY MENTORSHIP
           </h2>
+
           <div className="w-16 sm:w-24 h-0.5 bg-gradient-to-r from-transparent via-[#22D3EE] to-transparent mx-auto mt-2 opacity-80" />
         </div>
+
         <div className="flex flex-row justify-center items-center gap-3 sm:gap-8 max-w-5xl mx-auto">
           {facultyMembers.map((faculty, i) => (
             <FacultyCard
@@ -349,8 +351,7 @@ export default function Faculty() {
       id="faculty"
       ref={containerRef}
       aria-label="Faculty Mentorship"
-      className="relative w-full bg-[#070707] text-ivory"
-      style={{ height: '300vh' }}
+      className="relative w-full bg-[#070707] text-ivory h-[300vh] lg:h-[200vh]"
     >
       {/* Sticky Viewport Container */}
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex flex-col justify-center items-center select-none bg-[#070707]">
@@ -404,6 +405,7 @@ export default function Faculty() {
             <h2 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white tracking-[0.14em] uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
               FACULTY MENTORSHIP
             </h2>
+
             <div className="w-16 sm:w-24 h-0.5 bg-gradient-to-r from-transparent via-[#22D3EE] to-transparent mx-auto mt-1.5 sm:mt-2 opacity-80" />
           </motion.div>
 
