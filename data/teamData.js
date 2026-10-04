@@ -62,7 +62,7 @@ export const teamData = {
     {
       id: 'lead-1',
       name: 'Shivraj Patil',
-      role: 'Club President & Lead',
+      role: 'Club President',
       image: portrait('roborashtra/team/lead/shivrajpatil'),
       phone: '9322349300',
       email: 'roborashtra_pr@gmail.com',
@@ -74,7 +74,7 @@ export const teamData = {
     {
       id: 'lead-2',
       name: 'Sarthak Gadhave',
-      role: 'Management & Ops Lead',
+      role: 'Management Lead',
       image: portrait('roborashtra/team/lead/sarthakgadhave'),
       phone: '9822547765',
       email: 'roborashtra_pr@gmail.com',
@@ -85,7 +85,7 @@ export const teamData = {
     {
       id: 'lead-3',
       name: 'Rushikesh Sonaje',
-      role: 'Finance & Treasury Lead',
+      role: 'Finance Lead',
       image: portrait('roborashtra/team/lead/rushikeshsonaje'),
       phone: '9146447449',
       email: 'roborashtra_pr@gmail.com',
@@ -267,8 +267,8 @@ export const teamData = {
 
     {
       id: 'event',
-      name: 'EVENT & ARENA',
-      shortName: 'EVENT',
+      name: 'MANAGEMENT',
+      shortName: 'MANAGEMENT',
       heads: [
         {
           id: 'event-head-1',
@@ -521,9 +521,9 @@ export const teamData = {
     },
 
     {
-      id: 'content',
+      id: 'CONTENT',
       name: 'CONTENT & SOCIAL MEDIA',
-      shortName: 'CONTENT',
+      shortName: 'CONTENT & SOCIAL MEDIA',
       heads: [
         {
           id: 'content-head-2',
@@ -551,8 +551,8 @@ export const teamData = {
 
     {
       id: 'documentation',
-      name: 'DOCUMENTATION & RESEARCH',
-      shortName: 'DOCS',
+      name: 'DOCUMENTATION',
+      shortName: 'DOCUMENTATION',
       heads: [
         {
           id: 'doc-head-1',

@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
 /**
  * app/team/Team.jsx
- * ─────────────────
+ * â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
  * Spatial Crew Directory & Radial Unit Selector.
  *
  * Architecture:
@@ -61,7 +61,6 @@ function InstagramIcon({ className = 'w-3.5 h-3.5' }) {
 }
 
 /**
-<<<<<<< HEAD
  * Left-Edge Half-Hidden Circular Roulette Wheel.
  * Computes polar coordinates `(x, y)` for each team unit card around an offset center.
  *
@@ -70,9 +69,6 @@ function InstagramIcon({ className = 'w-3.5 h-3.5' }) {
  * @param {string} props.selectedId - Currently selected unit ID
  * @param {(id: string) => void} props.onSelectUnit - Selection handler
  * @param {(step: number) => void} props.onStep - Increment/decrement step handler
-=======
- * Left-Edge Half-Hidden Circular Roulette Wheel
->>>>>>> veer
  */
 function LeftEdgeRoulette({
   units,
@@ -241,30 +237,23 @@ function LeftEdgeRoulette({
                 opacity,
                 zIndex,
               }}
-              className={`w-[150px] sm:w-[170px] md:w-[195px] lg:w-[215px] h-[92px] sm:h-[102px] md:h-[114px] lg:h-[124px] rounded-2xl p-3 flex items-center justify-center cursor-pointer transition-all duration-300 ${
-                isActive
-                  ? 'bg-[#22D3EE] text-white shadow-[0_10px_35px_rgba(34,211,238,0.35)] border-2 border-[#22D3EE]'
-                  : 'bg-black text-white border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.25)] hover:border-[#22D3EE]/30 hover:shadow-[0_6px_26px_rgba(0,0,0,0.35)]'
-              }`}
+              className={`w-[150px] sm:w-[170px] md:w-[195px] lg:w-[215px] h-[92px] sm:h-[102px] md:h-[114px] lg:h-[124px] rounded-2xl p-2 sm:p-4 md:p-3.5 flex flex-col justify-between cursor-pointer transition-all duration-300 ${isActive
+                ? 'bg-[#22D3EE] text-[#050B14] shadow-[0_10px_35px_rgba(34,211,238,0.35)] border-2 border-[#22D3EE]'
+                : 'bg-black text-[#FFFFFF] border border-black/8 shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:border-[#22D3EE]/30 hover:shadow-[0_6px_26px_rgba(0,0,0,0.08)]'
+                }`}
             >
               <div className="flex flex-col items-center justify-center h-full w-full text-center gap-1 overflow-hidden">
                 <span
-                  className={`font-mono text-[11px] sm:text-xs tracking-[0.2em] font-bold uppercase ${
-                    isActive
-                      ? 'text-white/60'
-                      : 'text-white/50'
-                  }`}
+                  className={`font-mono text-xs sm:text-sm tracking-[0.18em] font-bold uppercase ${isActive ? 'text-black/80' : 'text-[#FFFFFF]'
+                    }`}
                 >
                   {unit.number ||
                     String(idx + 1).padStart(2, '0')}
                 </span>
 
                 <h4
-                  className="font-orbitron font-bold text-[15px] sm:text-[17px] md:text-[19px] lg:text-[21px] uppercase tracking-[0.01em] leading-[1.05] text-center w-full px-1 whitespace-normal text-white"
-                  style={{
-                    wordBreak: 'normal',
-                    overflowWrap: 'normal',
-                  }}
+                  className={`font-mono font-black text-[10px] sm:text-[10px] md:text-[10px] lg:text-[10px] uppercase tracking-[0.12em] leading-none ${isActive ? 'text-[#FFFFFF]' : 'text-[#FFFFFF]'
+                    }`}
                 >
                   {unit.shortName === 'PROBLEM STATEMENT' ? (
                     <>
@@ -592,16 +581,33 @@ export default function Team() {
       aria-label="Roborashtra Crew Directory"
       className="relative w-full text-white min-h-screen py-8 sm:py-12 lg:py-0 lg:h-[200vh]"
     >
-      {/* =====================================================
-          EXISTING GLOBAL BACKGROUND
-          THIS STAYS FOR SECTION 1 + SECTION 2
-      ====================================================== */}
-
+      {/* Injecting CSS Keyframes directly inside JSX */}
       <style>{`
-        @keyframes teamScan {
-          0% {
-            transform: translateX(0) skewX(-18deg);
-          }
+    @keyframes spacePan {
+      from {
+        background-position: 0px 0px, 0px 0px;
+      }
+      to {
+        background-position: 600px 1200px, 300px 600px;
+      }
+    }
+    .jsx-moving-stars {
+      animation: spacePan 60s linear infinite;
+    }
+  `}</style>
+
+      {/* FIXED BACKGROUND LAYER: Moving, high-brightness stars */}
+      <div
+        className="fixed inset-0 bg-[#020408] -z-10 pointer-events-none jsx-moving-stars"
+        style={{
+          backgroundImage: `
+        radial-gradient(circle at center, #ffffff 2px, transparent 2.5px),
+        radial-gradient(circle at center, #ffffff 1px, transparent 2px)
+      `,
+          backgroundSize: '120px 120px, 180px 180px',
+          filter: 'drop-shadow(0 0 1px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.4))'
+        }}
+      />
 
           100% {
             transform: translateX(420%) skewX(-18deg);
@@ -846,7 +852,7 @@ export default function Team() {
           }
         `}</style>
 
-        {/* Deep navy → blue base */}
+        {/* Deep navy â†’ blue base */}
         <div
           className="absolute inset-0 z-0 pointer-events-none"
           style={{
@@ -862,7 +868,7 @@ export default function Team() {
           }}
         />
 
-        {/* Soft cyan orb — left */}
+        {/* Soft cyan orb â€” left */}
         <div
           className="absolute z-[1] pointer-events-none robot-orb-one w-[520px] h-[520px] rounded-full blur-[130px] left-[-230px] top-[12%]"
           style={{
@@ -871,7 +877,7 @@ export default function Team() {
           }}
         />
 
-        {/* Soft blue orb — right */}
+        {/* Soft blue orb â€” right */}
         <div
           className="absolute z-[1] pointer-events-none robot-orb-two w-[580px] h-[580px] rounded-full blur-[150px] right-[-250px] top-[20%]"
           style={{
@@ -1132,14 +1138,11 @@ export default function Team() {
                   return (
                     <button
                       key={unit.id}
-                      onClick={() =>
-                        setSelectedUnitId(unit.id)
-                      }
-                      className={`shrink-0 rounded-full px-3 py-1 font-mono text-[9.5px] min-[360px]:text-[10px] sm:text-[11px] tracking-[0.18em] font-bold uppercase transition-all duration-200 min-h-[32px] sm:min-h-[36px] touch-manipulation ${
-                        isActive
-                          ? 'bg-[#22D3EE] text-[#050B14] shadow-[0_4px_14px_rgba(34,211,238,0.35)]'
-                          : 'bg-black/70 text-white/80 border border-white/15 hover:border-[#22D3EE]/40 hover:text-white'
-                      }`}
+                      onClick={() => setSelectedUnitId(unit.id)}
+                      className={`shrink-0 rounded-full px-3 py-1 font-mono text-[9.5px] min-[360px]:text-[10px] sm:text-[11px] tracking-[0.18em] font-bold uppercase transition-all duration-200 min-h-[32px] sm:min-h-[36px] touch-manipulation ${isActive
+                        ? 'bg-[#22D3EE] text-[#050B14] shadow-[0_4px_14px_rgba(34,211,238,0.35)]'
+                        : 'bg-black text-white/80 border border-white/15 hover:border-[#22D3EE]/40 hover:text-white'
+                        }`}
                     >
                       {unit.shortName || unit.name}
                     </button>
@@ -1152,7 +1155,7 @@ export default function Team() {
           {/* MAIN GRID */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-10 pt-16 sm:pt-20 lg:pt-16 items-start lg:items-center">
 
-            {/* DESKTOP ROULETTE */}
+            {/* LEFT: PARTIALLY HIDDEN CIRCULAR ROULETTE (Touches Left Edge) â€” desktop only */}
             <div className="hidden lg:flex lg:col-span-5 xl:col-span-4 w-full flex-col justify-center">
               <LeftEdgeRoulette
                 units={allUnits}
@@ -1184,6 +1187,7 @@ export default function Team() {
                     {activeUnit.name}
                   </motion.h2>
                 </div>
+
               </div>
 
               <AnimatePresence mode="wait">
