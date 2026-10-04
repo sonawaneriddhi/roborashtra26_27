@@ -1,24 +1,49 @@
 /**
  * teamData.js
  * ────────────
- * Comprehensive Team Data for ROBORASHTRA.
- * All data is modular and scalable. To add new teams, heads, or members,
- * simply edit this file without altering any component animation logic.
+ * Comprehensive Team Directory Data for ROBORASHTRA.
+ * All data is modular and scalable. Teams contain designated heads and crew members.
  *
  * Images are delivered via Cloudinary.
- * public_id pattern: roborashtra/team/<squad>/<firstname>
+ * Public ID pattern: `roborashtra/team/<squad>/<firstname>`
  *
- * Fallback: When NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME is not set (local dev),
- * getCloudinaryUrl() returns '' and the HeadCard will render an
- * initials-based CSS placeholder automatically.
+ * Fallback: When NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME is not set,
+ * getCloudinaryUrl() returns '' and components render initials-based CSS fallbacks.
+ *
+ * @typedef {Object} SocialLinks
+ * @property {string} [linkedin] - LinkedIn profile URL
+ * @property {string} [github] - GitHub profile URL
+ * @property {string} [instagram] - Instagram profile URL
+ *
+ * @typedef {Object} Member
+ * @property {string} id - Unique identifier
+ * @property {string} name - Full name
+ * @property {string} role - Team role/designation
+ * @property {SocialLinks} [socials] - Social media links
+ *
+ * @typedef {Object} Head
+ * @property {string} id - Unique identifier
+ * @property {string} name - Full name
+ * @property {string} role - Lead role
+ * @property {string} image - Cloudinary portrait URL
+ * @property {SocialLinks} [socials] - Social media links
+ *
+ * @typedef {Object} TeamUnit
+ * @property {string} id - Slug identifier
+ * @property {string} name - Full display title
+ * @property {string} shortName - Abbreviated title for navigation tabs
+ * @property {Head[]} heads - Squad leads/heads
+ * @property {Member[]} members - Squad crew members
  */
 
 import { getCloudinaryUrl } from '@/lib/cloudinary'
 
 /**
- * Build a portrait URL for a team head.
- * 400×400 fill with face-aware gravity, auto format & quality.
- * Falls back to empty string when cloud name is not configured.
+ * Builds an optimized Cloudinary delivery URL for team portraits.
+ * Applies face-aware gravity, auto format, and retina DPR.
+ *
+ * @param {string} publicId - Cloudinary asset path
+ * @returns {string} Optimized image URL or empty string if unconfigured
  */
 function portrait(publicId) {
   return getCloudinaryUrl(publicId, {
@@ -37,7 +62,7 @@ export const teamData = {
     {
       id: 'lead-1',
       name: 'Shivraj Patil',
-      role: 'Club President ',
+      role: 'Club President',
       image: portrait('roborashtra/team/lead/shivrajpatil'),
       phone: '9322349300',
       email: 'roborashtra_pr@gmail.com',
@@ -79,11 +104,11 @@ export const teamData = {
       heads: [
         {
           id: 'workshop-head-1',
-          name: 'Dhananjay',
+          name: 'Dhananjay Chavan',
           role: 'Workshop Head',
           image: portrait('roborashtra/team/workshop/dhananjay'),
           socials: {
-            linkedin: 'https://linkedin.com',
+            linkedin: 'https://www.linkedin.com/in/dhananjay-chavan-244901328?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
       ],
@@ -167,6 +192,15 @@ export const teamData = {
               'https://www.linkedin.com/in/saloni-sinha-46b123374?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
           },
         },
+        {
+          id: 'pr-member-6',
+          name: 'Vedant Parsewar',
+          role: 'Public Relations Co-Head',
+          socials: {
+            linkedin:
+              'https://www.linkedin.com/in/vedant-parsewar-819993376?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
       ],
       members: [
         {
@@ -193,7 +227,7 @@ export const teamData = {
           name: 'Aditya Kadam',
           role: 'Crew',
           socials: {
-            linkedin: 'https://linkedin.com',
+            linkedin: 'https://www.linkedin.com/in/aditya-kadam-908203429',
           },
         },
         {
@@ -202,15 +236,6 @@ export const teamData = {
           role: 'Crew',
           socials: {
             linkedin: 'https://www.linkedin.com/in/sukrut-suryawanshi',
-          },
-        },
-        {
-          id: 'pr-member-6',
-          name: 'Vedant Parsewar',
-          role: 'Crew',
-          socials: {
-            linkedin:
-              'https://www.linkedin.com/in/vedant-parsewar-819993376?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
         {
@@ -235,7 +260,7 @@ export const teamData = {
     {
       id: 'event',
       name: 'MANAGEMENT',
-      shortName: 'EVENT',
+      shortName: 'MANAGEMENT',
       heads: [
         {
           id: 'event-head-1',
@@ -439,8 +464,9 @@ export const teamData = {
       name: 'WEB DEVELOPMENT',
       shortName: 'WEB',
       heads: [
+
         {
-          id: 'web-head-1',
+          id: 'web-head-2',
           name: 'Riddhi Sonawane',
           role: 'Web Head',
           image: portrait('roborashtra/team/web/riddhi'),
@@ -488,9 +514,9 @@ export const teamData = {
     },
 
     {
-      id: 'content',
+      id: 'CONTENT',
       name: 'CONTENT & SOCIAL MEDIA',
-      shortName: 'CONTENT',
+      shortName: 'CONTENT & SOCIAL MEDIA',
       heads: [
         {
           id: 'content-head-2',
@@ -502,22 +528,23 @@ export const teamData = {
               'https://www.linkedin.com/in/tanaj-manyar-59a05932b?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
+        {
+          id: 'content-member-2',
+          name: 'Atharv Dangare',
+          role: 'Content Head',
+          image: portrait('roborashtra/team/content/atharv'),
+          socials: {
+            linkedin: 'https://www.linkedin.com/in/atharv-dangare-b22486409?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
+          },
+        },
       ],
       members: [
         {
           id: 'content-member-1',
-          name: 'Atharv Dangare',
+          name: 'Mrugandha Pawar',
           role: 'Crew',
           socials: {
-            linkedin: 'https://linkedin.com',
-          },
-        },
-        {
-          id: 'content-member-2',
-          name: 'Mrungandha Pawar',
-          role: 'Crew',
-          socials: {
-            linkedin: 'https://linkedin.com',
+            linkedin: 'https://www.linkedin.com/in/mrugandha-pawar-4227b543a?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
 
           },
         },
@@ -527,7 +554,7 @@ export const teamData = {
     {
       id: 'documentation',
       name: 'DOCUMENTATION',
-      shortName: 'DOCS',
+      shortName: 'DOCUMENTATION',
       heads: [
         {
           id: 'doc-head-1',
@@ -564,7 +591,7 @@ export const teamData = {
           role: 'CAD Head',
           image: portrait('roborashtra/team/cad/sarthak'),
           socials: {
-            linkedin: 'https://linkedin.com',
+            linkedin: 'https://www.linkedin.com/in/sarthak-thete-40432132b?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
           },
         },
       ],
