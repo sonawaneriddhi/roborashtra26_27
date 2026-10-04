@@ -11,7 +11,6 @@
  * @property {string} department - Academic department
  * @property {string} description - Research focus and mentorship summary
  * @property {string} image - Cloudinary or local fallback portrait URL
- * @property {string} badge - Highlight badge displayed on profile card
  * @property {string} credentials - Degrees, qualifications, and affiliations
  * @property {string} email - Official contact email
  */
@@ -47,7 +46,6 @@ export const facultyMembers = [
     description:
       'Spearheading autonomous kinematics architectures, ROS 2 deployment, and national combat robotics mentorship for over 12 years.',
     image: facultyPortrait('roborashtra/team/faculty/pallavikulkarni', '/team/pallavikulkarni.png'),
-    badge: 'FACULTY COORDINATOR',
     credentials: 'M.Tech. (Computer Engineering)',
     email: 'pallavi.kulkarni@pccoer.in',
   },
@@ -60,7 +58,6 @@ export const facultyMembers = [
     description:
       'Leading embedded vision pipelines, high-speed FPV dynamics, and precision manipulator telemetry across all competitive fleets.',
     image: facultyPortrait('roborashtra/team/faculty/vrushalideore', '/team/vrushalideore.png'),
-    badge: 'FACULTY CO-COORDINATOR',
     credentials: 'M.E. Computer',
     email: 'vrushali.deore@pccoer.in',
   },

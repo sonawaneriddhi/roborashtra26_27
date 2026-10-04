@@ -163,14 +163,10 @@ export default function Navbar() {
             <Link href="/event" className="hover:text-rust transition-colors">
               PROBLEM STATEMENTS
             </Link>
-            <a
-              href="/problem-statements"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-rust transition-colors"
-            >
+            <Link href="/problem-statements"
+              className="hover:text-rust transition-colors">
               REGISTER
-            </a>
+            </Link>
           </nav>
 
           {/* Right: MENU Button first, then Logo B to the right of the menu */}

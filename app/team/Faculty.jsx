@@ -74,23 +74,18 @@ function FacultyCard({ faculty, index }) {
 
           {/* Top Header & Faculty Portrait */}
           <div className="flex flex-col h-full justify-between">
-            <div className="flex flex-col flex-1">
-              <div className="flex items-center justify-between mb-1 sm:mb-1.5">
-                <span className="font-mono text-[6.5px] min-[360px]:text-[7.5px] sm:text-[9px] tracking-wider sm:tracking-widest uppercase px-2 py-0.5 rounded-full bg-[#22D3EE]/10 text-[#22D3EE] font-bold border border-[#22D3EE]/30 truncate shadow-[0_0_10px_rgba(34,211,238,0.15)]">
-                  {faculty.badge}
-                </span>
-              </div>
+            <div className="flex flex-col flex-1">  
 
               {/* Faculty Portrait */}
-              <div className="relative w-full h-[135px] min-[360px]:h-[148px] min-[390px]:h-[158px] sm:h-[200px] md:h-[230px] rounded-lg sm:rounded-xl overflow-hidden mb-1 sm:mb-1.5 border border-white/15 bg-black/50 shadow-inner group/img">
-                <img
-                  src={faculty.image}
-                  alt={`Portrait of ${faculty.name}`}
-                  className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#070a13]/80 via-transparent to-transparent opacity-60" />
-              </div>
+              <div className="relative w-full h-[180px] min-[360px]:h-[200px] min-[390px]:h-[220px] sm:h-[260px] md:h-[300px] rounded-lg sm:rounded-xl overflow-hidden mb-1 sm:mb-1.5 border border-white/15 bg-black/50 shadow-inner group/img">
+  <img
+    src={faculty.image}
+    alt={`Portrait of ${faculty.name}`}
+    className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+    loading="lazy"
+  />
+  <div className="absolute inset-0 bg-gradient-to-t from-[#070a13]/80 via-transparent to-transparent opacity-60" />
+</div>
 
               {/* Centered & Prominent Faculty Name in the middle */}
               <div className="flex-1 flex items-center justify-center px-1 py-1 sm:py-2 text-center">
