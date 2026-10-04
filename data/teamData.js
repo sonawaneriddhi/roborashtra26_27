@@ -192,6 +192,15 @@ export const teamData = {
               'https://www.linkedin.com/in/saloni-sinha-46b123374?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
           },
         },
+        {
+          id: 'pr-member-6',
+          name: 'Vedant Parsewar',
+          role: 'Public Relations Co-Head',
+          socials: {
+            linkedin:
+              'https://www.linkedin.com/in/vedant-parsewar-819993376?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+          },
+        },
       ],
       members: [
         {
@@ -227,15 +236,6 @@ export const teamData = {
           role: 'Crew',
           socials: {
             linkedin: 'https://www.linkedin.com/in/sukrut-suryawanshi',
-          },
-        },
-        {
-          id: 'pr-member-6',
-          name: 'Vedant Parsewar',
-          role: 'Crew',
-          socials: {
-            linkedin:
-              'https://www.linkedin.com/in/vedant-parsewar-819993376?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
         {
@@ -464,8 +464,9 @@ export const teamData = {
       name: 'WEB DEVELOPMENT',
       shortName: 'WEB',
       heads: [
+
         {
-          id: 'web-head-1',
+          id: 'web-head-2',
           name: 'Riddhi Sonawane',
           role: 'Web Development Head',
           image: portrait('roborashtra/team/web/riddhi'),
@@ -531,6 +532,7 @@ export const teamData = {
           id: 'content-member-2',
           name: 'Atharv Dangare',
           role: 'Content Head',
+          image: portrait('roborashtra/team/content/atharv'),
           socials: {
             linkedin: 'https://www.linkedin.com/in/atharv-dangare-b22486409?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
           },

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Disallow server-only API routes
+Disallow: /api/
+
+Sitemap: https://roborashtra.com/sitemap.xml
