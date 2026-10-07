@@ -437,41 +437,19 @@ export default function Hero() {
 
         <Link
           href="/"
-          className="group flex items-center gap-3.5 sm:gap-4 select-none"
+          className="group flex items-center select-none"
+          aria-label="Roborashtra Home"
         >
-
-          <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_16px_rgba(56,189,248,0.45)]">
-
+          <div className="relative h-8 sm:h-10 md:h-12 w-auto max-w-[62vw] sm:max-w-none flex items-center">
             <Image
-              src="/logo/emblem-bright.png"
-              alt="Roborashtra Emblem"
-              fill
-              className="object-contain"
+              src="/header.png"
+              alt="Robo Rashtra '27"
+              width={320}
+              height={48}
               priority
+              className="h-8 sm:h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_16px_rgba(56,189,248,0.3)]"
             />
-
           </div>
-
-          <div className="flex flex-col">
-
-            <div className="flex items-center gap-2">
-
-              <span className="font-orbitron font-black text-base sm:text-xl md:text-2xl tracking-wider text-white">
-                ROBO<span className="text-cyan-400">RASHTRA</span>
-              </span>
-
-              <span className="hidden sm:inline-block font-orbitron font-bold text-[9px] tracking-widest px-2.5 py-0.5 rounded-full border bg-cyan-950/50 text-cyan-300 border-cyan-500/40 shadow-[0_0_12px_rgba(6,182,212,0.25)]">
-                2026-27
-              </span>
-
-            </div>
-
-            <span className="font-orbitron font-semibold text-[9px] sm:text-[10px] tracking-[0.28em] uppercase text-slate-400 group-hover:text-cyan-400/80 transition-colors">
-              ROBOTICS CLUB
-            </span>
-
-          </div>
-
         </Link>
 
         {/* Menu */}
@@ -917,6 +895,8 @@ export default function Hero() {
 
           <a
             href="/problem-statements"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2.5 px-3 sm:px-8 py-2.5 sm:py-3 rounded-xl font-orbitron text-[10px] sm:text-xs tracking-wider font-black uppercase bg-gradient-to-r from-rust via-orange-600 to-amber-500 hover:from-orange-600 hover:to-amber-400 text-white border border-orange-400/40 shadow-[0_0_25px_rgba(234,88,12,0.45)] hover:shadow-[0_0_35px_rgba(234,88,12,0.75)] transition-all duration-300 active:scale-[0.98] group whitespace-nowrap"
           >
 

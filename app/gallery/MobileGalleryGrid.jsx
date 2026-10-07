@@ -90,12 +90,6 @@ export default function MobileGalleryGrid({ photos = [], onSelectPhoto }) {
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 group-active:scale-105"
           />
               <span className="absolute inset-0 bg-gradient-to-t from-[#05080e]/65 via-transparent to-[#ffffff]/5" />
-              <span className="absolute left-2 top-2 font-mono text-[9px] tracking-[0.18em] text-white/75">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <span className="absolute bottom-2 right-2 max-w-[75%] truncate font-mono text-[8px] uppercase tracking-[0.12em] text-white/70">
-                {photo.category}
-              </span>
             </button>
           )
         })()
