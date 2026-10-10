@@ -38,6 +38,24 @@
 
 import { getCloudinaryUrl } from '@/lib/cloudinary'
 
+const localPortraits = {
+  albin: '/team/albin.png',
+  devika: '/team/devika.png',
+  dhananjay: '/team/dhananjay.png',
+  parth: '/team/parth.png',
+  prachi: '/team/prachi.png',
+  rajat: '/team/rajat.png',
+  riddhi: '/team/riddhi.png',
+  rushikeshsonaje: '/team/rushikeshsonaje.png',
+  saloni: '/team/saloni.png',
+  sarthak: '/team/sarthak.png',
+  sarthakgadhave: '/team/sarthakgadhave.png',
+  shivrajpatil: '/team/shivrajpatil.png',
+  soham: '/team/soham.png',
+  tanaj: '/team/tanaj.png',
+  yadnesh: '/team/yadnesh.png',
+}
+
 /**
  * Builds an optimized Cloudinary delivery URL for team portraits.
  * Applies face-aware gravity, auto format, and retina DPR.
@@ -46,7 +64,7 @@ import { getCloudinaryUrl } from '@/lib/cloudinary'
  * @returns {string} Optimized image URL or empty string if unconfigured
  */
 function portrait(publicId) {
-  return getCloudinaryUrl(publicId, {
+  const cloudinaryUrl = getCloudinaryUrl(publicId, {
     width: 400,
     height: 400,
     crop: 'fill',
@@ -55,6 +73,11 @@ function portrait(publicId) {
     quality: 'auto',
     dpr: true,
   })
+
+  if (cloudinaryUrl) return cloudinaryUrl
+
+  const localName = publicId.split('/').pop()
+  return localPortraits[localName] || ''
 }
 
 export const teamData = {
