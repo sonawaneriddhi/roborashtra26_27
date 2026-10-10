@@ -1,0 +1,18 @@
+{
+  "name": "ROBORASHTRA",
+  "short_name": "RoboRashtra",
+  "description": "India's premier national-level robotics championship — ResQlympics, YantraUtsav, Chakravyuh.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0502",
+  "theme_color": "#f59e0b",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/logo-b.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

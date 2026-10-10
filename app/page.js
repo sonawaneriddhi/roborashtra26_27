@@ -1,90 +1,14 @@
-'use client'
+import HomeClient from './HomeClient'
 
-import { useEffect, useState, useCallback } from 'react'
-import LoadingScreen from '@/components/LoadingScreen'
-import Hero from '@/components/Hero'
+export const metadata = {
+  title: 'Home',
+  description:
+    "Welcome to ROBORASHTRA — India's premier national robotics championship. DRDO-sponsored, 290+ registered teams, ₹1,00,000+ prize pools. Join the build.",
+  alternates: {
+    canonical: 'https://roborashtra.com/',
+  },
+}
 
 export default function Home() {
-  const [loaded, setLoaded] = useState(false)
-  const [shouldPlayIntro, setShouldPlayIntro] = useState(false)
-
-  useEffect(() => {
-    // Check session storage to only play intro animation on the initial site visit
-    const hasSeenIntro = sessionStorage.getItem('roborashtra_intro_shown')
-    if (hasSeenIntro) {
-      setLoaded(true)
-      setShouldPlayIntro(false)
-      document.documentElement.classList.remove('intro-pending')
-      document.documentElement.classList.add('intro-done')
-      const blackout = document.getElementById('initial-blackout')
-      if (blackout) blackout.style.display = 'none'
-    } else {
-      setShouldPlayIntro(true)
-    }
-
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual'
-    }
-    window.scrollTo(0, 0)
-  }, [])
-
-  useEffect(() => {
-    if (shouldPlayIntro && !loaded) {
-      document.body.style.overflow = 'hidden'
-      return () => {
-        document.body.style.overflow = ''
-      }
-    }
-  }, [shouldPlayIntro, loaded])
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        document.documentElement.classList.add('mobile-no-scroll')
-        document.body.classList.add('mobile-no-scroll')
-      } else {
-        document.documentElement.classList.remove('mobile-no-scroll')
-        document.body.classList.remove('mobile-no-scroll')
-      }
-    }
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => {
-      document.documentElement.classList.remove('mobile-no-scroll')
-      document.body.classList.remove('mobile-no-scroll')
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
-
-  const handleLoadingFinish = useCallback(() => {
-    setLoaded(true)
-    sessionStorage.setItem('roborashtra_intro_shown', 'true')
-    document.documentElement.classList.remove('intro-pending')
-    document.documentElement.classList.add('intro-done')
-    const blackout = document.getElementById('initial-blackout')
-    if (blackout) blackout.style.display = 'none'
-
-    if (typeof window !== 'undefined') {
-      if (window.location.hash && window.location.hash !== '#hero') {
-        history.replaceState(null, '', window.location.pathname + window.location.search)
-      }
-      if (window.lenis) {
-        window.lenis.scrollTo(0, { immediate: true, force: true })
-      }
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-    }
-  }, [])
-
-  return (
-    <>
-      {shouldPlayIntro && <LoadingScreen onFinish={handleLoadingFinish} />}
-      <div
-        className={`h-[100dvh] max-h-[100dvh] md:h-auto overflow-hidden transition-opacity duration-700 ${
-          loaded ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        <Hero />
-      </div>
-    </>
-  )
+  return <HomeClient />
 }

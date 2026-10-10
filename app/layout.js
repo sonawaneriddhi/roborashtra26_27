@@ -29,9 +29,65 @@ import Navbar from '@/components/Navbar'
 import PageTransition from '@/components/PageTransition'
 
 export const metadata = {
-  title: 'ROBORASHTRA',
+  metadataBase: new URL('https://roborashtra.com'),
+  title: {
+    default: 'ROBORASHTRA — National Robotics Championship',
+    template: '%s | ROBORASHTRA',
+  },
   description:
-    'ROBORASHTRA is the robotics and automation club building autonomous systems, competition bots, and the engineers who make them. Join the build.',
+    "ROBORASHTRA is India's premier national-level robotics championship — 290+ participants, ₹1,00,000+ prize pools, DRDO-sponsored. Join the build.",
+  keywords: [
+    'ROBORASHTRA',
+    'national robotics championship',
+    'robotics competition India',
+    'ResQlympics',
+    'YantraUtsav',
+    'Chakravyuh',
+    'DRDO sponsored robotics',
+    'Mitsubishi robotics',
+    'college robotics fest',
+    'robot competition India',
+  ],
+  authors: [{ name: 'ROBORASHTRA Team' }],
+  creator: 'ROBORASHTRA',
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: 'https://roborashtra.com',
+    siteName: 'ROBORASHTRA',
+    title: 'ROBORASHTRA — National Robotics Championship',
+    description:
+      "India's premier robotics championship with 290+ participants and ₹1,00,000+ prize pools.",
+    images: [
+      {
+        url: '/logo-b.png',
+        width: 1200,
+        height: 630,
+        alt: 'ROBORASHTRA — National Robotics Championship',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ROBORASHTRA — National Robotics Championship',
+    description:
+      "India's premier robotics championship. Join the build at roborashtra.com",
+    images: ['/logo-b.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: 'https://roborashtra.com',
+  },
 }
 
 export const viewport = {
@@ -39,6 +95,7 @@ export const viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
+  themeColor: '#f59e0b',
 }
 
 export default function RootLayout({ children }) {
@@ -46,6 +103,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preload" href="/loading.mp4" as="video" type="video/mp4" />
+        <link rel="manifest" href="/manifest.json" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -63,6 +121,32 @@ export default function RootLayout({ children }) {
                 }
               })();
             `,
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'ROBORASHTRA',
+              url: 'https://roborashtra.com',
+              logo: 'https://roborashtra.com/logo-b.png',
+              description:
+                "India's premier national-level robotics championship — ResQlympics, YantraUtsav, Chakravyuh.",
+              contactPoint: {
+                '@type': 'ContactPoint',
+                contactType: 'customer support',
+                availableLanguage: ['English', 'Hindi'],
+              },
+              event: {
+                '@type': 'Event',
+                name: 'ROBORASHTRA 2K26',
+                description:
+                  'National robotics championship with Mitsubishi Electric as Title Sponsor and 147+ participating institutions.',
+                organizer: { '@type': 'Organization', name: 'ROBORASHTRA' },
+              },
+            }),
           }}
         />
       </head>

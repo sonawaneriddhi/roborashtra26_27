@@ -1,7 +1,11 @@
 User-agent: *
 Allow: /
+Allow: /*.js$
+Allow: /*.css$
 
-# Disallow server-only API routes
+# Disallow server-only and internal routes
 Disallow: /api/
+Disallow: /_next/
 
+# Sitemap location
 Sitemap: https://roborashtra.com/sitemap.xml

@@ -4,7 +4,7 @@
   <!-- Home -->
   <url>
     <loc>https://roborashtra.com/</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,15 +12,23 @@
   <!-- Event -->
   <url>
     <loc>https://roborashtra.com/event</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <!-- Problem Statements -->
   <url>
     <loc>https://roborashtra.com/problem-statements</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Roadmap -->
+  <url>
+    <loc>https://roborashtra.com/roadmap</loc>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -28,7 +36,7 @@
   <!-- Gallery -->
   <url>
     <loc>https://roborashtra.com/gallery</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -36,7 +44,7 @@
   <!-- Sponsors -->
   <url>
     <loc>https://roborashtra.com/sponsor</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -44,7 +52,7 @@
   <!-- Team -->
   <url>
     <loc>https://roborashtra.com/team</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -52,17 +60,9 @@
   <!-- Countdown -->
   <url>
     <loc>https://roborashtra.com/countdown</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
-  </url>
-
-  <!-- Roadmap -->
-  <url>
-    <loc>https://roborashtra.com/roadmap</loc>
-    <lastmod>2026-10-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
 
 </urlset>

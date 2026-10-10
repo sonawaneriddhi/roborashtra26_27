@@ -192,17 +192,18 @@ export const teamData = {
               'https://www.linkedin.com/in/saloni-sinha-46b123374?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
           },
         },
+
+      ],
+      members: [
         {
           id: 'pr-member-6',
           name: 'Vedant Parsewar',
-          role: 'Public Relations Co-Head',
+          role: 'Crew',
           socials: {
             linkedin:
               'https://www.linkedin.com/in/vedant-parsewar-819993376?utm_source=share_via&utm_content=profile&utm_medium=member_android',
           },
         },
-      ],
-      members: [
         {
           id: 'pr-member-1',
           name: 'Vedika Katke',
@@ -418,7 +419,7 @@ export const teamData = {
       heads: [
         {
           id: 'design-head-1',
-          name: 'Prachi Gareja',
+          name: 'Prachi Gereja',
           role: 'Design Head',
           image: portrait('roborashtra/team/design/prachi'),
           socials: {
@@ -428,7 +429,7 @@ export const teamData = {
         },
         {
           id: 'design-head-2',
-          name: 'Soham Sejwal',
+          name: 'Soham Shejwal',
           role: 'Design Co-Head',
           image: portrait('roborashtra/team/design/soham'),
           socials: {
