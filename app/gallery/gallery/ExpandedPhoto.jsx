@@ -89,7 +89,7 @@ export default function ExpandedPhoto({
               <X size={20} />
             </button>
 
-            {/* Left/Right Floating Quick Contro
+            {/* Left/Right Floating Quick Controls */}
             <button
               onClick={handlePrev}
               aria-label="Previous photograph"
@@ -124,8 +124,7 @@ export default function ExpandedPhoto({
                     src={photo.src}
                     alt={photo.title}
                     onError={(e) => {
-                      e.currentTarget.src =
-                      `https://picsum.photos/seed/${photo.id}/900/675`
+                      e.target.src = 'https://picsum.photos/seed/' + photo.id + '/900/675'
                     }}
                     className="max-h-[38vh] sm:max-h-[55vh] md:max-h-[68vh] w-auto object-contain select-none"
                   />

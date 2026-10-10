@@ -319,7 +319,9 @@ export default function PhotoCard({
 
     // Use already-loaded texture
     if (photoTextureCache.has(cacheKey)) {
-      setTexture(photoTextureCache.get(cacheKey))
+      setTexture(
+        photoTextureCache.get(cacheKey)
+      )
       return
     }
 

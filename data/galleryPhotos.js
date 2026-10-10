@@ -111,28 +111,6 @@ export const galleryPhotos = [
   },
   {
     id: 'photo-07',
-    publicId: 'roborashtra/gallery/DSC00991',
-    src: galleryUrl('roborashtra/gallery/DSC00991'),
-    title: 'FPV High-G Obstacle Course',
-    category: 'Telemetry',
-    date: 'APR 2026',
-    description:
-      'Custom carbon-weave quadcopter executing autonomous trajectory tracking in low-visibility floodlit arena.',
-    aspect: 1.5,
-  },
-  {
-    id: 'photo-08',
-    publicId: 'roborashtra/gallery/DSC00995',
-    src: galleryUrl('roborashtra/gallery/DSC00995'),
-    title: 'Armature Calibration Run',
-    category: 'Actuation',
-    date: 'MAY 2026',
-    description:
-      'Harmonic drive backlash compensation testing achieving sub-0.02mm repeatability across extreme articulation arcs.',
-    aspect: 1.5,
-  },
-  {
-    id: 'photo-21',
     publicId: 'roborashtra/gallery/rr2k26_faculty_01',
     src: galleryUrl('roborashtra/gallery/rr2k26_faculty_01'),
     title: 'RR2K26 Mentorship Arena',
@@ -143,7 +121,7 @@ export const galleryPhotos = [
     aspect: 1.5,
   },
   {
-    id: 'photo-22',
+    id: 'photo-08',
     publicId: 'roborashtra/gallery/rr2k26_faculty_02',
     src: galleryUrl('roborashtra/gallery/rr2k26_faculty_02'),
     title: 'RoboRashtra Faculty Delegation',
