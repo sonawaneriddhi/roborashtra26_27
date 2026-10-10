@@ -1,320 +1,245 @@
 'use client'
 
-/**
- * app/event/EventsStory.jsx
- * ─────────────────────────
- * Scroll-driven 3D Event Showcase with Card Splitting & Flipping Choreography.
- *
- * Animation Phases:
- * 1. Initial State (0.00 -> 0.18): 3 cards merge into a seamless panoramic robot image.
- * 2. Lateral Separation (0.18 -> 0.50): Cards smoothly split outward along the X-axis.
- * 3. 3D Inverted Flip (0.48 -> 0.80): Cards flip 180° around the Y-axis with inward bottom
- *    tilting (Z-axis) to reveal event descriptions and downloadable rulebooks.
- */
-
-import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { events } from '@/data/events'
 
-const HERO_IMAGE = '/robot.jpg'
-const BG_POSITIONS = ['0% 50%', '50% 50%', '100% 50%']
+const HERO_IMAGE = '/problem-combined.png'
+const IMAGE_POSITIONS = ['0% 50%', '50% 50%', '100% 50%']
+const CARD_SPREAD = [-4.2, 0, 4.2]
+const CARD_TILT = [-3.5, 0, 3.5]
+const CARD_BACK_ANGLE = [174, 180, 186]
 
-// Inverted tilt geometry: bottom angles inward toward the center, top flares slightly outward
-const TILT_Z = [-3.5, 0, 3.5]
-const TILT_Y_BACK = [174, 180, 186] // Inward 3D facing angle on back face
-const SPREAD_VW = [-3.8, 0, 3.8] // Lateral separation distance in viewport width units
-
-/**
- * Individual 3D Flip Card.
- *
- * @param {Object} props
- * @param {number} props.index - Card index (0, 1, 2)
- * @param {import('framer-motion').MotionValue<number>} props.progress - Scroll progress value (0 to 1)
- * @param {boolean} props.reduced - Accessibility flag for reduced motion preferences
- */
-function Card({ index, progress, reduced }) {
-  // Phase 2: Split apart smoothly (0.18 -> 0.50)
-  const splitX = useTransform(progress, [0.18, 0.50], [0, SPREAD_VW[index]])
-  const cardScale = useTransform(progress, [0.18, 0.50, 0.82], [1, 1, 0.98])
-
-  // Phase 3: Flip & Turn (0.48 -> 0.80)
+function ChallengeCard({ index, progress }) {
+  const splitX = useTransform(progress, [0.18, 0.48], [0, CARD_SPREAD[index]])
   const rotateY = useTransform(
     progress,
-    [0.48 + index * 0.02, 0.78 + index * 0.02],
-    [0, TILT_Y_BACK[index]]
+    [0.46 + index * 0.02, 0.78 + index * 0.02],
+    [0, CARD_BACK_ANGLE[index]]
   )
-
-  // Inverted tilt from bottom as cards flip
   const rotateZ = useTransform(
     progress,
-    [0.50 + index * 0.02, 0.80 + index * 0.02],
-    [0, TILT_Z[index]]
+    [0.5 + index * 0.02, 0.8 + index * 0.02],
+    [0, CARD_TILT[index]]
   )
-
-  const rotateX = useTransform(
-    progress,
-    [0.52, 0.80],
-    [0, index === 1 ? 0 : 2]
-  )
-
-  const x = useTransform(splitX, (v) => `${v}vw`)
-
-  const outerStyle = reduced
-    ? { transform: `translateX(${[-4, 0, 4][index]}%)`, perspective: 1600 }
-    : {
-      x,
-      scale: cardScale,
-      rotateZ,
-      rotateX,
-      transformOrigin: '50% 100%',
-      perspective: 1600,
-    }
-
-  const innerStyle = reduced
-    ? { transform: 'rotateY(180deg)', transformStyle: 'preserve-3d' }
-    : { rotateY, transformStyle: 'preserve-3d' }
+  const x = useTransform(splitX, (value) => `${value}vw`)
+  const challenge = events[index]
 
   return (
     <motion.div
-      style={outerStyle}
-      className="relative w-full sm:w-[32%] max-w-[415px] sm:min-w-[280px] h-[520px] sm:h-[550px] md:h-[615px] lg:h-[635px] shrink-0"
+      style={{
+        x,
+        rotateZ,
+        transformOrigin: '50% 100%',
+        perspective: 1600,
+        width: 'clamp(9rem, 29vw, 25rem)',
+        height: 'clamp(22rem, 68svh, 38rem)',
+      }}
+      className="relative shrink-0"
     >
       <motion.div
-        style={innerStyle}
-        className="relative w-full h-full rounded-2xl shadow-xl"
+        style={{ rotateY, transformStyle: 'preserve-3d' }}
+        className="relative h-full w-full rounded-2xl"
       >
-        {/* FRONT FACE — 1/3 Slice of the robot.jpg */}
         <div
-          className="absolute inset-0 rounded-2xl overflow-hidden border border-black/15 shadow-md bg-black"
+          aria-hidden="true"
+          className="absolute inset-0 overflow-hidden rounded-2xl border border-white/20 bg-black shadow-2xl"
           style={{ backfaceVisibility: 'hidden' }}
         >
           <div
-            className="w-full h-full"
+            className="h-full w-full"
             style={{
               backgroundImage: `url(${HERO_IMAGE})`,
               backgroundSize: '300% 100%',
-              backgroundPosition: BG_POSITIONS[index],
+              backgroundPosition: IMAGE_POSITIONS[index],
               backgroundRepeat: 'no-repeat',
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
-
-          {/* Front badge */}
-          <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between pointer-events-none">
-            <span className="font-mono text-[10px] tracking-widest2 uppercase text-ivory bg-black/60 backdrop-blur-md px-2.5 py-1 rounded">
-              {events[index].code} · {events[index].category}
-            </span>
-            <span className="font-mono text-[9px] tracking-widest2 text-ivory/70 uppercase">
-              FLIP →
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/5 to-slate-950/10" />
+          <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-2 sm:inset-x-5 sm:bottom-5">
+            <div>
+              <p className="font-mono text-[9px] tracking-[0.2em] text-cyan-200/80">
+                CHALLENGE {challenge.code}
+              </p>
+              <p className="mt-1 font-orbitron text-xs font-bold tracking-wider text-white sm:text-sm">
+                {challenge.title}
+              </p>
+            </div>
+            <span className="shrink-0 rounded border border-white/20 bg-black/40 px-2 py-1 font-mono text-[9px] tracking-widest text-white/80">
+              SCROLL TO FLIP
             </span>
           </div>
         </div>
 
-        {/* BACK FACE — Large, Clear Editorial Typography */}
-        <div
-          className="absolute inset-0 rounded-2xl bg-[#FCFAF6] text-textDark border border-black/15 p-6 md:p-8 flex flex-col justify-between shadow-2xl"
+        <article
+          className="absolute inset-0 flex flex-col rounded-2xl border border-black/15 bg-[#FCFAF6] p-5 text-textDark shadow-2xl sm:p-7"
           style={{
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
         >
-          {/* Top metadata */}
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="font-mono text-[12px] font-bold tracking-widest2 text-rust">
-                MISSION {events[index].code}
-              </span>
-              <span className="font-mono text-[10px] tracking-widest2 text-textDark/70 uppercase bg-black/[0.06] px-2.5 py-1 rounded">
-                {events[index].category}
-              </span>
-            </div>
-            <div className="w-10 h-0.5 bg-rust mb-3" />
-          </div>
-
-          {/* Center Content: High legibility */}
-          <div className="my-auto space-y-3">
-            <h3 className="font-mono text-2xl sm:text-3xl leading-[1.08] text-textDark font-black tracking-[0.06em] uppercase">
-              {events[index].title}
-            </h3>
-            <p className="text-[13px] sm:text-[14px] text-textDark/85 leading-relaxed">
-              {events[index].description}
-            </p>
-            <div className="bg-black/[0.04] p-3.5 rounded-lg border border-black/8">
-              <p className="font-mono text-[9px] tracking-widest2 uppercase text-textDark/70 font-semibold mb-1">
-                KEY OBJECTIVE
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="font-mono text-[10px] font-bold tracking-[0.2em] text-orange-700 sm:text-xs">
+                CHALLENGE {challenge.code}
               </p>
-              <p className="text-[12px] sm:text-[13px] text-textDark/90 leading-snug">
-                {events[index].objective}
-              </p>
+              <div className="mt-2 h-0.5 w-10 bg-orange-600" />
             </div>
-          </div>
-
-          {/* Bottom Action CTA */}
-          <div className="pt-4 border-t border-black/10 flex items-center justify-between">
-            <a
-              href={events[index].href}
-              className="inline-flex items-center gap-2 font-mono text-xs tracking-widest2 uppercase font-semibold text-textDark hover:text-rust transition-colors group"
-            >
-              <span>{events[index].cta}</span>
-              <span className="inline-block transition-transform group-hover:translate-x-1">
-                →
-              </span>
-            </a>
-            <span className="font-mono text-[11px] font-medium text-textMuted">
-              0{index + 1}/03
+            <span className="max-w-[55%] rounded bg-slate-950/[0.06] px-2 py-1 text-right font-mono text-[9px] leading-relaxed tracking-wider text-slate-700 sm:text-[10px]">
+              {challenge.category}
             </span>
           </div>
-        </div>
+
+          <div className="my-auto py-5">
+            <h3 className="font-orbitron text-xl font-black uppercase leading-tight tracking-wide text-slate-950 sm:text-2xl lg:text-3xl">
+              {challenge.title}
+            </h3>
+            <p className="mt-3 font-mono text-[10px] font-bold uppercase leading-relaxed tracking-wider text-orange-800 sm:text-xs">
+              {challenge.tagline}
+            </p>
+            <p className="mt-4 text-xs leading-relaxed text-slate-700 sm:text-sm">
+              {challenge.description}
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between border-t border-black/15 pt-3 font-mono text-[9px] uppercase tracking-[0.16em] text-textMuted sm:text-[10px]">
+            <span>Challenge profile</span>
+            <span>0{index + 1} / 03</span>
+          </div>
+        </article>
       </motion.div>
     </motion.div>
   )
 }
 
+function StaticChallengeCard({ challenge, index }) {
+  return (
+    <article
+      data-events-card
+      className="w-full overflow-hidden rounded-2xl border border-white/15 bg-[#FCFAF6] text-textDark shadow-2xl"
+    >
+      <div
+        className="relative h-48 bg-black"
+        style={{
+          backgroundImage: `url(${HERO_IMAGE})`,
+          backgroundSize: '300% 100%',
+          backgroundPosition: IMAGE_POSITIONS[index],
+        }}
+        aria-hidden="true"
+      >
+        <span className="absolute bottom-3 left-3 rounded border border-white/20 bg-black/60 px-2 py-1 font-mono text-[9px] tracking-widest text-white">
+          CHALLENGE {challenge.code}
+        </span>
+      </div>
+      <div className="p-5">
+        <p className="font-mono text-[9px] font-bold tracking-[0.18em] text-orange-700">
+          {challenge.category}
+        </p>
+        <h3 className="mt-2 font-orbitron text-xl font-black uppercase tracking-wide">
+          {challenge.title}
+        </h3>
+        <p className="mt-2 font-mono text-[10px] font-bold uppercase leading-relaxed tracking-wider text-orange-800">
+          {challenge.tagline}
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-textDark/80">
+          {challenge.description}
+        </p>
+      </div>
+    </article>
+  )
+}
+
 export default function EventsStory() {
   const wrapperRef = useRef(null)
-  const [reduced, setReduced] = useState(false)
-
-  useEffect(() => {
-    setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-  }, [])
-
+  const reducedMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
     offset: ['start start', 'end end'],
   })
 
-  // Subtle initial scale down without heavy zoom
-  const containerScale = useTransform(scrollYProgress, [0, 0.22], [1.04, 1.0])
-  const promptOpacity = useTransform(scrollYProgress, [0, 0.12], [0.8, 0])
-
-  if (reduced) {
+  if (reducedMotion) {
     return (
-      <section id="events" className="bg-[#F1EDE3] text-textDark py-24 px-6 md:px-12 border-t border-b border-black/10">
-        <div className="max-w-7xl mx-auto mb-12">
-          <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#FF9F1C] mb-2">
-            Events / 03
+      <section
+        id="problem-statements"
+        aria-labelledby="problem-statements-title"
+        className="bg-[#0A0F1A] px-4 py-16 text-white sm:px-8"
+      >
+        <div className="mx-auto max-w-7xl">
+          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-cyan-300">
+            Roborashtra / Challenges
           </p>
-          <h2 className="font-mono text-5xl md:text-6xl text-textDark tracking-[0.08em] uppercase font-black">
-            The Arena
+          <h2
+            id="problem-statements-title"
+            className="mt-2 font-orbitron text-3xl font-black uppercase tracking-wide sm:text-5xl"
+          >
+            Problem Statements
           </h2>
-        </div>
-        <div className="flex flex-col md:flex-row justify-center items-center gap-8">
-          {events.map((_, i) => (
-            <Card key={i} index={i} progress={scrollYProgress} reduced />
-          ))}
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {events.map((challenge, index) => (
+              <StaticChallengeCard
+                key={challenge.code}
+                challenge={challenge}
+                index={index}
+              />
+            ))}
+          </div>
         </div>
       </section>
     )
   }
 
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0.35])
+
   return (
     <section
-      id="events"
+      id="problem-statements"
       ref={wrapperRef}
-      className="relative bg-[#F1EDE3] text-textDark border-t border-b border-black/10"
+      aria-labelledby="problem-statements-title"
+      className="relative border-y border-white/10 bg-[#0A0F1A] text-white"
       style={{ height: '240vh' }}
     >
-      <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex flex-col justify-between items-center px-4 sm:px-8 md:px-12 py-6 md:py-8">
-        {/* Section Title — Stays visible throughout scroll without fading */}
-        <div className="w-full max-w-7xl flex flex-col md:flex-row md:items-end justify-between gap-3 md:gap-4 shrink-0 z-30 pointer-events-none">
-          <div>
-            <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-[#FF9F1C] mb-1">
-              Events / 03
-            </p>
-            <h2
-              className="font-mono leading-[0.9] text-textDark tracking-[0.08em] uppercase font-black"
-              style={{ fontSize: 'clamp(2rem, 5vw, 4.5rem)' }}
-            >
-              The Arena
-            </h2>
-          </div>
-          <p className="font-mono text-xs md:text-sm tracking-widest2 uppercase text-textMuted">
-            Three challenges. One champion.
+      <div className="sticky top-0 flex h-[100svh] w-full flex-col items-center justify-between overflow-hidden px-4 py-6 sm:px-8 md:px-12 md:py-8">
+        <motion.header
+          style={{ opacity: titleOpacity }}
+          className="z-30 w-full max-w-7xl shrink-0"
+        >
+          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-cyan-300 sm:text-[11px]">
+            Roborashtra / Challenges
           </p>
+          <h2
+            id="problem-statements-title"
+            className="mt-2 font-orbitron text-3xl font-black uppercase leading-none tracking-wide sm:text-5xl md:text-6xl"
+          >
+            Problem Statements
+          </h2>
+          <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.16em] text-white/55 sm:text-xs">
+            Three challenges. Scroll to split and reveal.
+          </p>
+        </motion.header>
+
+        <div className="relative z-20 my-auto hidden w-full items-center justify-center sm:flex">
+          {events.map((challenge, index) => (
+            <ChallengeCard
+              key={challenge.code}
+              index={index}
+              progress={scrollYProgress}
+            />
+          ))}
         </div>
 
-        {/* Interactive 3-Card Split & Tilted Turn Unit */}
-        {/* Mobile: vertical scroll stack; Desktop: cinematic horizontal flip */}
-        <motion.div
-          style={{ scale: containerScale }}
-          className="relative z-20 flex items-center justify-center w-full my-auto"
-        >
-          {/* MOBILE: Vertical scrollable card stack */}
-          <div className="sm:hidden w-full max-w-[380px] mx-auto overflow-y-auto flex flex-col gap-4 max-h-[68svh] overscroll-contain px-1 pb-2">
-            {events.map((_, i) => (
-              <div key={i} className="w-full h-[520px] relative rounded-2xl overflow-hidden shadow-xl">
-                {/* Back face (info) shown by default on mobile since no scroll flip */}
-                <div
-                  className="absolute inset-0 rounded-2xl bg-[#FCFAF6] text-textDark border border-black/15 p-6 flex flex-col justify-between shadow-2xl"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-[12px] font-bold tracking-widest2 text-rust">
-                        MISSION {events[i].code}
-                      </span>
-                      <span className="font-mono text-[10px] tracking-widest2 text-textDark/70 uppercase bg-black/[0.06] px-2.5 py-1 rounded">
-                        {events[i].category}
-                      </span>
-                    </div>
-                    <div className="w-10 h-0.5 bg-rust mb-3" />
-                    {/* Hero image */}
-                    <div
-                      className="w-full h-[200px] rounded-xl mb-4 overflow-hidden border border-black/10"
-                      style={{
-                        backgroundImage: `url(/robot.jpg)`,
-                        backgroundSize: '300% 100%',
-                        backgroundPosition: ['0% 50%', '50% 50%', '100% 50%'][i],
-                      }}
-                    />
-                  </div>
-                  <div className="space-y-3">
-                    <h3 className="font-mono text-2xl leading-[1.08] text-textDark font-black tracking-[0.06em] uppercase">
-                      {events[i].title}
-                    </h3>
-                    <p className="text-[13px] text-textDark/85 leading-relaxed">
-                      {events[i].description}
-                    </p>
-                    <div className="bg-black/[0.04] p-3.5 rounded-lg border border-black/8">
-                      <p className="font-mono text-[9px] tracking-widest2 uppercase text-textDark/70 font-semibold mb-1">
-                        KEY OBJECTIVE
-                      </p>
-                      <p className="text-[12px] text-textDark/90 leading-snug">
-                        {events[i].objective}
-                      </p>
-                    </div>
-                    <div className="pt-4 border-t border-black/10 flex items-center justify-between">
-                      <a
-                        href={events[i].href}
-                        className="inline-flex items-center gap-2 font-mono text-xs tracking-widest2 uppercase font-semibold text-textDark hover:text-rust transition-colors group"
-                      >
-                        <span>{events[i].cta}</span>
-                        <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
-                      </a>
-                      <span className="font-mono text-[11px] font-medium text-textMuted">0{i + 1}/03</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="z-20 my-auto flex max-h-[68svh] w-full max-w-sm flex-col gap-4 overflow-y-auto overscroll-contain px-1 pb-2 sm:hidden">
+          {events.map((challenge, index) => (
+            <StaticChallengeCard
+              key={challenge.code}
+              challenge={challenge}
+              index={index}
+            />
+          ))}
+        </div>
 
-          {/* DESKTOP (sm+): Cinematic horizontal 3-card layout */}
-          <div className="hidden sm:flex items-center justify-center w-full max-w-7xl">
-            {events.map((_, i) => (
-              <Card key={i} index={i} progress={scrollYProgress} reduced={false} />
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Bottom scroll hint */}
-        <motion.div
-          style={{ opacity: promptOpacity }}
-          className="shrink-0 z-10 pointer-events-none text-center"
-        >
-          <p className="font-mono text-[10px] tracking-widest2 uppercase text-textMuted">
-            ↓ Scroll to reveal
-          </p>
-        </motion.div>
+        <p className="z-10 shrink-0 pb-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white/45 sm:text-[10px]">
+          ↓ Scroll to reveal each challenge
+        </p>
       </div>
     </section>
   )

@@ -1,4 +1,4 @@
-import ProblemStatementComing from '@/app/event/ProblemStatementComing'
+import EventsStory from '@/app/event/EventsStory'
 
 export const metadata = {
   title: 'Problem Statements',
@@ -10,9 +10,5 @@ export const metadata = {
 }
 
 export default function ProblemStatementsPage() {
-  return (
-    <div className="h-screen h-[100dvh] w-full overflow-hidden">
-      <ProblemStatementComing />
-    </div>
-  )
+  return <EventsStory />
 }
