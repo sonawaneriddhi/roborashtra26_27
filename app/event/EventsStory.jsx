@@ -196,7 +196,7 @@ export default function EventsStory() {
         aria-labelledby="problem-statements-title"
         className="bg-[#0A0F1A] px-4 pb-16 pt-24 text-white sm:px-8 sm:pt-28"
       >
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-7xl text-center">
           <p className="font-orbitron text-[8px] uppercase tracking-[0.2em] text-cyan-300 sm:text-[9px]">
             Roborashtra / Challenges
           </p>
@@ -233,7 +233,7 @@ export default function EventsStory() {
       <div className="sticky top-0 flex h-[100svh] w-full flex-col items-center justify-between overflow-hidden px-4 pb-6 pt-20 sm:px-8 sm:pt-24 md:px-12 md:pb-8 md:pt-24">
         <motion.header
           style={{ opacity: titleOpacity }}
-          className="z-30 w-full max-w-7xl shrink-0"
+          className="z-30 mx-auto w-full max-w-7xl shrink-0 text-center"
         >
           <p className="font-orbitron text-[8px] uppercase tracking-[0.2em] text-cyan-300 sm:text-[9px]">
             Roborashtra / Challenges
