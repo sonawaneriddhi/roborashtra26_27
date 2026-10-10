@@ -32,6 +32,7 @@ import {
 } from 'lucide-react'
 
 import { teamData } from '@/data/teamData'
+import { websiteStore } from '@/lib/store/websiteStore'
 
 // Custom Clean Social Icons
 function LinkedInIcon({ className = 'w-3.5 h-3.5' }) {
@@ -555,6 +556,19 @@ export default function Team() {
     offset: ['start start', 'end end'],
   })
 
+  const [leads, setLeads] = useState(teamData.leads)
+  const [squads, setSquads] = useState(teamData.teams)
+
+  useEffect(() => {
+    const update = () => {
+      setLeads(websiteStore.getLeads())
+      setSquads(websiteStore.getSquads())
+    }
+    update()
+    const unsubscribe = websiteStore.subscribe(update)
+    return () => unsubscribe()
+  }, [])
+
   const allUnits = useMemo(() => {
     const leadUnit = {
       id: 'lead',
@@ -563,11 +577,11 @@ export default function Team() {
       shortName: 'LEAD',
       description:
         'The executive presidential council orchestrating autonomous kinematics development, battle arena protocols, and state championship operations.',
-      heads: teamData.leads,
+      heads: leads,
       members: [],
     }
 
-    const squadUnits = teamData.teams.map((t, idx) => ({
+    const squadUnits = (squads || []).map((t, idx) => ({
       ...t,
       number: String(idx + 2).padStart(2, '0'),
       description:
@@ -576,7 +590,7 @@ export default function Team() {
     }))
 
     return [leadUnit, ...squadUnits]
-  }, [])
+  }, [leads, squads])
 
   const [selectedUnitId, setSelectedUnitId] = useState('lead')
 

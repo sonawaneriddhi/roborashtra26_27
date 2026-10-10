@@ -111,21 +111,19 @@ export default function AdminLayout({ children }) {
             </button>
           </form>
 
-          <div className="mt-6 pt-4 border-t border-white/10 text-[10px] font-mono text-ivory/40">
-            DEMO ACCESS PIN: <span className="text-amber font-bold">2027</span> OR <span className="text-amber font-bold">admin</span>
-          </div>
+
         </div>
       </main>
     )
   }
 
   const navLinks = [
-    { label: 'OVERVIEW', href: '/admin', icon: LayoutDashboard },
-    { label: 'REGISTRATIONS & DESK', href: '/admin/registrations', icon: Shield },
-    { label: 'INTERNAL SQUADS', href: '/admin/teams', icon: Users },
-    { label: 'GATE SCANNER', href: '/admin/scanner', icon: Camera },
+    { label: 'COMMAND DECK', href: '/admin', icon: LayoutDashboard },
+    { label: 'TEAM & FACULTY CMS', href: '/admin/teams', icon: Users },
+    { label: 'DESK REGISTRATIONS', href: '/admin/registrations', icon: Shield },
+    { label: 'GATE QR SCANNER', href: '/admin/scanner', icon: Camera },
     { label: 'JUDGE SCORING', href: '/judge', icon: Award },
-    { label: 'LEADERBOARD', href: '/leaderboard', icon: Trophy },
+    { label: 'LIVE LEADERBOARD', href: '/leaderboard', icon: Trophy },
   ]
 
   return (
@@ -202,11 +200,10 @@ export default function AdminLayout({ children }) {
               <Link
                 key={tab.href}
                 href={tab.href}
-                className={`flex items-center gap-2 px-4 py-2 font-mono text-xs uppercase whitespace-nowrap transition-all border ${
-                  isActive
-                    ? 'border-amber bg-amber/15 text-amber font-bold shadow-[0_0_10px_rgba(255,159,28,0.2)]'
-                    : 'border-white/5 bg-[#0B132B]/40 text-ivory/60 hover:text-ivory hover:border-white/20'
-                }`}
+                className={`flex items-center gap-2 px-4 py-2 font-mono text-xs uppercase whitespace-nowrap transition-all border ${isActive
+                  ? 'border-amber bg-amber/15 text-amber font-bold shadow-[0_0_10px_rgba(255,159,28,0.2)]'
+                  : 'border-white/5 bg-[#0B132B]/40 text-ivory/60 hover:text-ivory hover:border-white/20'
+                  }`}
               >
                 <Icon className="w-3.5 h-3.5" />
                 {tab.label}

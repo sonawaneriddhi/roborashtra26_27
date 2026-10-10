@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { facultyMembers } from '@/data/faculty'
+import { websiteStore } from '@/lib/store/websiteStore'
 import { RotateCw, ExternalLink, Mail } from 'lucide-react'
 
 /**
@@ -214,6 +215,16 @@ function FacultyCard({ faculty, index }) {
 export default function Faculty() {
   const containerRef = useRef(null)
   const [reducedMotion, setReducedMotion] = useState(false)
+  const [facultyList, setFacultyList] = useState(facultyMembers)
+
+  useEffect(() => {
+    const update = () => {
+      setFacultyList(websiteStore.getFaculty())
+    }
+    update()
+    const unsubscribe = websiteStore.subscribe(update)
+    return () => unsubscribe()
+  }, [])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -414,7 +425,7 @@ export default function Faculty() {
             }}
             className="flex flex-row items-center justify-center gap-2.5 min-[360px]:gap-3.5 sm:gap-6 md:gap-8 lg:gap-10 w-full py-3 sm:py-5 overflow-visible"
           >
-            {facultyMembers.map((faculty, idx) => (
+            {(facultyList || []).map((faculty, idx) => (
               <FacultyCard
                 key={faculty.id}
                 faculty={faculty}
