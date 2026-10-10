@@ -1006,7 +1006,7 @@ export default function Hero() {
             </a>
 
             <a
-              href="mailto:hq@roborashtra.club"
+              href="mailto:roborashtra_pr@pccoer.in"
               aria-label="Email Contact"
               className="inline-flex items-center gap-1.5 font-orbitron text-[10px] sm:text-xs tracking-wider font-semibold text-slate-300 hover:text-cyan-400 transition-colors"
             >
