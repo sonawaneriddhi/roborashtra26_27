@@ -10,6 +10,30 @@ const CARD_SPREAD = [-4.2, 0, 4.2]
 const CARD_TILT = [-3.5, 0, 3.5]
 const CARD_BACK_ANGLE = [174, 180, 186]
 
+function RulebookAction({ challenge }) {
+  const className =
+    'inline-flex items-center justify-center rounded-lg border border-orange-700/25 bg-orange-700 px-3 py-2 font-mono text-[9px] font-bold uppercase tracking-wider text-white transition-colors hover:bg-orange-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-700 disabled:cursor-not-allowed disabled:border-black/10 disabled:bg-black/5 disabled:text-textMuted'
+
+  if (!challenge.rulebook) {
+    return (
+      <button type="button" disabled className={className}>
+        Rulebook coming soon
+      </button>
+    )
+  }
+
+  return (
+    <a
+      href={challenge.rulebook}
+      download
+      className={className}
+      aria-label={`Download ${challenge.title} rulebook`}
+    >
+      Download rulebook
+    </a>
+  )
+}
+
 function ChallengeCard({ index, progress }) {
   const splitX = useTransform(progress, [0.18, 0.48], [0, CARD_SPREAD[index]])
   const rotateY = useTransform(
@@ -32,8 +56,8 @@ function ChallengeCard({ index, progress }) {
         rotateZ,
         transformOrigin: '50% 100%',
         perspective: 1600,
-        width: 'clamp(8rem, 25vw, 22rem)',
-        height: 'clamp(20rem, 60svh, 34rem)',
+        width: 'clamp(7rem, 21vw, 18rem)',
+        height: 'clamp(18rem, 52svh, 30rem)',
         marginLeft: index === 0 ? 0 : '-2px',
       }}
       className="relative shrink-0"
@@ -75,7 +99,7 @@ function ChallengeCard({ index, progress }) {
         </div>
 
         <article
-          className="absolute inset-0 flex flex-col rounded-2xl bg-[#FCFAF6] p-5 text-textDark sm:p-7"
+          className="absolute inset-0 flex flex-col rounded-2xl bg-[#FCFAF6] p-4 text-textDark sm:p-5"
           style={{
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
@@ -94,20 +118,22 @@ function ChallengeCard({ index, progress }) {
           </div>
 
           <div className="my-auto py-5">
-            <h3 className="font-orbitron text-xl font-black uppercase leading-tight tracking-wide text-slate-950 sm:text-2xl lg:text-3xl">
+            <h3 className="font-orbitron text-lg font-black uppercase leading-tight tracking-wide text-slate-950 sm:text-xl lg:text-2xl">
               {challenge.title}
             </h3>
             <p className="mt-3 font-mono text-[10px] font-bold uppercase leading-relaxed tracking-wider text-orange-800 sm:text-xs">
               {challenge.tagline}
             </p>
-            <p className="mt-4 text-xs leading-relaxed text-slate-700 sm:text-sm">
+            <p className="mt-3 text-[11px] leading-relaxed text-slate-700 sm:text-xs">
               {challenge.description}
             </p>
           </div>
 
-          <div className="flex items-center justify-between border-t border-black/15 pt-3 font-mono text-[9px] uppercase tracking-[0.16em] text-textMuted sm:text-[10px]">
-            <span>Challenge profile</span>
-            <span>0{index + 1} / 03</span>
+          <div className="flex items-center justify-between gap-2 border-t border-black/15 pt-3">
+            <RulebookAction challenge={challenge} />
+            <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-textMuted sm:text-[10px]">
+              0{index + 1} / 03
+            </span>
           </div>
         </article>
       </motion.div>
@@ -147,6 +173,9 @@ function StaticChallengeCard({ challenge, index }) {
         <p className="mt-3 text-sm leading-relaxed text-textDark/80">
           {challenge.description}
         </p>
+        <div className="mt-4 border-t border-black/10 pt-4">
+          <RulebookAction challenge={challenge} />
+        </div>
       </div>
     </article>
   )

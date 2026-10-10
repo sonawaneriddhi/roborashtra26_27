@@ -23,7 +23,7 @@ export const events = [
     tagline: 'INNOVATE. AUTOMATE. DOMINATE.',
     description:
       'An engineering and robotics exhibition where students transform ideas into functional projects, prototypes and innovative solutions.',
-    rulebook: null,
+    rulebook: '/rulebooks/yantrautsav-rulebook.pdf',
     availableFrom: '29 SEPT',
   },
 
@@ -35,7 +35,7 @@ export const events = [
     tagline: 'SEARCH. RESCUE. SURVIVE.',
     description:
       'A high-intensity robotics challenge where teams navigate extraterrestrial environments, collect resources, construct structures and complete missions under pressure.',
-    rulebook: null,
+    rulebook: '/rulebooks/resqlympics-rulebook.pdf',
     availableFrom: '29 SEPT',
   },
 
@@ -47,7 +47,7 @@ export const events = [
     tagline: 'ONE CORE. TWO CONTENDERS. NO ROOM FOR ERROR.',
     description:
       'An intense robotic showdown where two teams compete for control of the Core through precision, strategy, speed and tactical decision-making.',
-    rulebook: null,
+    rulebook: '/rulebooks/orbital-clash-rulebook.pdf',
     availableFrom: '29 SEPT',
   },
 ]
