@@ -15,6 +15,7 @@ export default function Navbar() {
     pathname === '/problem-statements' ||
     pathname === '/sponsor' ||
     pathname === '/sponsors'
+
   const [open, setOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [introFinished, setIntroFinished] = useState(() => {
@@ -101,7 +102,14 @@ export default function Navbar() {
     }
   }, [isHidden])
 
-  if (pathname === '/' || pathname === '') {
+  if (
+    pathname === '/' ||
+    pathname === '' ||
+    pathname?.startsWith('/admin') ||
+    pathname?.startsWith('/judge') ||
+    pathname?.startsWith('/id') ||
+    pathname === '/leaderboard'
+  ) {
     return null
   }
 
