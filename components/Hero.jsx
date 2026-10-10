@@ -1006,8 +1006,10 @@ export default function Hero() {
             </a>
 
             <a
-              href="mailto:roborashtra_pr@pccoer.in"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=roborashtra_pr%40pccoer.in"
               aria-label="Email Contact"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 font-orbitron text-[10px] sm:text-xs tracking-wider font-semibold text-slate-300 hover:text-cyan-400 transition-colors"
             >
 
