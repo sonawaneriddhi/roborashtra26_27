@@ -32,8 +32,9 @@ function ChallengeCard({ index, progress }) {
         rotateZ,
         transformOrigin: '50% 100%',
         perspective: 1600,
-        width: 'clamp(9rem, 29vw, 25rem)',
-        height: 'clamp(22rem, 68svh, 38rem)',
+        width: 'clamp(8rem, 25vw, 22rem)',
+        height: 'clamp(20rem, 60svh, 34rem)',
+        marginLeft: index === 0 ? 0 : '-2px',
       }}
       className="relative shrink-0"
     >
@@ -43,7 +44,9 @@ function ChallengeCard({ index, progress }) {
       >
         <div
           aria-hidden="true"
-          className="absolute inset-0 overflow-hidden rounded-2xl border border-white/20 bg-black shadow-2xl"
+          className={`absolute inset-0 overflow-hidden bg-black ${
+            index === 0 ? 'rounded-l-2xl' : ''
+          } ${index === 2 ? 'rounded-r-2xl' : ''}`}
           style={{ backfaceVisibility: 'hidden' }}
         >
           <div
@@ -72,7 +75,7 @@ function ChallengeCard({ index, progress }) {
         </div>
 
         <article
-          className="absolute inset-0 flex flex-col rounded-2xl border border-black/15 bg-[#FCFAF6] p-5 text-textDark shadow-2xl sm:p-7"
+          className="absolute inset-0 flex flex-col rounded-2xl bg-[#FCFAF6] p-5 text-textDark sm:p-7"
           style={{
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
@@ -217,7 +220,7 @@ export default function EventsStory() {
           </p>
         </motion.header>
 
-        <div className="relative z-20 my-auto hidden w-full items-center justify-center sm:flex">
+        <div className="relative z-20 my-auto hidden w-full items-center justify-center drop-shadow-[0_24px_48px_rgba(0,0,0,0.55)] sm:flex">
           {events.map((challenge, index) => (
             <ChallengeCard
               key={challenge.code}
