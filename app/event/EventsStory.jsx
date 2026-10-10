@@ -194,15 +194,15 @@ export default function EventsStory() {
       <section
         id="problem-statements"
         aria-labelledby="problem-statements-title"
-        className="bg-[#0A0F1A] px-4 py-16 text-white sm:px-8"
+        className="bg-[#0A0F1A] px-4 pb-16 pt-24 text-white sm:px-8 sm:pt-28"
       >
         <div className="mx-auto max-w-7xl">
-          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-cyan-300">
+          <p className="font-orbitron text-[8px] uppercase tracking-[0.2em] text-cyan-300 sm:text-[9px]">
             Roborashtra / Challenges
           </p>
           <h2
             id="problem-statements-title"
-            className="mt-2 font-orbitron text-3xl font-black uppercase tracking-wide sm:text-5xl"
+            className="mt-2 font-orbitron text-xl font-black uppercase tracking-wide sm:text-3xl"
           >
             Problem Statements
           </h2>
@@ -230,21 +230,21 @@ export default function EventsStory() {
       className="relative border-y border-white/10 bg-[#0A0F1A] text-white"
       style={{ height: '240vh' }}
     >
-      <div className="sticky top-0 flex h-[100svh] w-full flex-col items-center justify-between overflow-hidden px-4 py-6 sm:px-8 md:px-12 md:py-8">
+      <div className="sticky top-0 flex h-[100svh] w-full flex-col items-center justify-between overflow-hidden px-4 pb-6 pt-20 sm:px-8 sm:pt-24 md:px-12 md:pb-8 md:pt-24">
         <motion.header
           style={{ opacity: titleOpacity }}
           className="z-30 w-full max-w-7xl shrink-0"
         >
-          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-cyan-300 sm:text-[11px]">
+          <p className="font-orbitron text-[8px] uppercase tracking-[0.2em] text-cyan-300 sm:text-[9px]">
             Roborashtra / Challenges
           </p>
           <h2
             id="problem-statements-title"
-            className="mt-2 font-orbitron text-3xl font-black uppercase leading-none tracking-wide sm:text-5xl md:text-6xl"
+            className="mt-1.5 font-orbitron text-xl font-black uppercase leading-none tracking-wide sm:text-3xl md:text-4xl"
           >
             Problem Statements
           </h2>
-          <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.16em] text-white/55 sm:text-xs">
+          <p className="mt-1.5 font-orbitron text-[7px] uppercase tracking-[0.12em] text-white/55 sm:text-[9px]">
             Three challenges. Scroll to split and reveal.
           </p>
         </motion.header>
@@ -269,7 +269,7 @@ export default function EventsStory() {
           ))}
         </div>
 
-        <p className="z-10 shrink-0 pb-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white/45 sm:text-[10px]">
+        <p className="z-10 shrink-0 pb-1 font-orbitron text-[7px] uppercase tracking-[0.14em] text-white/45 sm:text-[9px]">
           ↓ Scroll to reveal each challenge
         </p>
       </div>
