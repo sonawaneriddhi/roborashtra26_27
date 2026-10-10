@@ -92,11 +92,7 @@ const years = [
     shortBadge: '2ND ED',
     problemStatements: [
       'ResQlympics',
-<<<<<<< HEAD
       'YantraUtsav',
-=======
-      'Yantra Utsav',
->>>>>>> afc94064759e4e68eabf3172b3508444176a1935
     ],
     details: [
       'Successfully hosted a massive national-level technical festival partnering with Unstop for seamless execution',
@@ -115,11 +111,7 @@ const years = [
     shortBadge: '3RD ED',
     problemStatements: [
       'ResQlympics 3.0',
-<<<<<<< HEAD
       'YantraUtsav',
-=======
-      'Yantra Utsav',
->>>>>>> afc94064759e4e68eabf3172b3508444176a1935
       'Chakravyuh',
     ],
     details: [
@@ -553,160 +545,8 @@ export default function RoadmapSection() {
             </AnimatePresence>
           </div>
 
-<<<<<<< HEAD
           {/* ════════════════════════════════════════
-=======
         {/* ════════════════════════════════════════
-            DESKTOP FLOATING CARDS (lg+)
-            z-20 with top-positioning below the header
-        ════════════════════════════════════════ */}
-        <div
-          className="absolute inset-0 z-20 hidden lg:block pointer-events-none"
-          aria-live="polite"
-        >
-          <AnimatePresence mode="wait">
-            {years.map((item, index) => {
-              if (index !== activeStep) return null
-
-              const nodeLeftPct = (NODE_XS[index] / 1200) * 100
-              const cardWidthPct = 28
-              const clampedLeft = Math.max(
-                4,
-                Math.min(nodeLeftPct - cardWidthPct / 2, 96 - cardWidthPct)
-              )
-
-              return (
-                <motion.article
-                  key={item.step}
-                  initial={{ opacity: 0, y: 18, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 12, scale: 0.96 }}
-                  transition={{
-                    duration: reducedMotion ? 0 : 0.32,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  style={{
-                    position: 'absolute',
-                    left: `${clampedLeft}%`,
-                    top: 'clamp(110px, 14vh, 150px)',
-                    width: 'clamp(350px, 28vw, 440px)',
-                  }}
-                  className="pointer-events-auto"
-                >
-                  {/* Ultra-Premium Glassmorphism Card */}
-                  <div
-                    className="relative overflow-hidden rounded-2xl"
-                    style={{
-                      background:
-                        'linear-gradient(145deg, rgba(22, 11, 5, 0.88) 0%, rgba(12, 6, 2, 0.94) 100%)',
-                      backdropFilter: 'blur(28px)',
-                      WebkitBackdropFilter: 'blur(28px)',
-                      border: '1px solid rgba(245,158,11,0.30)',
-                      boxShadow:
-                        '0 30px 80px rgba(0,0,0,0.75), 0 0 0 1px rgba(245,158,11,0.12), inset 0 1px 0 rgba(255,255,255,0.10)',
-                    }}
-                  >
-                    {/* Top ambient highlight line */}
-                    <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-amber-400/80 to-transparent pointer-events-none" />
-
-                    {/* Cyber corner brackets */}
-                    <span className="absolute left-0 top-0 h-3.5 w-3.5 border-l-2 border-t-2 border-amber-400 rounded-tl-sm" />
-                    <span className="absolute right-0 top-0 h-3.5 w-3.5 border-r-2 border-t-2 border-amber-400/40 rounded-tr-sm" />
-                    <span className="absolute bottom-0 left-0 h-3.5 w-3.5 border-b-2 border-l-2 border-amber-400/40 rounded-bl-sm" />
-                    <span className="absolute bottom-0 right-0 h-3.5 w-3.5 border-b-2 border-r-2 border-amber-400 rounded-br-sm" />
-
-                    {/* Warm background gradient shine */}
-                    <div
-                      className="pointer-events-none absolute inset-0"
-                      style={{
-                        background:
-                          'radial-gradient(circle at 90% 0%, rgba(245,158,11,0.14) 0%, transparent 60%)',
-                      }}
-                    />
-
-                    <div className="relative p-5 xl:p-6">
-                      {/* Top meta row */}
-                      <div className="mb-3 flex items-center justify-between gap-2">
-                        <span className="font-mono text-[11px] xl:text-xs tracking-[0.22em] uppercase font-bold text-amber-400 flex items-center gap-1.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                          {item.year}&ensp;·&ensp;{item.phase}
-                        </span>
-                        <span className="font-mono text-[9px] xl:text-[10px] tracking-[0.16em] rounded-full px-3 py-0.5 uppercase font-bold text-amber-300 border border-amber-400/40 bg-amber-400/15 shadow-[0_0_12px_rgba(245,158,11,0.2)]">
-                          {item.badge}
-                        </span>
-                      </div>
-
-                      {/* Title & Ghost Step Number */}
-                      <div className="flex items-start justify-between gap-3 mb-2">
-                        <h3 className="font-mono text-xl xl:text-2xl leading-[1.15] text-white/90 tracking-[0.08em] uppercase font-black">
-                          {item.title}
-                        </h3>
-                        <span
-                          className="font-mono text-3xl xl:text-4xl font-black leading-none shrink-0 select-none"
-                          style={{ color: 'rgba(245,158,11,0.20)' }}
-                        >
-                          {item.step}
-                        </span>
-                      </div>
-
-                      {/* Tagline */}
-                      <p className="text-[12px] xl:text-[13px] leading-relaxed text-white/70 font-normal">
-                        {item.tagline}
-                      </p>
-
-                      {/* Divider */}
-                      <div className="my-3 h-px bg-gradient-to-r from-amber-400/40 via-white/10 to-transparent" />
-
-                      {/* Detail bullet points */}
-                      <ul className="space-y-2" aria-label="Phase objectives">
-                        {item.details.map((detail) => (
-                          <li
-                            key={detail}
-                            className="flex items-start gap-2.5 text-[12px] xl:text-[13px] leading-relaxed text-white/85"
-                          >
-                            <span
-                              className="text-amber-400 font-bold text-xs shrink-0 mt-0.5"
-                              aria-hidden="true"
-                            >
-                              ▸
-                            </span>
-                            <span>{detail}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      {/* Problem Statement Subsection */}
-                      {item.problemStatements && item.problemStatements.length > 0 && (
-                        <div className="mt-3.5 pt-3 border-t border-amber-400/20">
-                          <p className="font-mono text-[10px] xl:text-[11px] uppercase tracking-[0.2em] text-amber-400 font-bold mb-2 flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                            Problem Statement:
-                          </p>
-                          <ol className="space-y-1.5" aria-label="Problem statements">
-                            {item.problemStatements.map((ps, idx) => (
-                              <li
-                                key={ps}
-                                className="flex items-center gap-2 text-[12px] xl:text-[13px] text-white/90 font-mono"
-                              >
-                                <span className="flex items-center justify-center w-4 h-4 rounded-full bg-amber-400/15 border border-amber-400/35 text-[9.5px] font-bold text-amber-300 shrink-0">
-                                  {idx + 1}
-                                </span>
-                                <span className="font-medium tracking-wide">{ps}</span>
-                              </li>
-                            ))}
-                          </ol>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </motion.article>
-              )
-            })}
-          </AnimatePresence>
-        </div>
-
-        {/* ════════════════════════════════════════
->>>>>>> afc94064759e4e68eabf3172b3508444176a1935
             TRAJECTORY STAGE (SVG Rail Track)
             Dedicated upper arena on mobile (< lg) so rover is 100% visible
         ════════════════════════════════════════ */}
@@ -969,7 +809,6 @@ export default function RoadmapSection() {
                               >
                                 {ps}
                               </span>
-<<<<<<< HEAD
                             ))}
                           </div>
                         )}
@@ -980,36 +819,6 @@ export default function RoadmapSection() {
                           <span className="text-amber-400/50 text-xs">→</span>
                         </div>
                       </button>
-=======
-                              <span className="line-clamp-2 sm:line-clamp-none">{d}</span>
-                            </li>
-                          ))}
-                        </ul>
-
-                        {/* Problem Statement Subsection */}
-                        {item.problemStatements && item.problemStatements.length > 0 && (
-                          <div className="mt-2 pt-2 border-t border-amber-400/20">
-                            <p className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.18em] text-amber-400 font-bold mb-1 flex items-center gap-1">
-                              <span className="w-1 h-1 rounded-full bg-amber-400" />
-                              Problem Statement:
-                            </p>
-                            <ol className="space-y-1">
-                              {item.problemStatements.map((ps, idx) => (
-                                <li
-                                  key={ps}
-                                  className="flex items-center gap-1.5 text-[11px] sm:text-xs text-white/90 font-mono"
-                                >
-                                  <span className="flex items-center justify-center w-3.5 h-3.5 rounded-full bg-amber-400/15 border border-amber-400/30 text-[8px] font-bold text-amber-300 shrink-0">
-                                    {idx + 1}
-                                  </span>
-                                  <span className="font-medium tracking-wide">{ps}</span>
-                                </li>
-                              ))}
-                            </ol>
-                          </div>
-                        )}
-                      </div>
->>>>>>> afc94064759e4e68eabf3172b3508444176a1935
 
                       {/* Touch navigation controls */}
                       <div className="px-4 sm:px-5 pb-3 pt-1 border-t border-white/[0.08] flex items-center justify-between">

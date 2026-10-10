@@ -318,7 +318,7 @@ export default function Faculty() {
       <section
         id="faculty"
         aria-label="Faculty Mentorship"
-        className="w-full bg-[#070707] text-ivory pt-24 sm:pt-28 pb-16 px-4 sm:px-8 md:px-12 border-t border-b border-white/10"
+        className="w-full bg-[#070707] text-ivory pt-24 sm:pt-28 pb-16 px-4 sm:px-8 md:px-12 border-t border-white/10"
       >
         <div className="max-w-5xl mx-auto mb-6 sm:mb-8 text-center">
           <h2 className="font-display font-bold text-xs min-[360px]:text-sm sm:text-base md:text-lg lg:text-xl text-white/90 tracking-[0.2em] sm:tracking-[0.26em] uppercase">
