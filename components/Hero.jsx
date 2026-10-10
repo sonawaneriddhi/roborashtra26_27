@@ -440,14 +440,14 @@ export default function Hero() {
           className="group flex items-center select-none"
           aria-label="Roborashtra Home"
         >
-          <div className="relative h-8 sm:h-10 md:h-12 w-auto max-w-[62vw] sm:max-w-none flex items-center">
+          <div className="relative h-10 sm:h-14 md:h-16 lg:h-20 w-auto max-w-[65vw] sm:max-w-none flex items-center">
             <Image
               src="/header.png"
               alt="Robo Rashtra '27"
-              width={320}
-              height={48}
+              width={602}
+              height={89}
               priority
-              className="h-8 sm:h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_16px_rgba(56,189,248,0.3)]"
+              className="h-10 sm:h-14 md:h-16 lg:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_20px_rgba(56,189,248,0.35)]"
             />
           </div>
         </Link>
