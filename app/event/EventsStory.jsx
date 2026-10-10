@@ -1,5 +1,17 @@
 'use client'
 
+/**
+ * app/event/EventsStory.jsx
+ * ─────────────────────────
+ * Scroll-driven 3D Event Showcase with Card Splitting & Flipping Choreography.
+ *
+ * Animation Phases:
+ * 1. Initial State (0.00 -> 0.18): 3 cards merge into a seamless panoramic robot image.
+ * 2. Lateral Separation (0.18 -> 0.50): Cards smoothly split outward along the X-axis.
+ * 3. 3D Inverted Flip (0.48 -> 0.80): Cards flip 180° around the Y-axis with inward bottom
+ *    tilting (Z-axis) to reveal event descriptions and downloadable rulebooks.
+ */
+
 import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { events } from '@/data/events'
@@ -7,11 +19,19 @@ import { events } from '@/data/events'
 const HERO_IMAGE = '/robot.jpg'
 const BG_POSITIONS = ['0% 50%', '50% 50%', '100% 50%']
 
-// Inverted tilt: bottom angles inward toward the center, top flares slightly out
-const TILT_Z = [-3.5, 0, 3.5] 
-const TILT_Y_BACK = [174, 180, 186] // 3D card inward face angle
-const SPREAD_VW = [-3.8, 0, 3.8] // Clean card separation gap for larger cards
+// Inverted tilt geometry: bottom angles inward toward the center, top flares slightly outward
+const TILT_Z = [-3.5, 0, 3.5]
+const TILT_Y_BACK = [174, 180, 186] // Inward 3D facing angle on back face
+const SPREAD_VW = [-3.8, 0, 3.8] // Lateral separation distance in viewport width units
 
+/**
+ * Individual 3D Flip Card.
+ *
+ * @param {Object} props
+ * @param {number} props.index - Card index (0, 1, 2)
+ * @param {import('framer-motion').MotionValue<number>} props.progress - Scroll progress value (0 to 1)
+ * @param {boolean} props.reduced - Accessibility flag for reduced motion preferences
+ */
 function Card({ index, progress, reduced }) {
   // Phase 2: Split apart smoothly (0.18 -> 0.50)
   const splitX = useTransform(progress, [0.18, 0.50], [0, SPREAD_VW[index]])
@@ -42,13 +62,13 @@ function Card({ index, progress, reduced }) {
   const outerStyle = reduced
     ? { transform: `translateX(${[-4, 0, 4][index]}%)`, perspective: 1600 }
     : {
-        x,
-        scale: cardScale,
-        rotateZ,
-        rotateX,
-        transformOrigin: '50% 100%',
-        perspective: 1600,
-      }
+      x,
+      scale: cardScale,
+      rotateZ,
+      rotateX,
+      transformOrigin: '50% 100%',
+      perspective: 1600,
+    }
 
   const innerStyle = reduced
     ? { transform: 'rotateY(180deg)', transformStyle: 'preserve-3d' }

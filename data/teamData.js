@@ -79,7 +79,7 @@ export const teamData = {
       phone: '9822547765',
       email: 'roborashtra_pr@gmail.com',
       socials: {
-        linkedin: 'https://linkedin.com',
+        linkedin: 'https://www.linkedin.com/in/sarthak-gadhave-53537b32b?utm_source=share_via&utm_content=profile&utm_medium=member_android',
       },
     },
     {
@@ -469,7 +469,7 @@ export const teamData = {
         {
           id: 'web-head-2',
           name: 'Riddhi Sonawane',
-          role: 'Web Head',
+          role: 'Web Development Head',
           image: portrait('roborashtra/team/web/riddhi'),
           socials: {
             linkedin:
@@ -479,7 +479,7 @@ export const teamData = {
         {
           id: 'web-head-2',
           name: 'Yadnyesh Borole',
-          role: 'Web Co-Head',
+          role: 'Web Development Co-Head',
           image: portrait('roborashtra/team/web/yadnesh'),
           socials: {
             linkedin: 'https://www.linkedin.com/in/yadnyesh-borole-51aa0532a/',

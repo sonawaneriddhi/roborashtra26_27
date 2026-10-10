@@ -1,3 +1,19 @@
+/**
+ * data/events.js
+ * ──────────────
+ * Flagship Competitive & Exhibition Events for ROBORASHTRA.
+ *
+ * @typedef {Object} RoboEvent
+ * @property {number} id - Numeric event ID
+ * @property {string} code - Two-digit formatted identifier
+ * @property {string} category - Competition domain / genre
+ * @property {string} title - Official event title
+ * @property {string} tagline - Event motto / subtitle
+ * @property {string} description - Detailed mission and challenge summary
+ * @property {string|null} rulebook - Downloadable rulebook URL (null if upcoming)
+ * @property {string} availableFrom - Release date indicator
+ */
+
 export const events = [
   {
     id: 1,

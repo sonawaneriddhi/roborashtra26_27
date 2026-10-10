@@ -1,5 +1,16 @@
 'use client'
 
+/**
+ * app/countdown/Countdown.jsx
+ * ────────────────────────────
+ * Championship Countdown Hero Section.
+ * Renders an interactive WebGL planetary globe (Cobe) overlaid with India tournament
+ * telemetry markers, dynamic mechanical flip-clock timers, and direct registration CTAs.
+ *
+ * @param {Object} props
+ * @param {string|Date} [props.targetDate] - Target timestamp for event kickoff
+ */
+
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Radio, Check } from 'lucide-react'
@@ -9,7 +20,7 @@ import { GlobePulse } from '@/components/ui/cobe-globe-pulse'
 // Default championship event target: February 1, 2027, 00:00:00 IST
 const DEFAULT_EVENT_DATE = '2027-02-01T00:00:00+05:30'
 
-// Strategic tournament nodes across India
+/** Strategic tournament nodes mapped across national competitive circuits */
 const TOURNAMENT_MARKERS = [
   { id: 'pune-hq', location: [18.5204, 73.8567], delay: 0 }, // Pune Arena HQ (Main Combat Grounds)
   { id: 'mumbai-fleet', location: [19.0760, 72.8777], delay: 0.4 }, // Mumbai SLAM Division
