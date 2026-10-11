@@ -41,6 +41,16 @@ function ChallengeCard({ index, progress }) {
     [0.46 + index * 0.02, 0.78 + index * 0.02],
     [0, CARD_BACK_ANGLE[index]]
   )
+  const scale = useTransform(
+    progress,
+    [0.46 + index * 0.02, 0.78 + index * 0.02],
+    [1, 1.16]
+  )
+  const zIndex = useTransform(
+    progress,
+    [0.46 + index * 0.02, 0.78 + index * 0.02],
+    [index + 1, 10 + index]
+  )
   const rotateZ = useTransform(
     progress,
     [0.5 + index * 0.02, 0.8 + index * 0.02],
@@ -59,11 +69,12 @@ function ChallengeCard({ index, progress }) {
         width: 'clamp(7rem, 21vw, 18rem)',
         height: 'clamp(18rem, 52svh, 30rem)',
         marginLeft: index === 0 ? 0 : '-2px',
+        zIndex,
       }}
       className="relative shrink-0"
     >
       <motion.div
-        style={{ rotateY, transformStyle: 'preserve-3d' }}
+        style={{ rotateY, scale, transformStyle: 'preserve-3d' }}
         className="relative h-full w-full rounded-2xl"
       >
         <div
@@ -230,7 +241,7 @@ export default function EventsStory() {
       className="relative border-y border-white/10 bg-[#0A0F1A] text-white"
       style={{ height: '240vh' }}
     >
-      <div className="sticky top-0 flex h-[100svh] w-full flex-col items-center justify-between overflow-hidden px-4 pb-6 pt-20 sm:px-8 sm:pt-24 md:px-12 md:pb-8 md:pt-24">
+      <div className="sticky top-0 flex h-[100svh] w-full flex-col items-center justify-between overflow-visible px-4 pb-6 pt-20 sm:px-8 sm:pt-24 md:px-12 md:pb-8 md:pt-24">
         <motion.header
           style={{ opacity: titleOpacity }}
           className="z-30 mx-auto w-full max-w-7xl shrink-0 text-center"
