@@ -1,0 +1,862 @@
+/*
+ * contact.css — /contact page scoped styles
+ *
+ * Roadmap Design System Tokens (verbatim from spec):
+ *   color.text.primary    = #f4f6f8
+ *   color.text.secondary  = #151515   ← dark — use on orange/light fills
+ *   color.text.tertiary   = #ffffff
+ *   color.text.inverse    = #ffa01e   ← orange accent (CTA, glow, eyebrow)
+ *   color.surface.base    = #000000
+ *   color.surface.muted   = #0c0602
+ *   color.surface.raised  = #0a0f1a
+ *   color.surface.strong  = #0a0502
+ *   color.border.default  = #e5e7eb
+ *   color.border.strong   = #070707
+ *   font.family.primary   = Inter, sans-serif
+ *   font.size.xs=11px | sm=12px | md=16px | lg=24px | xl=30px
+ *   space.1=2px | space.2=8px | space.3=16px | space.4=24px
+ *   radius.xs=9999px (pill)
+ *   shadow.1 = rgba(245,158,11,0.3) 0 0 16px 0, rgba(255,255,255,0.2) 0 1px 0 0 inset
+ *   motion.duration.instant=150ms | fast=200ms | normal=300ms
+ *
+ * WCAG 2.2 AA — keyboard-first, focus-visible rings, contrast-compliant.
+ */
+
+/* ── Root Page Container & Design Tokens ──────────────────────────────────── */
+.contact-page {
+  /* ── Surface Tokens (Roadmap spec) ── */
+  --color-surface-base:   #000000;
+  --color-surface-muted:  #0c0602;
+  --color-surface-raised: #0a0f1a;
+  --color-surface-strong: #0a0502;
+
+  /* ── Text Tokens ── */
+  --color-text-primary:   #f4f6f8;   /* body copy on dark */
+  --color-text-secondary: #151515;   /* dark — on orange/light fills */
+  --color-text-tertiary:  #ffffff;   /* high-contrast white */
+  --color-text-inverse:   #ffa01e;   /* orange accent */
+
+  /* ── Border Tokens ── */
+  --color-border-default: #e5e7eb;
+  --color-border-strong:  #070707;
+
+  /* ── Semantic Shortcuts ── */
+  --color-accent: #ffa01e;           /* primary interactive accent */
+  --color-error:  #ef4444;
+
+  /* ── Typography Scale (Roadmap spec) ── */
+  --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-xs:   11px;
+  --font-size-sm:   12px;
+  --font-size-md:   16px;
+  --font-size-lg:   24px;
+  --font-size-xl:   30px;
+  --font-size-base: 16px;
+  --font-weight-base: 400;
+  --font-line-height-base: 24px;
+
+  /* ── Spacing Scale (Roadmap spec) ── */
+  --space-1: 2px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+
+  /* ── Radius (Roadmap spec) ── */
+  --radius-xs: 9999px;   /* pill */
+  --radius-sm: 12px;     /* card corners */
+
+  /* ── Shadow (Roadmap spec shadow.1 verbatim) ── */
+  --shadow-1:
+    rgba(245, 158, 11, 0.3) 0px 0px 16px 0px,
+    rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset;
+  --shadow-depth: 0 4px 32px 0 rgba(0, 0, 0, 0.55);
+  --shadow-accent: 0 0 20px 0 rgba(255, 160, 30, 0.45);
+
+  /* ── Motion (Roadmap spec) ── */
+  --motion-instant: 150ms;
+  --motion-fast:    200ms;
+  --motion-normal:  300ms;
+
+  min-height: 100vh;
+  background-color: var(--color-surface-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--font-line-height-base);
+  overflow-x: hidden;
+}
+
+/* ── Full-page robotic space background ────────────────────────────────────── */
+.contact-page .page-space-bg {
+  position: fixed;           /* sticks to viewport — covers the whole page as you scroll */
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url('/contact-hero-bg.jpg');
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  /* Vignette: bright centre fades to solid black at edges & bottom
+     so cards/forms sit cleanly on a very dark surface */
+  mask-image:
+    radial-gradient(
+      ellipse 120% 80% at 50% 20%,
+      rgba(0, 0, 0, 0.45) 0%,
+      rgba(0, 0, 0, 0.78) 45%,
+      rgba(0, 0, 0, 0.96) 75%,
+      #000 100%
+    );
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse 120% 80% at 50% 20%,
+      rgba(0, 0, 0, 0.45) 0%,
+      rgba(0, 0, 0, 0.78) 45%,
+      rgba(0, 0, 0, 0.96) 75%,
+      #000 100%
+    );
+  opacity: 0.68;
+}
+
+/* Make sure every section renders above the fixed bg */
+.contact-page > section,
+.contact-page > div:not(.page-space-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Circuit-trace hero background ────────────────────────────────────────── */
+.contact-page .circuit-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 79px,
+      rgba(255, 160, 30, 0.04) 79px,
+      rgba(255, 160, 30, 0.04) 80px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 79px,
+      rgba(255, 160, 30, 0.04) 79px,
+      rgba(255, 160, 30, 0.04) 80px
+    );
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0, 0, 0, 0.65) 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0, 0, 0, 0.65) 0%, transparent 100%);
+}
+
+/* ── Hero ambient glow ─────────────────────────────────────────────────────── */
+.contact-page .hero-glow {
+  position: absolute;
+  top: -140px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 760px;
+  height: 540px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 160, 30, 0.14) 0%,
+    rgba(255, 160, 30, 0.04) 42%,
+    transparent 68%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Section eyebrow ──────────────────────────────────────────────────────── */
+.contact-page .label-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);           /* #ffa01e */
+  font-weight: 600;
+}
+
+/* ── Info Cards ───────────────────────────────────────────────────────────── */
+.contact-page .info-card {
+  position: relative;
+  background-color: var(--color-surface-raised);
+  border: 1px solid rgba(229, 231, 235, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 28px var(--space-3);
+  box-shadow: var(--shadow-depth);
+  transition:
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+  cursor: default;
+}
+
+@media (min-width: 640px) {
+  .contact-page .info-card {
+    padding: 28px 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contact-page .info-card {
+    padding: 32px 24px;
+  }
+}
+
+.contact-page .info-card:hover {
+  border-color: rgba(255, 160, 30, 0.45);
+  box-shadow: var(--shadow-1);
+}
+
+.contact-page .info-card .card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background-color: rgba(255, 160, 30, 0.1);
+  border: 1px solid rgba(255, 160, 30, 0.3);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-3);
+  color: var(--color-accent);
+  transition: all var(--motion-instant) ease;
+}
+
+.contact-page .info-card:hover .card-icon {
+  background-color: rgba(255, 160, 30, 0.18);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-accent);
+}
+
+.contact-page .info-card .card-title {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-2);
+  font-weight: 600;
+}
+
+.contact-page .info-card .card-value {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  line-height: 1.65;
+}
+
+.contact-page .info-card .card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 160, 30, 0.35);
+  padding-bottom: 2px;
+  transition: all var(--motion-instant) ease;
+}
+
+.contact-page .info-card .card-link:hover {
+  color: var(--color-text-tertiary);
+  border-color: var(--color-text-tertiary);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.contact-page .info-card .card-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── Interactive Map Section ──────────────────────────────────────────────── */
+.contact-page .map-wrapper {
+  background-color: var(--color-surface-raised);
+  border: 1px solid rgba(229, 231, 235, 0.1);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--shadow-depth);
+  transition:
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+}
+
+.contact-page .map-wrapper:hover {
+  border-color: rgba(255, 160, 30, 0.4);
+  box-shadow: var(--shadow-1);
+}
+
+.contact-page .map-hud {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface-muted);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.08);
+}
+
+@media (min-width: 768px) {
+  .contact-page .map-hud {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+.contact-page .map-hud-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.contact-page .map-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  box-shadow: 0 0 8px rgba(255, 160, 30, 0.6);
+  animation: map-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  flex-shrink: 0;
+}
+
+@keyframes map-pulse {
+  0%, 100% { opacity: 1;    transform: scale(1);   }
+  50%       { opacity: 0.35; transform: scale(1.4); }
+}
+
+.contact-page .map-code-pill {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.08em;
+  color: var(--color-text-primary);
+  background: rgba(255, 160, 30, 0.08);
+  border: 1px solid rgba(255, 160, 30, 0.25);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-xs);       /* pill */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.contact-page .map-hud-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .contact-page .map-hud-actions {
+    width: auto;
+  }
+}
+
+.contact-page .map-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  background: var(--color-surface-raised);
+  border: 1px solid rgba(229, 231, 235, 0.15);
+  border-radius: var(--radius-xs);      /* pill */
+  padding: var(--space-1) var(--space-2);
+  min-height: 36px;
+  cursor: pointer;
+  text-decoration: none;
+  flex: 1 1 calc(50% - var(--space-2));
+  white-space: nowrap;
+  transition: all var(--motion-instant) ease;
+}
+
+@media (min-width: 640px) {
+  .contact-page .map-action-btn {
+    flex: 0 0 auto;
+    padding: var(--space-1) var(--space-3);
+  }
+}
+
+.contact-page .map-action-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text-tertiary);
+  background: rgba(255, 160, 30, 0.1);
+  box-shadow: 0 0 14px rgba(255, 160, 30, 0.2);
+}
+
+.contact-page .map-action-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Filled primary variant */
+.contact-page .map-action-btn.primary {
+  color: var(--color-text-secondary);    /* #151515 — dark on orange */
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  font-weight: 700;
+}
+
+.contact-page .map-action-btn.primary:hover {
+  background: #ffb340;
+  border-color: #ffb340;
+  color: var(--color-text-secondary);
+  box-shadow: var(--shadow-1);
+}
+
+.contact-page .map-frame-container {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  background-color: var(--color-surface-muted);
+}
+
+@media (min-width: 640px) {
+  .contact-page .map-frame-container {
+    height: 400px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contact-page .map-frame-container {
+    height: 460px;
+  }
+}
+
+.contact-page .map-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  /* Dark shade: inverts bright map canvas to deep black/charcoal while preserving marker & hue fidelity */
+  filter: invert(90%) hue-rotate(180deg) contrast(95%);
+  transition: filter var(--motion-normal) ease;
+}
+
+.contact-page .map-footer-bar {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface-muted);
+  border-top: 1px solid rgba(229, 231, 235, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+@media (min-width: 768px) {
+  .contact-page .map-footer-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+.contact-page .map-venue-name {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text-tertiary);    /* #ffffff */
+  margin: 0;
+}
+
+.contact-page .map-venue-sub {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-sm);
+  color: rgba(244, 246, 248, 0.65);
+  margin: 2px 0 0;
+  line-height: 1.5;
+}
+
+/* ── Contact Form Container ────────────────────────────────────────────────── */
+.contact-page .contact-form-wrap {
+  background-color: var(--color-surface-raised);
+  border: 1px solid rgba(229, 231, 235, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 28px var(--space-3);
+  position: relative;
+  box-shadow: var(--shadow-depth);
+}
+
+@media (min-width: 640px) {
+  .contact-page .contact-form-wrap {
+    padding: 32px 28px;
+  }
+}
+
+@media (min-width: 768px) {
+  .contact-page .contact-form-wrap {
+    padding: 48px 40px;
+  }
+}
+
+/* ── Form Grid ─────────────────────────────────────────────────────────────── */
+.contact-page .form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .contact-page .form-row-2col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ── Form Field Wrapper ────────────────────────────────────────────────────── */
+.contact-page .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.contact-page .form-field label {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(244, 246, 248, 0.8);
+  font-weight: 500;
+  user-select: none;
+}
+
+.contact-page .form-field label .required-star {
+  color: var(--color-accent);
+  margin-left: 0.2rem;
+}
+
+/* ── Inputs, Selects, Textareas ────────────────────────────────────────────── */
+.contact-page .form-field input,
+.contact-page .form-field select,
+.contact-page .form-field textarea {
+  width: 100%;
+  background-color: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  border: 1px solid rgba(229, 231, 235, 0.15);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);     /* 16px — prevents iOS auto-zoom */
+  line-height: var(--font-line-height-base);
+  transition:
+    border-color var(--motion-instant) ease,
+    box-shadow var(--motion-instant) ease;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+}
+
+.contact-page .form-field input::placeholder,
+.contact-page .form-field textarea::placeholder {
+  color: rgba(244, 246, 248, 0.35);
+}
+
+.contact-page .form-field input:hover,
+.contact-page .form-field select:hover,
+.contact-page .form-field textarea:hover {
+  border-color: rgba(255, 160, 30, 0.4);
+}
+
+/* Focus — WCAG 2.2 AA focus-visible */
+.contact-page .form-field input:focus,
+.contact-page .form-field select:focus,
+.contact-page .form-field textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(255, 160, 30, 0.18);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 0;
+}
+
+/* Error state */
+.contact-page .form-field.has-error input,
+.contact-page .form-field.has-error select,
+.contact-page .form-field.has-error textarea {
+  border-color: var(--color-error);
+}
+
+.contact-page .form-field.has-error input:focus,
+.contact-page .form-field.has-error select:focus,
+.contact-page .form-field.has-error textarea:focus {
+  outline-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+.contact-page .form-field textarea {
+  resize: vertical;
+  min-height: 120px;
+  max-height: 320px;
+}
+
+/* Select wrapper & custom caret */
+.contact-page .select-wrap {
+  position: relative;
+}
+
+.contact-page .select-wrap::after {
+  content: '';
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid rgba(244, 246, 248, 0.5);
+  pointer-events: none;
+}
+
+.contact-page .form-field select option {
+  background-color: var(--color-surface-muted);
+  color: var(--color-text-primary);
+}
+
+/* ── Field Error Message ───────────────────────────────────────────────────── */
+.contact-page .field-error {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.07em;
+  color: var(--color-error);
+  margin-top: 2px;
+  min-height: 1rem;
+}
+
+/* ── Submit Button ─────────────────────────────────────────────────────────── */
+.contact-page .submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  /* Orange fill — WCAG AA requires dark text (#151515) on #ffa01e */
+  color: var(--color-text-secondary);
+  background-color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-xs);      /* pill per spec */
+  padding: var(--space-2) 28px;
+  min-height: 48px;
+  width: 100%;
+  max-width: 100%;
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all var(--motion-fast) ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+}
+
+@media (min-width: 640px) {
+  .contact-page .submit-btn {
+    width: auto;
+    padding: var(--space-2) 40px;
+  }
+}
+
+.contact-page .submit-btn:hover:not(:disabled) {
+  background-color: #ffb340;
+  border-color: #ffb340;
+  box-shadow: var(--shadow-accent), var(--shadow-1);
+  transform: translateY(-2px);
+}
+
+.contact-page .submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-1);
+}
+
+.contact-page .submit-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.contact-page .submit-btn:focus-visible {
+  outline: 2px solid var(--color-text-tertiary);
+  outline-offset: 3px;
+}
+
+/* Loading spinner inside button */
+.contact-page .btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(21, 21, 21, 0.25);
+  border-top-color: var(--color-text-secondary);
+  border-radius: 50%;
+  animation: contact-spin 0.7s linear infinite;
+}
+
+@keyframes contact-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Feedback Panels ───────────────────────────────────────────────────────── */
+.contact-page .feedback-panel {
+  border-radius: var(--radius-sm);
+  padding: 40px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+  box-shadow: var(--shadow-depth);
+}
+
+.contact-page .feedback-panel.success {
+  background-color: var(--color-surface-raised);
+  border: 1px solid rgba(255, 160, 30, 0.4);
+  box-shadow: var(--shadow-1);
+}
+
+.contact-page .feedback-panel.error {
+  background-color: var(--color-surface-raised);
+  border: 1px solid rgba(239, 68, 68, 0.45);
+}
+
+.contact-page .feedback-panel .feedback-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-page .feedback-panel.success .feedback-icon {
+  background-color: rgba(255, 160, 30, 0.12);
+  color: var(--color-accent);
+  box-shadow: var(--shadow-accent);
+}
+
+.contact-page .feedback-panel.error .feedback-icon {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: var(--color-error);
+}
+
+.contact-page .feedback-panel .feedback-title {
+  font-family: 'Orbitron', var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-lg);       /* 24px per spec */
+  letter-spacing: 0.06em;
+  color: var(--color-text-tertiary);    /* #ffffff */
+  font-weight: 700;
+}
+
+.contact-page .feedback-panel .feedback-body {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-md);
+  color: rgba(244, 246, 248, 0.75);
+  line-height: 1.65;
+  max-width: 420px;
+}
+
+/* Retry button */
+.contact-page .retry-btn {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: transparent;
+  border: 1px solid rgba(255, 160, 30, 0.5);
+  border-radius: var(--radius-xs);      /* pill */
+  padding: var(--space-1) 28px;
+  min-height: 40px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all var(--motion-instant) ease;
+}
+
+.contact-page .retry-btn:hover {
+  background-color: rgba(255, 160, 30, 0.12);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 16px rgba(255, 160, 30, 0.25);
+  color: var(--color-text-tertiary);
+}
+
+.contact-page .retry-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ── CTA Strip ─────────────────────────────────────────────────────────────── */
+.contact-page .cta-strip {
+  background-color: var(--color-surface-raised);
+  border: 1px solid rgba(229, 231, 235, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 28px var(--space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+  box-shadow: var(--shadow-depth);
+}
+
+@media (min-width: 640px) {
+  .contact-page .cta-strip {
+    padding: 32px 28px;
+  }
+}
+
+/* Instagram / social link */
+.contact-page .ig-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  text-decoration: none;
+  border: 1px solid rgba(255, 160, 30, 0.4);
+  background-color: rgba(255, 160, 30, 0.07);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-xs);      /* pill */
+  min-height: 42px;
+  transition: all var(--motion-fast) ease;
+}
+
+/* BUG FIX: removed duplicate color property */
+.contact-page .ig-link:hover {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+  color: var(--color-text-secondary);   /* #151515 on orange — WCAG AA */
+  font-weight: 700;
+  box-shadow: var(--shadow-accent);
+}
+
+.contact-page .ig-link:focus-visible {
+  outline: 2px solid var(--color-text-tertiary);
+  outline-offset: 3px;
+}
+
+/* ── Schematic Dividers ─────────────────────────────────────────────────────── */
+.contact-page .schematic-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(229, 231, 235, 0.12) 20%,
+    rgba(255, 160, 30, 0.35) 50%,
+    rgba(229, 231, 235, 0.12) 80%,
+    transparent 100%
+  );
+}

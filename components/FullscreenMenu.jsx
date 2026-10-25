@@ -15,6 +15,7 @@ const links = [
   { label: 'JOURNEY', href: '/roadmap' },
   { label: 'COUNTDOWN', href: '/countdown' },
   { label: 'REGISTER', href: '/problem-statements' },
+  { label: 'CONTACT', href: '/contact' },
 ]
 
 const listVariants = {

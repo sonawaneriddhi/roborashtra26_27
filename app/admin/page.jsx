@@ -7,6 +7,7 @@ import SiteSettingsTab from '@/components/admin/SiteSettingsTab'
 import DatabaseSyncTab from '@/components/admin/DatabaseSyncTab'
 import { tournamentStore } from '@/lib/store/tournamentStore'
 import { websiteStore } from '@/lib/store/websiteStore'
+import { contactStore } from '@/lib/store/contactStore'
 import { TOURNAMENT_TRACKS } from '@/data/tournamentSeeds'
 import Link from 'next/link'
 import {
@@ -24,6 +25,8 @@ import {
   LayoutDashboard,
   Shield,
   Layers,
+  Mail,
+  MessageSquare,
 } from 'lucide-react'
 
 export default function AdminOverviewPage() {
@@ -36,6 +39,7 @@ export default function AdminOverviewPage() {
   const [squadsCount, setSquadsCount] = useState(0)
   const [siteSettings, setSiteSettings] = useState(null)
   const [atlasConfig, setAtlasConfig] = useState(null)
+  const [contactMessages, setContactMessages] = useState([])
 
   useEffect(() => {
     const updateTournament = () => {
@@ -53,14 +57,22 @@ export default function AdminOverviewPage() {
       setAtlasConfig(websiteStore.getAtlasConfig())
     }
 
+    const updateContact = () => {
+      setContactMessages(contactStore.getMessages())
+    }
+
     updateTournament()
     updateWebsite()
+    updateContact()
+    contactStore.syncWithServer()
 
     const unsubT = tournamentStore.subscribe(updateTournament)
     const unsubW = websiteStore.subscribe(updateWebsite)
+    const unsubC = contactStore.subscribe(updateContact)
     return () => {
       unsubT()
       unsubW()
+      unsubC()
     }
   }, [])
 
@@ -71,6 +83,7 @@ export default function AdminOverviewPage() {
   const unstopCount = registrations.filter((r) => r.regType === 'UNSTOP_ONLINE').length
 
   const totalPersonnel = leadsCount + facultyCount + squadsCount
+  const unreadMessagesCount = contactMessages.filter((m) => m.status === 'UNREAD').length
 
   const tabs = [
     { id: 'OVERVIEW', label: 'OVERVIEW & TELEMETRY', icon: LayoutDashboard },
@@ -144,6 +157,27 @@ export default function AdminOverviewPage() {
               </div>
             </div>
 
+            <div className="tick-frame p-5 border border-amber/30 bg-[#0B132B]/70">
+              <div className="flex items-center justify-between text-xs font-mono text-ivory/50 mb-2 uppercase">
+                <span>INCOMING CONTACT INQUIRIES</span>
+                <Mail className="w-4 h-4 text-amber" />
+              </div>
+              <div className="flex items-baseline gap-3">
+                <span className="font-orbitron font-extrabold text-3xl text-ivory">{contactMessages.length}</span>
+                {unreadMessagesCount > 0 && (
+                  <span className="text-[10px] font-mono px-2 py-0.5 border border-amber/50 bg-amber/15 text-amber font-bold">
+                    {unreadMessagesCount} NEW
+                  </span>
+                )}
+              </div>
+              <div className="text-[10px] font-mono text-ivory/50 mt-1">
+                <Link href="/admin/messages" className="text-amber hover:underline flex items-center gap-1">
+                  <span>Open Inbox Dossier</span>
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
+            </div>
+
             <div className="tick-frame p-5 border border-white/15 bg-[#0B132B]/70">
               <div className="flex items-center justify-between text-xs font-mono text-ivory/50 mb-2 uppercase">
                 <span>DATABASE STATUS</span>
@@ -212,6 +246,24 @@ export default function AdminOverviewPage() {
                 </p>
 
                 <div className="space-y-2.5 font-mono text-xs">
+                  <Link
+                    href="/admin/messages"
+                    className="flex items-center justify-between p-3 border border-amber/40 hover:border-amber bg-[#0B132B]/70 hover:bg-[#0B132B] transition-all text-ivory group shadow-[0_0_12px_rgba(255,159,28,0.1)]"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Mail className="w-4 h-4 text-amber" />
+                      <span className="font-bold">INBOX &amp; CONTACT INQUIRIES</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {unreadMessagesCount > 0 && (
+                        <span className="px-1.5 py-0.5 bg-amber text-blueprintDeep font-mono font-black text-[10px] rounded-full">
+                          {unreadMessagesCount}
+                        </span>
+                      )}
+                      <ArrowRight className="w-4 h-4 text-ivory/40 group-hover:text-amber group-hover:translate-x-1 transition-all" />
+                    </div>
+                  </Link>
+
                   <button
                     onClick={() => setActiveTab('TEAM_CMS')}
                     className="w-full flex items-center justify-between p-3 border border-white/10 hover:border-amber/50 bg-[#060A12] hover:bg-[#060A12]/90 transition-all text-ivory group"
@@ -285,6 +337,54 @@ export default function AdminOverviewPage() {
                 <span className="text-amber font-bold">{siteSettings?.announcementActive ? 'ACTIVE' : 'MUTED'}</span>
               </div>
             </div>
+          </div>
+
+          {/* Incoming Messages Quick Feed */}
+          <div className="tick-frame p-6 border border-white/10 bg-[#070B19]/80">
+            <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-amber" />
+                <h3 className="font-orbitron font-bold text-sm text-ivory tracking-wide uppercase">
+                  LATEST CONTACT INQUIRIES &amp; TRANSMISSIONS
+                </h3>
+              </div>
+              <Link
+                href="/admin/messages"
+                className="text-xs font-mono text-amber hover:underline flex items-center gap-1"
+              >
+                <span>OPEN FULL INBOX ({contactMessages.length})</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            {contactMessages.length === 0 ? (
+              <p className="font-mono text-xs text-ivory/40 py-4 text-center">
+                NO INCOMING CONTACT MESSAGES YET.
+              </p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {contactMessages.slice(0, 3).map((msg) => (
+                  <Link
+                    key={msg.id}
+                    href="/admin/messages"
+                    className="p-3.5 border border-white/10 hover:border-amber/50 bg-[#060A12] transition-all block group"
+                  >
+                    <div className="flex items-center justify-between text-[10px] font-mono mb-1.5">
+                      <span className="text-amber font-bold truncate max-w-[150px]">{msg.name}</span>
+                      <span className="text-ivory/40">
+                        {new Date(msg.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <span className="text-[9px] font-mono px-1.5 py-0.5 border border-white/10 text-cyan-300 block w-fit mb-2">
+                      {msg.category}
+                    </span>
+                    <p className="text-xs font-mono text-ivory/70 line-clamp-2">
+                      {msg.message}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { tournamentStore } from '@/lib/store/tournamentStore'
+import { contactStore } from '@/lib/store/contactStore'
 import RegistrationModal from './RegistrationModal'
 import QrScannerModal from './QrScannerModal'
 import Link from 'next/link'
@@ -19,6 +20,7 @@ import {
   LogOut,
   QrCode,
   Radio,
+  Mail,
 } from 'lucide-react'
 
 export default function AdminLayout({ children }) {
@@ -27,14 +29,24 @@ export default function AdminLayout({ children }) {
   const [pinError, setPinError] = useState(false)
   const [regModalOpen, setRegModalOpen] = useState(false)
   const [scannerOpen, setScannerOpen] = useState(false)
+  const [unreadCount, setUnreadCount] = useState(0)
   const pathname = usePathname()
 
   useEffect(() => {
     setIsAuth(tournamentStore.isAdminLoggedIn())
-    const unsubscribe = tournamentStore.subscribe(() => {
+    setUnreadCount(contactStore.getUnreadCount())
+
+    const unsubscribeT = tournamentStore.subscribe(() => {
       setIsAuth(tournamentStore.isAdminLoggedIn())
     })
-    return () => unsubscribe()
+    const unsubscribeC = contactStore.subscribe(() => {
+      setUnreadCount(contactStore.getUnreadCount())
+    })
+
+    return () => {
+      unsubscribeT()
+      unsubscribeC()
+    }
   }, [])
 
   const handleLogin = (e) => {
@@ -119,6 +131,7 @@ export default function AdminLayout({ children }) {
 
   const navLinks = [
     { label: 'COMMAND DECK', href: '/admin', icon: LayoutDashboard },
+    { label: 'INBOX / MESSAGES', href: '/admin/messages', icon: Mail, badge: unreadCount },
     { label: 'TEAM & FACULTY CMS', href: '/admin/teams', icon: Users },
     { label: 'DESK REGISTRATIONS', href: '/admin/registrations', icon: Shield },
     { label: 'GATE QR SCANNER', href: '/admin/scanner', icon: Camera },
@@ -206,7 +219,12 @@ export default function AdminLayout({ children }) {
                   }`}
               >
                 <Icon className="w-3.5 h-3.5" />
-                {tab.label}
+                <span>{tab.label}</span>
+                {tab.badge > 0 && (
+                  <span className="ml-1 px-1.5 py-0.5 bg-amber text-blueprintDeep font-mono font-black text-[10px] rounded-full shadow-[0_0_8px_#ff9f1c]">
+                    {tab.badge}
+                  </span>
+                )}
               </Link>
             )
           })}
