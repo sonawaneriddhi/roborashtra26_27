@@ -63,57 +63,81 @@ export default function QrScannerModal({ isOpen, onClose, onCheckInComplete }) {
           fps: 10,
           qrbox: { width: 250, height: 250 },
         },
-        (decodedText) => {
-          handleCodeDetected(decodedText)
+        async (decodedText) => {
+          handleScanSuccess(decodedText)
         },
         (errorMessage) => {
-          // ignore low-level frame parse errors
+          // Ignore transient frame read errors
         }
       )
       setScannerActive(true)
     } catch (err) {
-      console.warn('Camera initiation issue:', err)
-      setErrorMsg('Camera access unavailable or permission denied. Use Manual Entry below.')
+      console.warn('QR camera startup error:', err)
+      setErrorMsg('Camera access failed or permission denied. You can use manual token entry below.')
       setScannerActive(false)
     }
   }
 
   const stopScanner = async () => {
-    if (html5QrCodeRef.current) {
-      try {
-        if (html5QrCodeRef.current.isScanning) {
-          await html5QrCodeRef.current.stop()
-        }
-        html5QrCodeRef.current.clear()
-      } catch (err) {
-        console.warn('Stop scanner cleanup:', err)
+    try {
+      if (html5QrCodeRef.current && html5QrCodeRef.current.isScanning) {
+        await html5QrCodeRef.current.stop()
       }
-      html5QrCodeRef.current = null
+      setScannerActive(false)
+    } catch (e) {
+      // Ignore cleanup error
     }
-    setScannerActive(false)
   }
 
-  const handleCodeDetected = (code) => {
+  const handleScanSuccess = async (rawCode) => {
     if (isProcessing) return
     setIsProcessing(true)
 
-    const outcome = tournamentStore.verifyAndCheckInQr(code)
-    setScanResult(outcome)
+    try {
+      let teamId = rawCode.trim()
 
-    if (outcome.success) {
-      playSuccessBeep()
-      if (onCheckInComplete) onCheckInComplete(outcome.team)
+      // Handle full URL scanned from QR code e.g. https://.../id/RR27-YO-101
+      if (teamId.includes('/id/')) {
+        const parts = teamId.split('/id/')
+        teamId = parts[parts.length - 1].split('?')[0].split('#')[0]
+      }
+
+      // Check in with tournament store
+      const result = tournamentStore.checkInTeam(teamId)
+
+      if (result.success) {
+        playSuccessBeep()
+        setScanResult({
+          success: true,
+          team: result.team,
+          message: result.message,
+          alreadyCheckedIn: result.alreadyCheckedIn,
+        })
+        if (onCheckInComplete) {
+          onCheckInComplete(result.team)
+        }
+      } else {
+        setScanResult({
+          success: false,
+          message: result.message || 'Invalid or unregistered team security token.',
+        })
+      }
+    } catch (err) {
+      setScanResult({
+        success: false,
+        message: 'Decryption or verification error.',
+      })
+    } finally {
+      setTimeout(() => {
+        setIsProcessing(false)
+      }, 1500)
     }
-
-    setTimeout(() => {
-      setIsProcessing(false)
-    }, 1800)
   }
 
   const handleManualSubmit = (e) => {
     e.preventDefault()
     if (!manualCode.trim()) return
-    handleCodeDetected(manualCode.trim())
+    handleScanSuccess(manualCode.trim())
     setManualCode('')
   }
 
@@ -121,42 +145,44 @@ export default function QrScannerModal({ isOpen, onClose, onCheckInComplete }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-      <div className="tick-frame relative w-full max-w-lg bg-[#070B19] border-2 border-amber/60 text-ivory p-6 shadow-[0_0_40px_rgba(255,159,28,0.25)]">
+      <div className="relative w-full max-w-lg bg-[#060c1d] border border-cyan-500/35 rounded-3xl text-slate-100 p-6 shadow-[0_8px_40px_rgba(0,0,0,0.9),0_0_35px_rgba(6,182,212,0.2)]">
         {/* Top Header */}
-        <div className="flex items-center justify-between pb-3 mb-4 border-b border-amber/30">
-          <div className="flex items-center gap-2">
-            <Camera className="w-5 h-5 text-amber animate-pulse" />
+        <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-cyan-500/25">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-cyan-950/60 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
+              <Camera className="w-4 h-4 animate-pulse" />
+            </div>
             <div>
-              <h3 className="font-orbitron font-bold text-base text-ivory uppercase tracking-wider">
+              <h3 className="font-orbitron font-extrabold text-base text-white uppercase tracking-wider">
                 TACTICAL QR GATE SCANNER
               </h3>
-              <p className="font-mono text-[9px] text-ivory/50">ON-SPOT DESK CHECK-IN PROTOCOL</p>
+              <p className="font-mono text-[9px] text-cyan-400 tracking-wider">ON-SPOT DESK CHECK-IN PROTOCOL</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 text-ivory/50 hover:text-amber transition-colors border border-white/10 hover:border-amber/40"
+            className="p-2 rounded-xl text-slate-400 hover:text-white transition-colors border border-white/10 hover:border-cyan-400/50 bg-slate-950/60"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Camera Viewport Area */}
-        <div className="relative w-full aspect-square max-h-[300px] bg-black border border-amber/40 mb-4 overflow-hidden rounded-sm flex items-center justify-center">
+        <div className="relative w-full aspect-square max-h-[290px] bg-slate-950 border border-cyan-500/40 mb-4 overflow-hidden rounded-2xl flex items-center justify-center shadow-inner">
           <div id="tactical-qr-reader" className="w-full h-full" />
 
           {/* HUD Target Reticle Overlay */}
           <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-            <div className="w-56 h-56 border-2 border-dashed border-amber/60 relative animate-pulse">
+            <div className="w-56 h-56 border-2 border-dashed border-cyan-500/60 relative animate-pulse">
               {/* Corner brackets */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-amber" />
-              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-amber" />
-              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-amber" />
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-amber" />
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-400" />
 
               {/* Laser Scanline */}
               <div
-                className="w-full h-0.5 bg-gradient-to-r from-transparent via-amber to-transparent absolute"
+                className="w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent absolute shadow-[0_0_10px_#22d3ee]"
                 style={{
                   animation: 'laserSweep 2s ease-in-out infinite',
                 }}
@@ -185,33 +211,33 @@ export default function QrScannerModal({ isOpen, onClose, onCheckInComplete }) {
         {/* Scan Status Toast Result */}
         {scanResult && (
           <div
-            className={`p-3 mb-4 border font-mono text-xs flex items-start gap-2.5 ${
+            className={`p-3.5 mb-4 rounded-xl border font-mono text-xs flex items-start gap-2.5 ${
               scanResult.success
                 ? scanResult.alreadyCheckedIn
-                  ? 'border-amber/50 bg-amber/10 text-amber'
-                  : 'border-green-500/50 bg-green-500/10 text-green-400'
-                : 'border-red-500/50 bg-red-500/10 text-red-400'
+                  ? 'border-orange-500/50 bg-orange-950/40 text-orange-300'
+                  : 'border-emerald-500/50 bg-emerald-950/40 text-emerald-300'
+                : 'border-red-500/50 bg-red-950/40 text-red-300'
             }`}
           >
             {scanResult.success ? (
-              <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-emerald-400" />
             ) : (
-              <XCircle className="w-4 h-4 shrink-0 mt-0.5" />
+              <XCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-400" />
             )}
             <div className="flex-1">
-              <div className="font-bold uppercase">
+              <div className="font-orbitron font-bold uppercase tracking-wider">
                 {scanResult.success
                   ? scanResult.alreadyCheckedIn
                     ? 'ALREADY VERIFIED'
                     : 'CHECK-IN CONFIRMED'
                   : 'AUTHENTICATION FAILED'}
               </div>
-              <div className="text-[11px] opacity-90 mt-0.5">{scanResult.message}</div>
+              <div className="text-[11px] opacity-90 mt-0.5 font-mono">{scanResult.message}</div>
               {scanResult.team && (
-                <div className="mt-2 text-[10px] p-2 bg-black/40 border border-white/10 space-y-0.5">
-                  <div>TEAM: <span className="text-ivory font-bold">{scanResult.team.teamName}</span> ({scanResult.team.id})</div>
-                  <div>TRACK: <span className="text-amber">{scanResult.team.trackName}</span></div>
-                  <div>PIT ALLOCATION: <span className="text-ivory">{scanResult.team.pitNumber || 'UNASSIGNED'}</span></div>
+                <div className="mt-2 text-[10px] p-2.5 rounded-lg bg-black/60 border border-white/10 space-y-0.5">
+                  <div>TEAM: <span className="text-white font-bold">{scanResult.team.teamName}</span> ({scanResult.team.id})</div>
+                  <div>TRACK: <span className="text-cyan-300">{scanResult.team.trackName}</span></div>
+                  <div>PIT ALLOCATION: <span className="text-white">{scanResult.team.pitNumber || 'UNASSIGNED'}</span></div>
                 </div>
               )}
             </div>
@@ -220,7 +246,7 @@ export default function QrScannerModal({ isOpen, onClose, onCheckInComplete }) {
 
         {/* Camera error notification if any */}
         {errorMsg && (
-          <div className="p-2.5 mb-4 border border-amber/40 bg-amber/10 text-amber font-mono text-[11px] flex items-center gap-2">
+          <div className="p-3 mb-4 rounded-xl border border-orange-500/40 bg-orange-950/30 text-orange-300 font-mono text-[11px] flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
@@ -228,7 +254,7 @@ export default function QrScannerModal({ isOpen, onClose, onCheckInComplete }) {
 
         {/* Manual Fallback Input Form */}
         <form onSubmit={handleManualSubmit} className="pt-2 border-t border-white/10">
-          <label className="block text-[10px] font-mono text-ivory/60 uppercase mb-1">
+          <label className="block text-[10px] font-orbitron text-slate-400 uppercase tracking-wider mb-1.5">
             MANUAL ID / TOKEN OVERRIDE ENTRY
           </label>
           <div className="flex gap-2">
@@ -237,12 +263,12 @@ export default function QrScannerModal({ isOpen, onClose, onCheckInComplete }) {
               value={manualCode}
               onChange={(e) => setManualCode(e.target.value)}
               placeholder="e.g. RR27-YO-101 or RR-VERIFIED-..."
-              className="flex-1 px-3 py-2 bg-[#060A12] border border-amber/30 text-ivory font-mono text-xs focus:border-amber focus:outline-none"
+              className="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/15 text-white font-mono text-xs focus:border-cyan-400 focus:outline-none"
             />
             <button
               type="submit"
               disabled={!manualCode.trim() || isProcessing}
-              className="px-4 py-2 bg-amber text-blueprintDeep font-mono font-bold text-xs uppercase hover:bg-amberDim transition-colors disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rust via-orange-600 to-amber-500 hover:from-orange-600 hover:to-amber-400 text-white font-orbitron font-bold text-xs uppercase transition-all shadow-[0_0_15px_rgba(234,88,12,0.4)] disabled:opacity-50"
             >
               VERIFY
             </button>

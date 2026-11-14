@@ -22,6 +22,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { contactStore } from '@/lib/store/contactStore'
 import {
   Mail,
+  Phone,
   ExternalLink,
   Handshake,
   Send,
@@ -91,9 +92,21 @@ function validateName(v) {
 }
 
 function validateEmail(v) {
-  if (!v.trim()) return 'Email address is required.'
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()))
-    return 'Please enter a valid email address.'
+  if (!v || !v.trim()) return 'Email address is required.'
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  if (!emailRegex.test(v.trim()))
+    return 'Please enter a valid email address (e.g. name@domain.com).'
+  return ''
+}
+
+function validatePhone(v) {
+  if (!v || !v.trim()) return 'Mobile number is required.'
+  const clean = v.trim().replace(/[\s\-()]/g, '')
+  const validIndian = /^(?:\+91|91|0)?([6-9]\d{9})$/.test(clean)
+  const validIntl = /^\+?[1-9]\d{9,14}$/.test(clean)
+  if (!validIndian && !validIntl) {
+    return 'Please enter a valid 10-digit mobile number.'
+  }
   return ''
 }
 
@@ -136,18 +149,21 @@ export default function Contact() {
   const [fields, setFields] = useState({
     name: '',
     email: '',
+    phone: '',
     category: '',
     message: '',
   })
   const [errors, setErrors] = useState({
     name: '',
     email: '',
+    phone: '',
     category: '',
     message: '',
   })
   const [touched, setTouched] = useState({
     name: false,
     email: false,
+    phone: false,
     category: false,
     message: false,
   })
@@ -177,6 +193,7 @@ export default function Contact() {
     switch (name) {
       case 'name': return validateName(value)
       case 'email': return validateEmail(value)
+      case 'phone': return validatePhone(value)
       case 'category': return validateCategory(value)
       case 'message': return validateMessage(value)
       default: return ''
@@ -187,11 +204,12 @@ export default function Contact() {
     const newErrors = {
       name: validateName(fields.name),
       email: validateEmail(fields.email),
+      phone: validatePhone(fields.phone),
       category: validateCategory(fields.category),
       message: validateMessage(fields.message),
     }
     setErrors(newErrors)
-    setTouched({ name: true, email: true, category: true, message: true })
+    setTouched({ name: true, email: true, phone: true, category: true, message: true })
     return newErrors
   }
 
@@ -201,7 +219,7 @@ export default function Contact() {
     const hasError = Object.values(newErrors).some(Boolean)
 
     if (hasError) {
-      const order = ['name', 'email', 'category', 'message']
+      const order = ['name', 'email', 'phone', 'category', 'message']
       const firstInvalid = order.find((k) => newErrors[k])
       if (firstInvalid && formRef.current) {
         const el = formRef.current.querySelector(`[name="${firstInvalid}"]`)
@@ -216,6 +234,7 @@ export default function Contact() {
       const payload = {
         name: fields.name.trim(),
         email: fields.email.trim(),
+        phone: fields.phone.trim(),
         category: fields.category,
         message: fields.message.trim(),
       }
@@ -250,8 +269,8 @@ export default function Contact() {
       contactStore.addMessage(createdDoc)
 
       setSubmitState('success')
-      setFields({ name: '', email: '', category: '', message: '' })
-      setTouched({ name: false, email: false, category: false, message: false })
+      setFields({ name: '', email: '', phone: '', category: '', message: '' })
+      setTouched({ name: false, email: false, phone: false, category: false, message: false })
     } catch {
       setSubmitState('error')
     }
@@ -697,6 +716,50 @@ export default function Contact() {
                       </span>
                     </div>
 
+                    {/* Category */}
+                    <div
+                      className={`form-field${errors.category && touched.category ? ' has-error' : ''}`}
+                    >
+                      <label htmlFor={`${uid}-category`}>
+                        Enquiry Category
+                        <span className="required-star" aria-hidden="true">*</span>
+                      </label>
+                      <div className="select-wrap">
+                        <select
+                          id={`${uid}-category`}
+                          name="category"
+                          required
+                          aria-required="true"
+                          aria-describedby={`${uid}-category-error`}
+                          aria-invalid={!!(errors.category && touched.category)}
+                          value={fields.category}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        >
+                          <option value="" disabled>
+                            Select a category…
+                          </option>
+                          {CATEGORIES.map((cat) => (
+                            <option key={cat} value={cat}>
+                              {cat}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <span
+                        id={`${uid}-category-error`}
+                        className="field-error"
+                        role="alert"
+                        aria-live="polite"
+                      >
+                        {touched.category ? errors.category : ''}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Verified Email & Compulsory Phone Number */}
+                  <div className="form-row form-row-2col" style={{ marginBottom: '1.5rem' }}>
+
                     {/* Email */}
                     <div className={`form-field${errors.email && touched.email ? ' has-error' : ''}`}>
                       <label htmlFor={`${uid}-email`}>
@@ -726,47 +789,36 @@ export default function Contact() {
                         {touched.email ? errors.email : ''}
                       </span>
                     </div>
-                  </div>
 
-                  {/* Category */}
-                  <div
-                    className={`form-field${errors.category && touched.category ? ' has-error' : ''}`}
-                    style={{ marginBottom: '1.5rem' }}
-                  >
-                    <label htmlFor={`${uid}-category`}>
-                      Enquiry Category
-                      <span className="required-star" aria-hidden="true">*</span>
-                    </label>
-                    <div className="select-wrap">
-                      <select
-                        id={`${uid}-category`}
-                        name="category"
+                    {/* Mobile Phone Number */}
+                    <div className={`form-field${errors.phone && touched.phone ? ' has-error' : ''}`}>
+                      <label htmlFor={`${uid}-phone`}>
+                        Mobile Phone Number
+                        <span className="required-star" aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        id={`${uid}-phone`}
+                        name="phone"
+                        type="tel"
+                        autoComplete="tel"
                         required
                         aria-required="true"
-                        aria-describedby={`${uid}-category-error`}
-                        aria-invalid={!!(errors.category && touched.category)}
-                        value={fields.category}
+                        aria-describedby={`${uid}-phone-error`}
+                        aria-invalid={!!(errors.phone && touched.phone)}
+                        placeholder="+91 98765 43210"
+                        value={fields.phone}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                      />
+                      <span
+                        id={`${uid}-phone-error`}
+                        className="field-error"
+                        role="alert"
+                        aria-live="polite"
                       >
-                        <option value="" disabled>
-                          Select a category…
-                        </option>
-                        {CATEGORIES.map((cat) => (
-                          <option key={cat} value={cat}>
-                            {cat}
-                          </option>
-                        ))}
-                      </select>
+                        {touched.phone ? errors.phone : ''}
+                      </span>
                     </div>
-                    <span
-                      id={`${uid}-category-error`}
-                      className="field-error"
-                      role="alert"
-                      aria-live="polite"
-                    >
-                      {touched.category ? errors.category : ''}
-                    </span>
                   </div>
 
                   {/* Message */}

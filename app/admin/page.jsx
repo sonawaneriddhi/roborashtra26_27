@@ -27,6 +27,8 @@ import {
   Layers,
   Mail,
   MessageSquare,
+  Sparkles,
+  Phone,
 } from 'lucide-react'
 
 export default function AdminOverviewPage() {
@@ -94,8 +96,8 @@ export default function AdminOverviewPage() {
 
   return (
     <AdminLayout>
-      {/* Primary Module Switcher Navigation */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 mb-8 border-b border-white/10 no-scrollbar">
+      {/* Primary Module Switcher Navigation - Website Hero Division Style */}
+      <div className="flex items-center gap-1.5 p-1.5 bg-slate-950/75 rounded-2xl border border-white/10 backdrop-blur-xl mb-6 overflow-x-auto no-scrollbar shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
         {tabs.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
@@ -103,13 +105,14 @@ export default function AdminOverviewPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2.5 font-mono text-xs uppercase whitespace-nowrap transition-all border ${isActive
-                ? 'border-amber bg-amber/15 text-amber font-bold shadow-[0_0_12px_rgba(255,159,28,0.25)]'
-                : 'border-white/10 bg-[#070B19]/70 text-ivory/60 hover:text-ivory hover:border-white/20'
-                }`}
+              className={`flex items-center gap-2 px-4 py-2.5 font-orbitron text-[11px] tracking-wider uppercase whitespace-nowrap transition-all rounded-xl ${
+                isActive
+                  ? 'bg-gradient-to-r from-cyan-600/30 to-blue-600/30 border border-cyan-400/50 text-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.3)] font-bold'
+                  : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
+              }`}
             >
-              <Icon className="w-3.5 h-3.5" />
-              {tab.label}
+              <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-cyan-300' : 'text-slate-400'}`} />
+              <span>{tab.label}</span>
             </button>
           )
         })}
@@ -119,74 +122,74 @@ export default function AdminOverviewPage() {
       {/* TAB 1: OVERVIEW & TELEMETRY */}
       {/* ─────────────────────────────────────────────────────────────────── */}
       {activeTab === 'OVERVIEW' && (
-        <div className="space-y-8">
-          {/* Telemetry Stat Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="tick-frame p-5 border border-amber/30 bg-[#0B132B]/70">
-              <div className="flex items-center justify-between text-xs font-mono text-ivory/50 mb-2 uppercase">
+        <div className="space-y-6">
+          {/* Telemetry Stat Cards - Hero Page Aesthetic */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="p-5 rounded-2xl border border-cyan-500/25 bg-[#060c1d]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_20px_rgba(6,182,212,0.12)]">
+              <div className="flex items-center justify-between text-xs font-orbitron text-slate-400 mb-2 uppercase tracking-wider">
                 <span>TOTAL TEAMS</span>
-                <Users className="w-4 h-4 text-amber" />
+                <Users className="w-4 h-4 text-cyan-400" />
               </div>
-              <div className="font-orbitron font-extrabold text-3xl text-ivory">{totalRegistered}</div>
-              <div className="text-[10px] font-mono text-ivory/50 mt-1 flex gap-2">
-                <span className="text-amber">{unstopCount} Unstop</span>
+              <div className="font-orbitron font-extrabold text-3xl text-white">{totalRegistered}</div>
+              <div className="text-[10px] font-mono text-slate-400 mt-2 flex gap-2">
+                <span className="text-cyan-300 font-semibold">{unstopCount} Unstop</span>
                 <span>•</span>
-                <span className="text-green-400">{onSpotCount} On-Spot</span>
+                <span className="text-emerald-400 font-semibold">{onSpotCount} On-Spot</span>
               </div>
             </div>
 
-            <div className="tick-frame p-5 border border-green-500/40 bg-[#0B132B]/70">
-              <div className="flex items-center justify-between text-xs font-mono text-green-400 mb-2 uppercase">
+            <div className="p-5 rounded-2xl border border-emerald-500/30 bg-[#060c1d]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_20px_rgba(16,185,129,0.12)]">
+              <div className="flex items-center justify-between text-xs font-orbitron text-emerald-400 mb-2 uppercase tracking-wider">
                 <span>CHECKED-IN ON SITE</span>
-                <ShieldCheck className="w-4 h-4 text-green-400" />
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
               </div>
-              <div className="font-orbitron font-extrabold text-3xl text-green-400">{checkedInCount}</div>
-              <div className="text-[10px] font-mono text-ivory/50 mt-1">
+              <div className="font-orbitron font-extrabold text-3xl text-emerald-400">{checkedInCount}</div>
+              <div className="text-[10px] font-mono text-slate-400 mt-2">
                 {totalRegistered ? Math.round((checkedInCount / totalRegistered) * 100) : 0}% Arena Presence Verified
               </div>
             </div>
 
-            <div className="tick-frame p-5 border border-amber/20 bg-[#0B132B]/70">
-              <div className="flex items-center justify-between text-xs font-mono text-amber mb-2 uppercase">
+            <div className="p-5 rounded-2xl border border-orange-500/30 bg-[#060c1d]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_20px_rgba(234,88,12,0.12)]">
+              <div className="flex items-center justify-between text-xs font-orbitron text-orange-400 mb-2 uppercase tracking-wider">
                 <span>WEBSITE PERSONNEL</span>
-                <Layers className="w-4 h-4 text-amber" />
+                <Layers className="w-4 h-4 text-orange-400" />
               </div>
-              <div className="font-orbitron font-extrabold text-3xl text-amber">{totalPersonnel}</div>
-              <div className="text-[10px] font-mono text-ivory/50 mt-1">
+              <div className="font-orbitron font-extrabold text-3xl text-orange-400">{totalPersonnel}</div>
+              <div className="text-[10px] font-mono text-slate-400 mt-2">
                 {leadsCount} Leads • {facultyCount} Faculty • {squadsCount} Squad Crew
               </div>
             </div>
 
-            <div className="tick-frame p-5 border border-amber/30 bg-[#0B132B]/70">
-              <div className="flex items-center justify-between text-xs font-mono text-ivory/50 mb-2 uppercase">
-                <span>INCOMING CONTACT INQUIRIES</span>
-                <Mail className="w-4 h-4 text-amber" />
+            <div className="p-5 rounded-2xl border border-cyan-500/25 bg-[#060c1d]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_20px_rgba(6,182,212,0.12)]">
+              <div className="flex items-center justify-between text-xs font-orbitron text-slate-400 mb-2 uppercase tracking-wider">
+                <span>CONTACT INQUIRIES</span>
+                <Mail className="w-4 h-4 text-cyan-400" />
               </div>
-              <div className="flex items-baseline gap-3">
-                <span className="font-orbitron font-extrabold text-3xl text-ivory">{contactMessages.length}</span>
+              <div className="flex items-baseline gap-2.5">
+                <span className="font-orbitron font-extrabold text-3xl text-white">{contactMessages.length}</span>
                 {unreadMessagesCount > 0 && (
-                  <span className="text-[10px] font-mono px-2 py-0.5 border border-amber/50 bg-amber/15 text-amber font-bold">
+                  <span className="text-[9px] font-mono px-2 py-0.5 rounded-full border border-orange-500/40 bg-orange-950/60 text-orange-400 font-bold shadow-[0_0_8px_rgba(234,88,12,0.4)]">
                     {unreadMessagesCount} NEW
                   </span>
                 )}
               </div>
-              <div className="text-[10px] font-mono text-ivory/50 mt-1">
-                <Link href="/admin/messages" className="text-amber hover:underline flex items-center gap-1">
+              <div className="text-[10px] font-mono text-slate-400 mt-2">
+                <Link href="/admin/messages" className="text-cyan-300 hover:text-cyan-200 flex items-center gap-1 transition-colors">
                   <span>Open Inbox Dossier</span>
                   <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
             </div>
 
-            <div className="tick-frame p-5 border border-white/15 bg-[#0B132B]/70">
-              <div className="flex items-center justify-between text-xs font-mono text-ivory/50 mb-2 uppercase">
-                <span>DATABASE STATUS</span>
-                <Database className="w-4 h-4 text-amber" />
+            <div className="p-5 rounded-2xl border border-white/10 bg-[#060c1d]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+              <div className="flex items-center justify-between text-xs font-orbitron text-slate-400 mb-2 uppercase tracking-wider">
+                <span>DATABASE GATEWAY</span>
+                <Database className="w-4 h-4 text-slate-400" />
               </div>
-              <div className="font-orbitron font-extrabold text-xl text-ivory mt-1 truncate">
+              <div className="font-orbitron font-extrabold text-xl text-white mt-1 truncate">
                 {atlasConfig?.isKeyConfigured ? 'ATLAS SYNC' : 'LOCAL CACHE'}
               </div>
-              <div className="text-[10px] font-mono text-ivory/50 mt-1">
+              <div className="text-[10px] font-mono text-slate-400 mt-2">
                 {atlasConfig?.isKeyConfigured ? 'MongoDB Atlas live ready' : 'Local browser storage active'}
               </div>
             </div>
@@ -195,36 +198,38 @@ export default function AdminOverviewPage() {
           {/* Grid: Track Distribution & Rapid Command Shortcuts */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Track Breakdown (2 Cols) */}
-            <div className="lg:col-span-2 tick-frame p-6 border border-white/10 bg-[#070B19]/80">
-              <h2 className="font-orbitron font-bold text-sm text-ivory uppercase tracking-wider mb-4 flex items-center justify-between">
+            <div className="lg:col-span-2 p-6 rounded-2xl border border-cyan-500/25 bg-[#060c1d]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+              <h2 className="font-orbitron font-bold text-sm text-white uppercase tracking-wider mb-4 flex items-center justify-between">
                 <span>TOURNAMENT TRACK ROSTER DISTRIBUTION</span>
-                <span className="text-[10px] font-mono text-amber">3 ACTIVE TRACKS</span>
+                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 font-bold">
+                  3 ACTIVE TRACKS
+                </span>
               </h2>
 
-              <div className="space-y-4">
+              <div className="space-y-3.5">
                 {TOURNAMENT_TRACKS.map((track) => {
                   const trackTeams = registrations.filter((r) => r.trackCode === track.code)
                   const trackChecked = trackTeams.filter((r) => r.status === 'CHECKED_IN').length
                   const percentage = totalRegistered ? Math.round((trackTeams.length / totalRegistered) * 100) : 0
 
                   return (
-                    <div key={track.code} className="p-3.5 border border-white/5 bg-[#0B132B]/40">
-                      <div className="flex items-center justify-between text-xs font-mono mb-1.5">
+                    <div key={track.code} className="p-4 rounded-xl border border-white/10 bg-slate-950/60 backdrop-blur-md">
+                      <div className="flex items-center justify-between text-xs font-mono mb-2">
                         <div>
-                          <span className="text-amber font-bold mr-2">TRACK {track.code}</span>
-                          <span className="text-ivory font-semibold">{track.name}</span>
-                          <span className="text-ivory/40 text-[10px] ml-2">({track.category})</span>
+                          <span className="text-cyan-400 font-bold mr-2">TRACK {track.code}</span>
+                          <span className="text-white font-semibold">{track.name}</span>
+                          <span className="text-slate-500 text-[10px] ml-2">({track.category})</span>
                         </div>
                         <div className="text-right">
-                          <span className="text-ivory font-bold">{trackTeams.length} TEAMS</span>
-                          <span className="text-green-400 text-[10px] ml-2">({trackChecked} Present)</span>
+                          <span className="text-white font-bold">{trackTeams.length} TEAMS</span>
+                          <span className="text-emerald-400 text-[10px] ml-2">({trackChecked} Present)</span>
                         </div>
                       </div>
 
                       {/* Progress bar */}
-                      <div className="w-full h-1.5 bg-white/10 overflow-hidden">
+                      <div className="w-full h-2 rounded-full bg-slate-900 border border-white/5 overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-amber to-amberDim transition-all duration-500"
+                          className="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-amber-500 rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(6,182,212,0.4)]"
                           style={{ width: `${percentage}%` }}
                         />
                       </div>
@@ -235,122 +240,100 @@ export default function AdminOverviewPage() {
             </div>
 
             {/* Quick Hub Navigation Cards (1 Col) */}
-            <div className="tick-frame p-6 border border-amber/30 bg-[#0B132B]/80 flex flex-col justify-between">
+            <div className="p-6 rounded-2xl border border-cyan-500/30 bg-[#060c1d]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_20px_rgba(6,182,212,0.12)] flex flex-col justify-between">
               <div>
-                <h2 className="font-orbitron font-bold text-sm text-ivory uppercase tracking-wider mb-2 flex items-center gap-2">
-                  <Radio className="w-4 h-4 text-amber animate-pulse" />
-                  RAPID ACTIONS
+                <h2 className="font-orbitron font-bold text-sm text-white uppercase tracking-wider mb-1.5 flex items-center gap-2">
+                  <Radio className="w-4 h-4 text-cyan-400 animate-pulse" />
+                  RAPID COMMAND OPS
                 </h2>
-                <p className="font-mono text-xs text-ivory/60 mb-5">
-                  Control website sections, scan arrivals, or launch judge console.
+                <p className="font-tech text-xs text-slate-400 mb-5">
+                  Manage website staff, scan arrivals, handle queries, or launch the judge rubric console.
                 </p>
 
-                <div className="space-y-2.5 font-mono text-xs">
+                <div className="space-y-2.5 font-orbitron text-xs">
                   <Link
                     href="/admin/messages"
-                    className="flex items-center justify-between p-3 border border-amber/40 hover:border-amber bg-[#0B132B]/70 hover:bg-[#0B132B] transition-all text-ivory group shadow-[0_0_12px_rgba(255,159,28,0.1)]"
+                    className="flex items-center justify-between p-3.5 rounded-xl border border-cyan-500/40 hover:border-cyan-400 bg-slate-950/70 hover:bg-slate-900 transition-all text-white group shadow-[0_0_15px_rgba(6,182,212,0.15)]"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Mail className="w-4 h-4 text-amber" />
-                      <span className="font-bold">INBOX &amp; CONTACT INQUIRIES</span>
+                      <Mail className="w-4 h-4 text-cyan-400" />
+                      <span className="font-bold tracking-wide">INBOX &amp; CONTACT INQUIRIES</span>
                     </div>
                     <div className="flex items-center gap-2">
                       {unreadMessagesCount > 0 && (
-                        <span className="px-1.5 py-0.5 bg-amber text-blueprintDeep font-mono font-black text-[10px] rounded-full">
+                        <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white font-mono font-black text-[10px] shadow-[0_0_8px_rgba(234,88,12,0.5)]">
                           {unreadMessagesCount}
                         </span>
                       )}
-                      <ArrowRight className="w-4 h-4 text-ivory/40 group-hover:text-amber group-hover:translate-x-1 transition-all" />
+                      <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all" />
                     </div>
                   </Link>
 
                   <button
                     onClick={() => setActiveTab('TEAM_CMS')}
-                    className="w-full flex items-center justify-between p-3 border border-white/10 hover:border-amber/50 bg-[#060A12] hover:bg-[#060A12]/90 transition-all text-ivory group"
+                    className="w-full flex items-center justify-between p-3 rounded-xl border border-white/10 hover:border-cyan-400/50 bg-slate-950/50 hover:bg-slate-900 transition-all text-white group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Users className="w-4 h-4 text-amber" />
-                      <span>EDIT TEAM &amp; FACULTY</span>
+                      <Users className="w-4 h-4 text-cyan-400" />
+                      <span className="tracking-wide">EDIT TEAM &amp; FACULTY CMS</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-ivory/40 group-hover:text-amber group-hover:translate-x-1 transition-all" />
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all" />
                   </button>
 
                   <button
                     onClick={() => setActiveTab('SITE_SETTINGS')}
-                    className="w-full flex items-center justify-between p-3 border border-white/10 hover:border-amber/50 bg-[#060A12] hover:bg-[#060A12]/90 transition-all text-ivory group"
+                    className="w-full flex items-center justify-between p-3 rounded-xl border border-white/10 hover:border-cyan-400/50 bg-slate-950/50 hover:bg-slate-900 transition-all text-white group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Sliders className="w-4 h-4 text-amber" />
-                      <span>SITE BROADCAST CONTROLS</span>
+                      <Sliders className="w-4 h-4 text-cyan-400" />
+                      <span className="tracking-wide">SITE BROADCAST CONTROLS</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-ivory/40 group-hover:text-amber group-hover:translate-x-1 transition-all" />
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all" />
                   </button>
 
                   <Link
                     href="/admin/registrations"
-                    className="flex items-center justify-between p-3 border border-white/10 hover:border-amber/50 bg-[#060A12] hover:bg-[#060A12]/90 transition-all text-ivory group"
+                    className="flex items-center justify-between p-3 rounded-xl border border-white/10 hover:border-cyan-400/50 bg-slate-950/50 hover:bg-slate-900 transition-all text-white group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Shield className="w-4 h-4 text-amber" />
-                      <span>MANAGE REGISTRATIONS</span>
+                      <Shield className="w-4 h-4 text-cyan-400" />
+                      <span className="tracking-wide">MANAGE REGISTRATIONS</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-ivory/40 group-hover:text-amber group-hover:translate-x-1 transition-all" />
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all" />
                   </Link>
 
                   <Link
                     href="/admin/scanner"
-                    className="flex items-center justify-between p-3 border border-white/10 hover:border-amber/50 bg-[#060A12] hover:bg-[#060A12]/90 transition-all text-ivory group"
+                    className="flex items-center justify-between p-3 rounded-xl border border-white/10 hover:border-cyan-400/50 bg-slate-950/50 hover:bg-slate-900 transition-all text-white group"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Camera className="w-4 h-4 text-amber" />
-                      <span>GATE QR SCANNER STATION</span>
+                      <Camera className="w-4 h-4 text-cyan-400" />
+                      <span className="tracking-wide">GATE QR SCANNER TERMINAL</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-ivory/40 group-hover:text-amber group-hover:translate-x-1 transition-all" />
-                  </Link>
-
-                  <Link
-                    href="/judge"
-                    className="flex items-center justify-between p-3 border border-white/10 hover:border-amber/50 bg-[#060A12] hover:bg-[#060A12]/90 transition-all text-ivory group"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <Award className="w-4 h-4 text-amber" />
-                      <span>JUDGE SCORING CONSOLE</span>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-ivory/40 group-hover:text-amber group-hover:translate-x-1 transition-all" />
-                  </Link>
-
-                  <Link
-                    href="/leaderboard"
-                    className="flex items-center justify-between p-3 border border-white/10 hover:border-amber/50 bg-[#060A12] hover:bg-[#060A12]/90 transition-all text-ivory group"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <Trophy className="w-4 h-4 text-amber" />
-                      <span>LIVE LEADERBOARD</span>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-ivory/40 group-hover:text-amber group-hover:translate-x-1 transition-all" />
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all" />
                   </Link>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-white/10 text-[10px] font-mono text-ivory/40">
-                ACTIVE BROADCAST: <span className="text-amber font-bold">{siteSettings?.registrationStatus || 'OPEN'}</span> // ANNOUNCEMENT:{' '}
-                <span className="text-amber font-bold">{siteSettings?.announcementActive ? 'ACTIVE' : 'MUTED'}</span>
+              <div className="pt-4 border-t border-white/10 text-[10px] font-mono text-slate-400">
+                ACTIVE BROADCAST: <span className="text-cyan-400 font-bold">{siteSettings?.registrationStatus || 'OPEN'}</span> // ANNOUNCEMENT:{' '}
+                <span className="text-emerald-400 font-bold">{siteSettings?.announcementActive ? 'ACTIVE' : 'MUTED'}</span>
               </div>
             </div>
           </div>
 
           {/* Incoming Messages Quick Feed */}
-          <div className="tick-frame p-6 border border-white/10 bg-[#070B19]/80">
-            <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/10">
-              <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-amber" />
-                <h3 className="font-orbitron font-bold text-sm text-ivory tracking-wide uppercase">
+          <div className="p-6 rounded-2xl border border-cyan-500/25 bg-[#060c1d]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+              <div className="flex items-center gap-2.5">
+                <Mail className="w-4 h-4 text-cyan-400" />
+                <h3 className="font-orbitron font-bold text-sm text-white tracking-wide uppercase">
                   LATEST CONTACT INQUIRIES &amp; TRANSMISSIONS
                 </h3>
               </div>
               <Link
                 href="/admin/messages"
-                className="text-xs font-mono text-amber hover:underline flex items-center gap-1"
+                className="text-xs font-orbitron text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
               >
                 <span>OPEN FULL INBOX ({contactMessages.length})</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -358,7 +341,7 @@ export default function AdminOverviewPage() {
             </div>
 
             {contactMessages.length === 0 ? (
-              <p className="font-mono text-xs text-ivory/40 py-4 text-center">
+              <p className="font-mono text-xs text-slate-500 py-6 text-center">
                 NO INCOMING CONTACT MESSAGES YET.
               </p>
             ) : (
@@ -367,18 +350,28 @@ export default function AdminOverviewPage() {
                   <Link
                     key={msg.id}
                     href="/admin/messages"
-                    className="p-3.5 border border-white/10 hover:border-amber/50 bg-[#060A12] transition-all block group"
+                    className="p-4 rounded-xl border border-white/10 hover:border-cyan-400/50 bg-slate-950/60 transition-all block group hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]"
                   >
-                    <div className="flex items-center justify-between text-[10px] font-mono mb-1.5">
-                      <span className="text-amber font-bold truncate max-w-[150px]">{msg.name}</span>
-                      <span className="text-ivory/40">
+                    <div className="flex items-center justify-between text-[11px] font-mono mb-2">
+                      <span className="text-cyan-300 font-bold truncate max-w-[150px]">{msg.name}</span>
+                      <span className="text-slate-500">
                         {new Date(msg.createdAt).toLocaleDateString()}
                       </span>
                     </div>
-                    <span className="text-[9px] font-mono px-1.5 py-0.5 border border-white/10 text-cyan-300 block w-fit mb-2">
-                      {msg.category}
-                    </span>
-                    <p className="text-xs font-mono text-ivory/70 line-clamp-2">
+
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
+                      <span className="text-[9px] font-mono px-2 py-0.5 rounded border border-cyan-500/30 bg-cyan-950/50 text-cyan-300">
+                        {msg.category}
+                      </span>
+                      {msg.phone && (
+                        <span className="text-[9px] font-mono text-amber-300 flex items-center gap-1">
+                          <Phone className="w-2.5 h-2.5 text-amber-400" />
+                          <span>{msg.phone}</span>
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="text-xs font-tech text-slate-300 line-clamp-2 leading-relaxed">
                       {msg.message}
                     </p>
                   </Link>

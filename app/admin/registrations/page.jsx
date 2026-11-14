@@ -101,12 +101,12 @@ export default function AdminRegistrationsPage() {
       `"${(r.botName || '').replace(/"/g, '""')}"`,
       `"${r.pitNumber || ''}"`,
       `"${(r.leader?.name || '').replace(/"/g, '""')}"`,
-      `"${r.leader?.email || ''}"`,
-      `"${r.leader?.phone || ''}"`,
-      `"${(r.members || []).map((m) => (typeof m === 'string' ? m : m.name)).join('; ')}"`,
+      `"${(r.leader?.email || '').replace(/"/g, '""')}"`,
+      `"${(r.leader?.phone || '').replace(/"/g, '""')}"`,
+      `"${(r.members || []).map((m) => m.name).join('; ')}"`,
       `"${r.status}"`,
       `"${r.checkedInAt || ''}"`,
-      `"${r.registeredAt}"`,
+      `"${r.registeredAt || ''}"`,
     ])
 
     const csvContent = [headers.join(','), ...rows.map((row) => row.join(','))].join('\n')
@@ -125,10 +125,14 @@ export default function AdminRegistrationsPage() {
       {/* Top Header & Action Controls */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="font-orbitron font-extrabold text-2xl text-ivory uppercase tracking-wider">
-            PARTICIPANT REGISTRATIONS & DESK
+          <div className="flex items-center gap-2 mb-1.5 font-orbitron text-[10px] font-bold tracking-[0.2em] uppercase text-cyan-400">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]" />
+            <span>DESK ROSTER LOG</span>
+          </div>
+          <h1 className="font-orbitron font-extrabold text-2xl text-white uppercase tracking-wider">
+            PARTICIPANT REGISTRATIONS &amp; DESK
           </h1>
-          <p className="font-mono text-xs text-ivory/60 mt-0.5">
+          <p className="font-tech text-xs text-slate-400 mt-0.5">
             Manage Unstop pre-registrations, record on-the-day desk arrivals, issue tactical ID cards, and track attendance.
           </p>
         </div>
@@ -136,34 +140,34 @@ export default function AdminRegistrationsPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={exportCSV}
-            className="flex items-center gap-1.5 px-3.5 py-2 border border-white/20 hover:border-amber/50 text-ivory font-mono text-xs uppercase hover:bg-white/5 transition-all"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/20 hover:border-cyan-400/50 bg-slate-950/70 hover:bg-slate-900 text-white font-orbitron text-xs uppercase transition-all shadow-[0_4px_16px_rgba(0,0,0,0.4)]"
           >
-            <Download className="w-3.5 h-3.5" />
-            EXPORT CSV
+            <Download className="w-3.5 h-3.5 text-cyan-400" />
+            <span>EXPORT CSV</span>
           </button>
 
           <button
             onClick={() => setRegModalOpen(true)}
-            className="flex items-center gap-1.5 px-4 py-2 bg-amber text-blueprintDeep font-mono font-bold text-xs uppercase hover:bg-amberDim transition-all shadow-[0_0_15px_rgba(255,159,28,0.3)]"
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-rust via-orange-600 to-amber-500 hover:from-orange-600 hover:to-amber-400 text-white font-orbitron font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_20px_rgba(234,88,12,0.4)] active:scale-[0.98]"
           >
             <UserPlus className="w-4 h-4" />
-            NEW ON-SPOT REG
+            <span>NEW ON-SPOT REG</span>
           </button>
         </div>
       </div>
 
       {/* Filter and Search Panel */}
-      <div className="tick-frame p-4 mb-6 border border-white/10 bg-[#070B19]/80 backdrop-blur-md">
+      <div className="p-4 mb-6 rounded-2xl border border-cyan-500/25 bg-[#060c1d]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
           {/* Search Field (5 cols) */}
           <div className="md:col-span-5 relative">
-            <Search className="w-4 h-4 text-amber absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search className="w-4 h-4 text-cyan-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by Team, Unstop Ref, ID, College, Captain..."
-              className="w-full pl-9 pr-3 py-2 bg-[#060A12] border border-white/15 text-ivory text-xs font-mono placeholder:text-ivory/30 focus:border-amber focus:outline-none"
+              className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/15 text-white text-xs font-mono placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all"
             />
           </div>
 
@@ -172,7 +176,7 @@ export default function AdminRegistrationsPage() {
             <select
               value={trackFilter}
               onChange={(e) => setTrackFilter(e.target.value)}
-              className="w-full px-3 py-2 bg-[#060A12] border border-white/15 text-ivory text-xs font-mono focus:border-amber focus:outline-none"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/15 text-white text-xs font-mono focus:border-cyan-400 focus:outline-none"
             >
               <option value="ALL">ALL TRACKS</option>
               <option value="01">01 - YANTRAUTSAV</option>
@@ -181,14 +185,14 @@ export default function AdminRegistrationsPage() {
             </select>
           </div>
 
-          {/* Origin / Reg Type (2 cols) */}
+          {/* Type Filter (2 cols) */}
           <div className="md:col-span-2">
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="w-full px-3 py-2 bg-[#060A12] border border-white/15 text-ivory text-xs font-mono focus:border-amber focus:outline-none"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/15 text-white text-xs font-mono focus:border-cyan-400 focus:outline-none"
             >
-              <option value="ALL">ALL ORIGINS</option>
+              <option value="ALL">ALL CHANNELS</option>
               <option value="UNSTOP_ONLINE">UNSTOP ONLINE</option>
               <option value="ON_SPOT_DESK">ON-SPOT DESK</option>
             </select>
@@ -199,7 +203,7 @@ export default function AdminRegistrationsPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2 bg-[#060A12] border border-white/15 text-ivory text-xs font-mono focus:border-amber focus:outline-none"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/15 text-white text-xs font-mono focus:border-cyan-400 focus:outline-none"
             >
               <option value="ALL">ALL STATUSES</option>
               <option value="CHECKED_IN">CHECKED-IN</option>
@@ -211,19 +215,19 @@ export default function AdminRegistrationsPage() {
       </div>
 
       {/* Registrations Data Table */}
-      <div className="tick-frame border border-white/10 bg-[#070B19]/90 overflow-hidden">
+      <div className="rounded-2xl border border-cyan-500/25 bg-[#060c1d]/90 backdrop-blur-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
         <div className="overflow-x-auto">
           <table className="w-full text-left font-mono text-xs">
-            <thead className="bg-[#0B132B] text-amber border-b border-white/10 uppercase text-[10px] tracking-wider">
+            <thead className="bg-slate-950 text-cyan-400 border-b border-white/10 uppercase text-[10px] tracking-wider font-orbitron">
               <tr>
-                <th className="py-3 px-4">TEAM / IDENTIFIER</th>
-                <th className="py-3 px-3">TRACK & BOT</th>
-                <th className="py-3 px-3">COLLEGE / INSTITUTION</th>
-                <th className="py-3 px-3">CAPTAIN & ROSTER</th>
-                <th className="py-3 px-3 text-center">PIT</th>
-                <th className="py-3 px-3 text-center">ORIGIN</th>
-                <th className="py-3 px-3 text-center">STATUS</th>
-                <th className="py-3 px-4 text-right">ACTIONS</th>
+                <th className="py-3.5 px-4">TEAM / IDENTIFIER</th>
+                <th className="py-3.5 px-3">TRACK &amp; BOT</th>
+                <th className="py-3.5 px-3">COLLEGE / INSTITUTION</th>
+                <th className="py-3.5 px-3">CAPTAIN &amp; ROSTER</th>
+                <th className="py-3.5 px-3 text-center">PIT</th>
+                <th className="py-3.5 px-3 text-center">ORIGIN</th>
+                <th className="py-3.5 px-3 text-center">STATUS</th>
+                <th className="py-3.5 px-4 text-right">ACTIONS</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
@@ -235,108 +239,107 @@ export default function AdminRegistrationsPage() {
                 return (
                   <tr
                     key={team.id}
-                    className="hover:bg-white/[0.02] transition-colors group"
+                    className="hover:bg-cyan-500/[0.03] transition-colors group"
                   >
                     {/* Team ID & Callsign */}
                     <td className="py-3.5 px-4">
-                      <div className="font-orbitron font-bold text-sm text-ivory group-hover:text-amber transition-colors">
+                      <div className="font-orbitron font-bold text-sm text-white group-hover:text-cyan-300 transition-colors">
                         {team.teamName}
                       </div>
-                      <div className="text-[10px] text-amber font-mono mt-0.5 flex items-center gap-1.5">
+                      <div className="text-[10px] text-cyan-400 font-mono mt-0.5 flex items-center gap-1.5">
                         <span>{team.id}</span>
                         {team.unstopId && (
-                          <span className="text-ivory/40">({team.unstopId})</span>
+                          <span className="text-slate-500">({team.unstopId})</span>
                         )}
                       </div>
                     </td>
 
                     {/* Track & Bot */}
                     <td className="py-3.5 px-3">
-                      <div className="text-ivory font-semibold truncate max-w-[150px]">
+                      <div className="text-white font-semibold truncate max-w-[150px]">
                         {team.trackName}
                       </div>
-                      <div className="text-[10px] text-ivory/50 truncate max-w-[150px]">
-                        Bot: <span className="text-ivory/80">{team.botName || 'Custom'}</span>
+                      <div className="text-[10px] text-slate-400 truncate max-w-[150px]">
+                        Bot: <span className="text-slate-200">{team.botName || 'Custom'}</span>
                       </div>
                     </td>
 
                     {/* College */}
-                    <td className="py-3.5 px-3 max-w-[160px] truncate text-ivory/70 text-[11px]">
+                    <td className="py-3.5 px-3 max-w-[160px] truncate text-slate-300 text-[11px]">
                       {team.college || 'Direct Entry'}
                     </td>
 
                     {/* Captain & Roster */}
                     <td className="py-3.5 px-3">
-                      <div className="text-ivory font-medium truncate max-w-[140px]">
+                      <div className="text-white font-medium truncate max-w-[140px]">
                         {team.leader?.name || 'N/A'}
                       </div>
-                      <div className="text-[10px] text-ivory/40">
+                      <div className="text-[10px] text-slate-400">
                         {team.leader?.phone || 'No Phone'} • {memberCount} Crew
                       </div>
                     </td>
 
                     {/* Pit Bay */}
                     <td className="py-3.5 px-3 text-center">
-                      <span className="px-2 py-0.5 bg-black/40 border border-white/10 text-amber font-bold text-[10px]">
-                        {team.pitNumber || 'TBD'}
+                      <span className="px-2 py-0.5 rounded bg-slate-950 border border-white/10 text-cyan-300 font-bold text-[10px]">
+                        {team.pitNumber || 'AUTO'}
                       </span>
                     </td>
 
                     {/* Origin Badge */}
                     <td className="py-3.5 px-3 text-center">
                       <span
-                        className={`text-[9px] font-bold px-2 py-0.5 border ${
+                        className={`text-[9px] px-2 py-0.5 rounded border uppercase tracking-wider ${
                           isDesk
-                            ? 'border-purple-400/40 bg-purple-400/10 text-purple-300'
-                            : 'border-blue-400/40 bg-blue-400/10 text-blue-300'
+                            ? 'border-emerald-500/40 bg-emerald-950/50 text-emerald-300'
+                            : 'border-cyan-500/30 bg-cyan-950/40 text-cyan-300'
                         }`}
                       >
                         {isDesk ? 'ON-SPOT' : 'UNSTOP'}
                       </span>
                     </td>
 
-                    {/* Check-In Status */}
+                    {/* Status Badge */}
                     <td className="py-3.5 px-3 text-center">
                       <button
                         onClick={() => toggleCheckIn(team)}
                         title="Click to toggle check-in state"
-                        className={`text-[9px] font-bold px-2.5 py-1 border transition-all cursor-pointer flex items-center gap-1 mx-auto ${
+                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] uppercase font-bold border transition-all ${
                           isChecked
-                            ? 'border-green-500/50 bg-green-500/15 text-green-400 hover:bg-green-500/25'
-                            : 'border-amber/40 bg-amber/10 text-amber hover:bg-amber/20'
+                            ? 'border-emerald-500/50 bg-emerald-950/60 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.3)]'
+                            : 'border-white/15 bg-slate-950/60 text-slate-400 hover:border-cyan-400 hover:text-cyan-300'
                         }`}
                       >
                         {isChecked ? (
                           <>
-                            <Check className="w-3 h-3" />
-                            CHECKED-IN
+                            <Check className="w-3 h-3 text-emerald-400" />
+                            <span>CHECKED-IN</span>
                           </>
                         ) : (
                           <>
                             <Clock className="w-3 h-3" />
-                            MARK HERE
+                            <span>PENDING</span>
                           </>
                         )}
                       </button>
                     </td>
 
-                    {/* Actions */}
+                    {/* Action Links */}
                     <td className="py-3.5 px-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        {/* Open Tactical ID Pass */}
+                      <div className="flex items-center justify-end gap-1.5">
                         <Link
                           href={`/id/${team.id}`}
-                          title="View & Print Tactical ID Badge"
-                          className="p-1.5 border border-white/10 hover:border-amber/50 text-ivory/70 hover:text-amber transition-colors bg-[#060A12]"
+                          target="_blank"
+                          title="Open Tactical ID Card"
+                          className="p-1.5 rounded-lg border border-white/10 hover:border-cyan-400 bg-slate-950/50 text-slate-300 hover:text-cyan-300 transition-colors"
                         >
                           <Printer className="w-3.5 h-3.5" />
                         </Link>
 
-                        {/* Delete Action */}
                         <button
                           onClick={() => handleDelete(team.id, team.teamName)}
                           title="Delete Registration"
-                          className="p-1.5 border border-white/10 hover:border-red-500/50 text-ivory/50 hover:text-red-400 transition-colors bg-[#060A12]"
+                          className="p-1.5 rounded-lg border border-red-500/30 hover:border-red-500 bg-slate-950/50 text-red-400 hover:bg-red-500/10 transition-colors"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -349,26 +352,14 @@ export default function AdminRegistrationsPage() {
           </table>
         </div>
 
-        {/* Empty State */}
         {filtered.length === 0 && (
-          <div className="p-12 text-center text-ivory/40 font-mono text-xs">
-            NO TEAMS FOUND MATCHING FILTER CRITERIA.
+          <div className="p-12 text-center text-slate-500 font-mono text-xs">
+            No participant registrations found matching current filter or search criteria.
           </div>
         )}
-
-        {/* Table Footer Summary */}
-        <div className="p-3 bg-[#0B132B] border-t border-white/10 text-[10px] font-mono text-ivory/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div>
-            SHOWING <span className="text-amber font-bold">{filtered.length}</span> OF{' '}
-            <span className="text-ivory font-bold">{registrations.length}</span> TOTAL TEAMS
-          </div>
-          <div>
-            CLICK "MARK HERE" TO CHECK-IN A TEAM PHYSICALLY PRESENT AT DESK
-          </div>
-        </div>
       </div>
 
-      {/* Embedded Registration Modal */}
+      {/* On-Spot Registration Modal */}
       <RegistrationModal
         isOpen={regModalOpen}
         onClose={() => setRegModalOpen(false)}

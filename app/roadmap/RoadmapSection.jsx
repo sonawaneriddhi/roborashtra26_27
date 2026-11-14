@@ -92,11 +92,7 @@ const years = [
     shortBadge: '2ND ED',
     problemStatements: [
       'ResQlympics',
-<<<<<<< HEAD
-      'YantraUtsav',
-=======
-      'Yantra Utsav',
->>>>>>> afc94064759e4e68eabf3172b3508444176a1935
+'Yantra Utsav',
     ],
     details: [
       'Successfully hosted a massive national-level technical festival partnering with Unstop for seamless execution',
@@ -115,11 +111,7 @@ const years = [
     shortBadge: '3RD ED',
     problemStatements: [
       'ResQlympics 3.0',
-<<<<<<< HEAD
-      'YantraUtsav',
-=======
-      'Yantra Utsav',
->>>>>>> afc94064759e4e68eabf3172b3508444176a1935
+'Yantra Utsav',
       'Chakravyuh',
     ],
     details: [
@@ -553,9 +545,6 @@ export default function RoadmapSection() {
             </AnimatePresence>
           </div>
 
-<<<<<<< HEAD
-          {/* ════════════════════════════════════════
-=======
         {/* ════════════════════════════════════════
             DESKTOP FLOATING CARDS (lg+)
             z-20 with top-positioning below the header
@@ -706,7 +695,6 @@ export default function RoadmapSection() {
         </div>
 
         {/* ════════════════════════════════════════
->>>>>>> afc94064759e4e68eabf3172b3508444176a1935
             TRAJECTORY STAGE (SVG Rail Track)
             Dedicated upper arena on mobile (< lg) so rover is 100% visible
         ════════════════════════════════════════ */}
@@ -969,7 +957,6 @@ export default function RoadmapSection() {
                               >
                                 {ps}
                               </span>
-<<<<<<< HEAD
                             ))}
                           </div>
                         )}
@@ -980,36 +967,6 @@ export default function RoadmapSection() {
                           <span className="text-amber-400/50 text-xs">→</span>
                         </div>
                       </button>
-=======
-                              <span className="line-clamp-2 sm:line-clamp-none">{d}</span>
-                            </li>
-                          ))}
-                        </ul>
-
-                        {/* Problem Statement Subsection */}
-                        {item.problemStatements && item.problemStatements.length > 0 && (
-                          <div className="mt-2 pt-2 border-t border-amber-400/20">
-                            <p className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.18em] text-amber-400 font-bold mb-1 flex items-center gap-1">
-                              <span className="w-1 h-1 rounded-full bg-amber-400" />
-                              Problem Statement:
-                            </p>
-                            <ol className="space-y-1">
-                              {item.problemStatements.map((ps, idx) => (
-                                <li
-                                  key={ps}
-                                  className="flex items-center gap-1.5 text-[11px] sm:text-xs text-white/90 font-mono"
-                                >
-                                  <span className="flex items-center justify-center w-3.5 h-3.5 rounded-full bg-amber-400/15 border border-amber-400/30 text-[8px] font-bold text-amber-300 shrink-0">
-                                    {idx + 1}
-                                  </span>
-                                  <span className="font-medium tracking-wide">{ps}</span>
-                                </li>
-                              ))}
-                            </ol>
-                          </div>
-                        )}
-                      </div>
->>>>>>> afc94064759e4e68eabf3172b3508444176a1935
 
                       {/* Touch navigation controls */}
                       <div className="px-4 sm:px-5 pb-3 pt-1 border-t border-white/[0.08] flex items-center justify-between">

@@ -7,14 +7,24 @@ let memoryMessages = []
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { name, email, category, message } = body
+    const { name, email, phone, category, message } = body
 
     if (!name || !name.trim()) {
-      return NextResponse.json({ success: false, error: 'Name is required' }, { status: 400 })
+      return NextResponse.json({ success: false, error: 'Full name is required' }, { status: 400 })
     }
-    if (!email || !email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      return NextResponse.json({ success: false, error: 'Valid email is required' }, { status: 400 })
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    if (!email || !email.trim() || !emailRegex.test(email.trim())) {
+      return NextResponse.json({ success: false, error: 'Valid email address is required (e.g. name@domain.com)' }, { status: 400 })
     }
+
+    const cleanPhone = (phone || '').toString().trim().replace(/[\s\-()]/g, '')
+    const validIndianPhone = /^(?:\+91|91|0)?([6-9]\d{9})$/.test(cleanPhone)
+    const validIntlPhone = /^\+?[1-9]\d{9,14}$/.test(cleanPhone)
+    if (!phone || (!validIndianPhone && !validIntlPhone)) {
+      return NextResponse.json({ success: false, error: 'Valid 10-digit mobile number is required' }, { status: 400 })
+    }
+
     if (!category || !category.trim()) {
       return NextResponse.json({ success: false, error: 'Category is required' }, { status: 400 })
     }
@@ -26,6 +36,7 @@ export async function POST(request) {
       id: `MSG-${Date.now()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
       name: name.trim(),
       email: email.trim().toLowerCase(),
+      phone: phone.toString().trim(),
       category: category.trim(),
       message: message.trim(),
       status: 'UNREAD', // 'UNREAD' | 'READ' | 'RESOLVED'

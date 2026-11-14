@@ -441,8 +441,6 @@ export default function Hero() {
           aria-label="Roborashtra Home"
         >
           <div className="relative h-10 sm:h-14 md:h-16 lg:h-20 w-auto max-w-[65vw] sm:max-w-none flex items-center">
-<<<<<<< HEAD
-          <div className="relative h-8 sm:h-10 md:h-12 w-auto max-w-[62vw] sm:max-w-none flex items-center">
             <Image
               src="/header.png"
               alt="Robo Rashtra '27"
