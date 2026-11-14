@@ -165,7 +165,7 @@ export default function Navbar() {
               GALLERY
             </Link>
             <Link href="/event" className="hover:text-rust transition-colors">
-              PROBLEM STATEMENTS
+              EVENTS
             </Link>
             <Link href="/problem-statements" className="hover:text-rust transition-colors">
               REGISTER

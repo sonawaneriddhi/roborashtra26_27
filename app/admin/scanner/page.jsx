@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react'
 import { tournamentStore } from '@/lib/store/tournamentStore'
+import AdminLayout from '@/components/admin/AdminLayout'
 import QrScannerModal from '@/components/admin/QrScannerModal'
-import { Camera, CheckCircle, Clock, Users, ArrowLeft, ShieldCheck, RefreshCw, QrCode } from 'lucide-react'
-import Link from 'next/link'
+import { Camera, CheckCircle, Clock, Users, ShieldCheck, QrCode } from 'lucide-react'
 
 export default function GateScannerPage() {
   const [registrations, setRegistrations] = useState([])
@@ -37,18 +37,11 @@ export default function GateScannerPage() {
   }
 
   return (
-    <main className="min-h-screen bg-blueprintDeep text-ivory pt-28 pb-16 px-4 relative">
+    <AdminLayout>
       <div className="max-w-4xl mx-auto">
-        {/* Navigation & Header */}
+        {/* Header */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-amber/30">
           <div>
-            <Link
-              href="/admin"
-              className="inline-flex items-center gap-1.5 text-xs font-mono text-ivory/60 hover:text-amber mb-2"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              BACK TO ADMIN COMMAND DECK
-            </Link>
             <h1 className="font-orbitron font-extrabold text-2xl md:text-3xl text-ivory uppercase tracking-wider flex items-center gap-2">
               <Camera className="w-6 h-6 text-amber animate-pulse" />
               EVENT GATE CHECK-IN STATION
@@ -140,6 +133,6 @@ export default function GateScannerPage() {
         onClose={() => setScannerOpen(false)}
         onCheckInComplete={handleCheckInComplete}
       />
-    </main>
+    </AdminLayout>
   )
 }

@@ -102,7 +102,7 @@ export default function AdminLayout({ children }) {
                 maxLength={10}
                 value={pin}
                 onChange={(e) => setPin(e.target.value)}
-                placeholder="ENTER ACCESS PIN (2027)"
+                placeholder="ENTER ACCESS PIN"
                 className="w-full text-center px-4 py-3 bg-[#060A12] border-2 border-amber/40 text-ivory font-mono text-lg tracking-[0.3em] placeholder:tracking-normal placeholder:text-xs placeholder:text-ivory/30 focus:border-amber focus:outline-none transition-colors"
                 autoFocus
               />
@@ -172,6 +172,9 @@ export default function AdminLayout({ children }) {
               </div>
               <p className="font-mono text-[10px] text-ivory/50">
                 EVENT-DAY SQUADS, DESK CHECK-INS & PS JUDGE CONSOLE
+              </p>
+              <p className="font-mono text-[10px] text-amber/80">
+                LOCAL SESSION MODE • DATA IS STORED IN THIS BROWSER ONLY
               </p>
             </div>
           </div>

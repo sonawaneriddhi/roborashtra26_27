@@ -98,7 +98,7 @@ export default function LeaderboardPage() {
                   MISSION CONTROL LEADERBOARD
                 </h1>
                 <p className="font-mono text-xs text-ivory/60">
-                  REAL-TIME PROBLEM STATEMENT TELEMETRY & JURY TALLIES
+                  PROBLEM STATEMENT TELEMETRY &amp; JURY TALLIES (THIS BROWSER)
                 </p>
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function LeaderboardPage() {
             {/* Auto refresh status indicator */}
             <div className="flex items-center gap-2 px-3 py-1.5 border border-white/10 bg-[#070B19] font-mono text-[10px] text-ivory/60">
               <span className="w-2 h-2 rounded-full bg-green-400 animate-ping" />
-              <span>LIVE SYNC: {lastRefreshed}</span>
+              <span>LOCAL DATA: {lastRefreshed}</span>
             </div>
 
             {/* Projector Mode Toggle */}

@@ -151,7 +151,7 @@ export default function Contact() {
     category: false,
     message: false,
   })
-  const [submitState, setSubmitState] = useState('idle') /* idle | loading | success | error */
+  const [submitState, setSubmitState] = useState('idle') /* idle | loading | success | fallback | error */
   const [copiedCode, setCopiedCode] = useState(false)
 
   /* Refs for focus management */
@@ -221,21 +221,27 @@ export default function Contact() {
       }
 
       let createdDoc = null
+      let delivered = false
+
       try {
         const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         })
-        const json = await res.json()
-        if (json.success && json.data) {
-          createdDoc = json.data
+
+        if (res.ok) {
+          const json = await res.json().catch(() => null)
+          if (json?.success && json.data) {
+            createdDoc = json.data
+            delivered = true
+          }
         }
       } catch (err) {
-        console.warn('Network call to /api/contact failed, using fallback:', err)
+        console.warn('Network call to /api/contact failed, using local fallback:', err)
       }
 
-      // Fallback document if API was unreachable
+      // Keep a local copy so the admin inbox on this device still sees the message.
       if (!createdDoc) {
         createdDoc = {
           id: `MSG-${Date.now()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
@@ -246,12 +252,17 @@ export default function Contact() {
         }
       }
 
-      // Add to contact store so admin section receives it live
       contactStore.addMessage(createdDoc)
 
-      setSubmitState('success')
-      setFields({ name: '', email: '', category: '', message: '' })
-      setTouched({ name: false, email: false, category: false, message: false })
+      if (delivered) {
+        setSubmitState('success')
+        setFields({ name: '', email: '', category: '', message: '' })
+        setTouched({ name: false, email: false, category: false, message: false })
+      } else {
+        // Static hosting has no POST endpoint. Never claim the message was
+        // delivered — give the sender a direct email path instead.
+        setSubmitState('fallback')
+      }
     } catch {
       setSubmitState('error')
     }
@@ -278,6 +289,18 @@ export default function Contact() {
   }
 
   /* ── Render ────────────────────────────────────────────────────────────── */
+
+  const fallbackMailtoHref = `mailto:${OFFICIAL_EMAIL}?subject=${encodeURIComponent(
+    `[ROBORASHTRA] ${fields.category || 'Website Enquiry'}`
+  )}&body=${encodeURIComponent(
+    [
+      `Name: ${fields.name}`,
+      `Email: ${fields.email}`,
+      `Category: ${fields.category}`,
+      '',
+      fields.message,
+    ].join('\n')
+  )}`
 
   return (
     <div className="contact-page">
@@ -622,6 +645,49 @@ export default function Contact() {
                 </motion.div>
               )}
 
+              {/* ── Fallback state: no server endpoint (static hosting) ───── */}
+              {submitState === 'fallback' && (
+                <motion.div
+                  key="fallback"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="feedback-panel error"
+                  role="alert"
+                  aria-live="assertive"
+                >
+                  <div className="feedback-icon" aria-hidden="true">
+                    <AlertCircle size={26} strokeWidth={1.5} />
+                  </div>
+                  <p className="feedback-title">Direct Delivery Needed</p>
+                  <p className="feedback-body">
+                    Automatic delivery is unavailable right now, so your message
+                    has only been saved on this device. Please send it directly
+                    by email so it reaches the team.
+                  </p>
+                  <a
+                    href={fallbackMailtoHref}
+                    className="retry-btn"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    Email {OFFICIAL_EMAIL}
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleRetry}
+                    className="retry-btn"
+                  >
+                    Back to Form
+                  </button>
+                </motion.div>
+              )}
+
               {/* ── Error state ──────────────────────────────────────────── */}
               {submitState === 'error' && (
                 <motion.div
@@ -640,7 +706,8 @@ export default function Contact() {
                   <p className="feedback-title">Something Went Wrong</p>
                   <p className="feedback-body">
                     We couldn&rsquo;t send your message. Please try again, or
-                    reach out to us directly via Instagram.
+                    email us directly at{' '}
+                    <a href={`mailto:${OFFICIAL_EMAIL}`}>{OFFICIAL_EMAIL}</a>.
                   </p>
                   <button
                     type="button"

@@ -41,9 +41,15 @@ export default function DatabaseSyncTab() {
 
   const checkServerDriver = async () => {
     setIsCheckingDriver(true)
+    let result = null
     try {
-      const res = await fetch('/api/db/status')
+      const res = await fetch('/api/db/status', { cache: 'no-store' })
+      if (!res.ok) {
+        throw new Error(`Server database status endpoint is unavailable (HTTP ${res.status}).`)
+      }
+
       const data = await res.json()
+      result = data
       setDriverStatus(data)
       if (data.success && data.status === 'CONNECTED') {
         setConnStatus('CONNECTED')
@@ -51,9 +57,17 @@ export default function DatabaseSyncTab() {
       }
     } catch (e) {
       console.warn('Driver status check failed:', e)
+      result = {
+        success: false,
+        status: 'UNAVAILABLE',
+        error: e.message || 'Server database status endpoint is unavailable.',
+      }
+      setDriverStatus(result)
     } finally {
       setIsCheckingDriver(false)
     }
+
+    return result
   }
 
   useEffect(() => {
@@ -110,15 +124,15 @@ export default function DatabaseSyncTab() {
   const handleTestConnection = async () => {
     setConnStatus('TESTING')
     setStatusMessage('Initiating handshake with MongoDB Atlas cluster...')
-    await checkServerDriver()
+    const driver = await checkServerDriver()
     const res = await websiteStore.testAtlasConnection()
 
     if (res.success) {
       setConnStatus('CONNECTED')
       setStatusMessage(res.message || 'Connected to MongoDB Atlas cluster successfully.')
-    } else if (driverStatus?.success) {
+    } else if (driver?.success) {
       setConnStatus('CONNECTED')
-      setStatusMessage(`Connected to MongoDB Atlas via server driver: Database "${driverStatus.database}".`)
+      setStatusMessage(`Connected to MongoDB Atlas via server driver: Database "${driver.database}".`)
     } else {
       if (res.reason === 'NOT_CONFIGURED') {
         setConnStatus('NOT_CONFIGURED')
@@ -158,8 +172,16 @@ export default function DatabaseSyncTab() {
             </span>
           </div>
           <p className="font-mono text-xs text-ivory/60 mt-1">
-            Zero-breakage dual-mode architecture: runs locally out-of-the-box and synchronizes live with MongoDB Atlas cluster.
+            Runs on local data by default. Atlas sync requires the Node server API
+            and is unavailable in the static Cloudflare build.
           </p>
+          {driverStatus?.status === 'UNAVAILABLE' && (
+            <p className="font-mono text-[10px] text-amber mt-2 max-w-xl">
+              Server API unavailable: this build is a static export, so database
+              writes are disabled. Run the app with a Node server (`next dev` /
+              `next start`) to enable Atlas sync.
+            </p>
+          )}
         </div>
 
         <div className="flex items-center gap-2">

@@ -9,7 +9,8 @@ import Image from 'next/image'
 const links = [
   { label: 'HOME', href: '/' },
   { label: 'GALLERY', href: '/gallery' },
-  { label: 'PROBLEM STATEMENTS', href: '/event' },
+  { label: 'EVENTS', href: '/event' },
+  { label: 'PROBLEM STATEMENTS', href: '/problem-statements' },
   { label: 'SPONSORS', href: '/sponsor' },
   { label: 'TEAM', href: '/team' },
   { label: 'JOURNEY', href: '/roadmap' },
