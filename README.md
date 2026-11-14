@@ -31,9 +31,16 @@
    - 6-wheel Rocker-Bogie NASA MER 3D model with Kapton MLI gold thermal foil, Pancam stereo camera eyes, and high-gain antenna.
    - **Direction-Aware 180° U-Turn Physics**: Automatically performs a smooth 180° rotation when scrolling in reverse or returning from the end of the trajectory.
 3. **Kinetic Launch Countdown**: Real-time tournament timer featuring 3D perspective card flip transitions (`FlipUnit.jsx`).
-4. **Build Log Repository (`/projects`)**: Detailed technical specifications for active and retired combat bots, autonomous SLAM rovers, and quadcopters.
-5. **Enlistment Terminal (`/join`)**: Interactive recruitment application form with real-time transmission verification.
-6. **Self-Hosted Typography**: Zero external font network calls for immediate rendering performance.
+4. **Gallery & Roadmap**: 3D photo ring (`/gallery`) and scroll-linked mission roadmap (`/roadmap`).
+5. **Tournament Command Deck** (`/admin`): on-spot registrations, desk check-in, QR gate scanner, team/faculty CMS, and contact inbox.
+6. **Judge Portal & Live Leaderboard**: rubric-based scoring (`/judge`) and a projector-mode scoreboard (`/leaderboard`).
+7. **Tactical ID Passes**: printable team credentials with QR check-in tokens (`/id`).
+8. **Self-Hosted Typography**: Zero external font network calls for immediate rendering performance.
+
+> **Deployment note:** the site is currently exported as static files (`output: 'export'`) to Cloudflare Pages.
+> `/api/*` route handlers therefore only run with a Node server (`npm run dev` / `next start`).
+> On the static deployment the contact form falls back to a direct email link, and the
+> admin/judge/leaderboard data is stored in each browser's `localStorage`.
 
 ---
 
@@ -42,18 +49,15 @@
 ### Prerequisites
 - **Node.js**: `v18.17.0` or higher
 - **npm**: `v9.0.0` or higher
-- **Python**: `3.x` (used optionally by the dependency setup helper)
 
 ### 1. Installation
 Clone the repository and install Node.js dependencies:
 
 ```bash
-# Install via standard npm
 npm ci
-
-# Alternatively, run the Python setup helper:
-python install_dependencies.py
 ```
+
+Copy `.env` (or create `.env.local`) with the Cloudinary and MongoDB values you need.
 
 ### 2. Development Server
 Start the local development server:
@@ -63,13 +67,18 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-### 3. Production Build
-To create an optimized production build:
+`next dev` is currently the only mode where the MongoDB API routes (`/api/contact`,
+`/api/db/status`, `/api/db/sync`) run.
+
+### 3. Production Build (static export)
+The deploy target is Cloudflare Pages, so the build produces a static `out/` directory:
 
 ```bash
 npm run build
-npm start
+npx serve out        # preview the exported site locally
 ```
+
+`next start` is not supported while `output: 'export'` is enabled.
 
 ---
 
@@ -80,24 +89,33 @@ roborashtra26_27/
 ├── app/                      # Next.js 14 App Router pages & global styles
 │   ├── globals.css           # Design tokens, keyframe animations, & tick-frame utilities
 │   ├── layout.js             # Root layout wrapping SmoothScroll, fonts, & cursor trail
-│   ├── page.js               # Main Landing Page route (/)
-│   ├── projects/page.js      # Build Log route (/projects)
-│   ├── events/page.js        # Missions route (/events)
-│   ├── team/page.js          # Team Units route (/team)
-│   └── join/page.js          # Recruitment Enlistment route (/join)
-├── components/               # Modular UI & 3D WebGL components
-│   ├── Hero.jsx              # Hero section & core CTAs
+│   ├── page.js + HomeClient  # Landing route (/) — loading screen + 3D hero
+│   ├── gallery/              # 3D photo ring gallery (/gallery)
+│   ├── roadmap/              # Scroll-linked Mars roadmap (/roadmap)
+│   ├── event/                # Events story (/event)
+│   ├── team/                 # Team + faculty (/team)
+│   ├── sponsor/              # Sponsors (/sponsor)
+│   ├── countdown/            # Flip countdown (/countdown)
+│   ├── problem-statements/   # Problem statements (/problem-statements)
+│   ├── contact/              # Contact page (/contact)
+│   ├── admin/                # Command deck: registrations, scanner, CMS, inbox
+│   ├── judge/                # Judge scoring portal (/judge)
+│   ├── leaderboard/          # Projector-mode leaderboard (/leaderboard)
+│   ├── id/                   # ID finder + printable pass (/id, /id/[id])
+│   └── api/                  # MongoDB/Cloudinary routes (Node runtime only)
+├── components/               # Modular UI, 3D, admin, judge & ID components
+│   ├── Hero.jsx              # Full-screen 3D robot hero
 │   ├── Core3D.jsx            # 3D wireframe core canvas
-│   ├── RoadmapSection.jsx    # Interactive Mars roadmap section & scroll bindings
-│   ├── RoadmapRobot3D.jsx    # 3D NASA Mars Rover canvas & 180° U-turn physics
-│   ├── Countdown.jsx         # Mission countdown timer
-│   ├── FlipUnit.jsx          # 3D perspective flip unit component
-│   └── ...                   # Additional layout & section components
+│   ├── admin/               # Admin layout, modals, CMS tabs
+│   ├── judge/               # Judge auth + scoring rubric
+│   ├── leaderboard/         # Podium + table
+│   └── ...                  # Layout & section components
 ├── data/                     # Content modules & structured metadata
 │   ├── events.js             # Upcoming & past competition records
 │   ├── faculty.js            # Faculty mentors & department metadata
 │   ├── galleryPhotos.js      # Competition & workshop photo repository
-│   └── teamData.js           # Subsystem division rosters & member entries
+│   ├── teamData.js           # Subsystem division rosters & member entries
+│   └── tournamentSeeds.js    # Tracks, rubrics, demo registrations & scores
 ├── DECISIONS.md              # Architectural Decision Records (ADRs)
 ├── Design.md                 # Design system specifications & visual tokens
 └── FLOW.md                   # Application architecture, flowcharts & scroll math

@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react'
 import AdminLayout from '@/components/admin/AdminLayout'
 import { tournamentStore } from '@/lib/store/tournamentStore'
+import AdminLayout from '@/components/admin/AdminLayout'
 import QrScannerModal from '@/components/admin/QrScannerModal'
-import { Camera, CheckCircle, Clock, Users, ArrowLeft, ShieldCheck, RefreshCw, QrCode } from 'lucide-react'
-import Link from 'next/link'
+import { Camera, CheckCircle, Clock, Users, ShieldCheck, QrCode } from 'lucide-react'
 
 export default function GateScannerPage() {
   const [registrations, setRegistrations] = useState([])
@@ -39,16 +39,12 @@ export default function GateScannerPage() {
 
   return (
     <AdminLayout>
-      <div className="space-y-6">
-        {/* Navigation & Header */}
-        <div className="p-6 rounded-2xl border border-cyan-500/25 bg-[#060c1d]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_20px_rgba(6,182,212,0.12)] flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-amber/30">
           <div>
-            <div className="flex items-center gap-2 mb-1.5 font-orbitron text-[10px] font-bold tracking-[0.2em] uppercase text-cyan-400">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]" />
-              <span>ENTRY GATE PROTOCOL</span>
-            </div>
-            <h1 className="font-orbitron font-extrabold text-2xl text-white uppercase tracking-wider flex items-center gap-2.5">
-              <Camera className="w-6 h-6 text-cyan-400 animate-pulse" />
+            <h1 className="font-orbitron font-extrabold text-2xl md:text-3xl text-ivory uppercase tracking-wider flex items-center gap-2">
+              <Camera className="w-6 h-6 text-amber animate-pulse" />
               EVENT GATE CHECK-IN STATION
             </h1>
             <p className="font-tech text-xs text-slate-400 mt-1">

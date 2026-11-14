@@ -21,9 +21,11 @@ export default function JudgeAuth({ onAuthenticated }) {
       return
     }
 
-    // Passcode validation: "judge", "2027", "eval", or empty
-    const allowedPins = ['judge', '2027', 'eval', 'roborashtra', '']
-    if (!allowedPins.includes(judgePin.toLowerCase().trim())) {
+    // Client-side gate only. Set NEXT_PUBLIC_JUDGE_PIN at build time to
+    // override the fallback (this still ships in the bundle — it is not a
+    // substitute for server-side authentication).
+    const expectedPin = (process.env.NEXT_PUBLIC_JUDGE_PIN || 'judge').toLowerCase()
+    if (judgePin.toLowerCase().trim() !== expectedPin) {
       setError('Invalid Judge Access PIN.')
       return
     }
@@ -102,12 +104,13 @@ export default function JudgeAuth({ onAuthenticated }) {
         </div>
 
         <div>
-          <label className="block text-ivory/70 uppercase mb-1">JUDGE PIN (OPTIONAL: "judge")</label>
+          <label className="block text-ivory/70 uppercase mb-1">JUDGE ACCESS PIN *</label>
           <input
             type="password"
+            required
             value={judgePin}
             onChange={(e) => setJudgePin(e.target.value)}
-            placeholder="Enter 'judge' or press enter"
+            placeholder="Enter authorized judge PIN"
             className="w-full px-3 py-2 bg-[#060A12] border border-white/20 text-ivory focus:border-amber focus:outline-none"
           />
         </div>

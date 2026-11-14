@@ -49,6 +49,14 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Contact -->
+  <url>
+    <loc>https://roborashtra.com/contact</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <!-- Team -->
   <url>
     <loc>https://roborashtra.com/team</loc>

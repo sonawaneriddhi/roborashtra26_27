@@ -282,6 +282,9 @@ export default function AdminLayout({ children }) {
               <p className="font-mono text-[10px] text-slate-400 uppercase tracking-widest mt-0.5">
                 FLAGSHIP ROBOTICS CHAMPIONSHIP · CENTRAL OPS CONSOLE
               </p>
+              <p className="font-mono text-[10px] text-amber/80">
+                LOCAL SESSION MODE • DATA IS STORED IN THIS BROWSER ONLY
+              </p>
             </div>
           </div>
 
