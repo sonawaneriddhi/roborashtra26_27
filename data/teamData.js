@@ -192,6 +192,16 @@ export const teamData = {
               'https://www.linkedin.com/in/saloni-sinha-46b123374?utm_source=share_via&utm_content=profile&utm_medium=member_ios',
           },
         },
+        {
+          id: 'pr-head-2',
+          name: 'Yash Bilwal',
+          role: 'Public Relations Co-Head',
+          image: portrait('roborashtra/team/pr/yashbilwal'),
+          socials: {
+            linkedin:
+              'https://www.linkedin.com/in/yash-bilwal-1462433b3/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B2ZP2VJ7vS0qpcIV4D3ymDg%3D%3D',
+          },
+        }
 
       ],
       members: [

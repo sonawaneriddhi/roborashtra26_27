@@ -32,6 +32,7 @@ import {
 } from 'lucide-react'
 
 import { teamData } from '@/data/teamData'
+import { websiteStore } from '@/lib/store/websiteStore'
 
 // Custom Clean Social Icons
 function LinkedInIcon({ className = 'w-3.5 h-3.5' }) {
@@ -555,6 +556,19 @@ export default function Team() {
     offset: ['start start', 'end end'],
   })
 
+  const [leads, setLeads] = useState(teamData.leads)
+  const [squads, setSquads] = useState(teamData.teams)
+
+  useEffect(() => {
+    const update = () => {
+      setLeads(websiteStore.getLeads())
+      setSquads(websiteStore.getSquads())
+    }
+    update()
+    const unsubscribe = websiteStore.subscribe(update)
+    return () => unsubscribe()
+  }, [])
+
   const allUnits = useMemo(() => {
     const leadUnit = {
       id: 'lead',
@@ -563,11 +577,11 @@ export default function Team() {
       shortName: 'LEAD',
       description:
         'The executive presidential council orchestrating autonomous kinematics development, battle arena protocols, and state championship operations.',
-      heads: teamData.leads,
+      heads: leads,
       members: [],
     }
 
-    const squadUnits = teamData.teams.map((t, idx) => ({
+    const squadUnits = (squads || []).map((t, idx) => ({
       ...t,
       number: String(idx + 2).padStart(2, '0'),
       description:
@@ -576,7 +590,7 @@ export default function Team() {
     }))
 
     return [leadUnit, ...squadUnits]
-  }, [])
+  }, [leads, squads])
 
   const [selectedUnitId, setSelectedUnitId] = useState('lead')
 
@@ -614,19 +628,6 @@ export default function Team() {
     >
       {/* Injecting CSS Keyframes directly inside JSX */}
       <style>{`
-        @keyframes spacePan {
-          from {
-            background-position: 0px 0px, 0px 0px;
-          }
-          to {
-            background-position: 600px 1200px, 300px 600px;
-          }
-        }
-
-        .jsx-moving-stars {
-          animation: spacePan 60s linear infinite;
-        }
-
         @keyframes teamScan {
           0% {
             transform: translateX(0) skewX(-18deg);
@@ -656,19 +657,6 @@ export default function Team() {
           animation: subtleGlow 8s ease-in-out infinite;
         }
       `}</style>
-
-      {/* FIXED BACKGROUND LAYER: Moving, high-brightness stars */}
-      <div
-        className="fixed inset-0 bg-[#020408] -z-10 pointer-events-none jsx-moving-stars"
-        style={{
-          backgroundImage: `
-        radial-gradient(circle at center, #ffffff 2px, transparent 2.5px),
-        radial-gradient(circle at center, #ffffff 1px, transparent 2px)
-      `,
-          backgroundSize: '120px 120px, 180px 180px',
-          filter: 'drop-shadow(0 0 1px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.4))'
-        }}
-      />
 
       {/* Base background */}
       <div className="fixed inset-0 -z-20 bg-[#020509] pointer-events-none" />

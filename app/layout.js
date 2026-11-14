@@ -25,7 +25,8 @@ import 'lenis/dist/lenis.css'
 import './globals.css'
 import CursorTrail from '@/components/CursorTrail'
 import SmoothScroll from '@/components/SmoothScroll'
-import Navbar from '@/components/Navbar'
+import ConditionalNavbar from '@/components/ConditionalNavbar'
+
 import PageTransition from '@/components/PageTransition'
 
 export const metadata = {
@@ -154,7 +155,8 @@ export default function RootLayout({ children }) {
         <div id="initial-blackout" aria-hidden="true" />
         <SmoothScroll />
         <CursorTrail />
-        <Navbar />
+
+        <ConditionalNavbar />
         <main className="min-h-screen">
           <PageTransition>{children}</PageTransition>
         </main>

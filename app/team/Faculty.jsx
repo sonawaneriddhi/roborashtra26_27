@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { facultyMembers } from '@/data/faculty'
+import { websiteStore } from '@/lib/store/websiteStore'
 import { RotateCw, ExternalLink, Mail } from 'lucide-react'
 
 /**
@@ -214,6 +215,16 @@ function FacultyCard({ faculty, index }) {
 export default function Faculty() {
   const containerRef = useRef(null)
   const [reducedMotion, setReducedMotion] = useState(false)
+  const [facultyList, setFacultyList] = useState(facultyMembers)
+
+  useEffect(() => {
+    const update = () => {
+      setFacultyList(websiteStore.getFaculty())
+    }
+    update()
+    const unsubscribe = websiteStore.subscribe(update)
+    return () => unsubscribe()
+  }, [])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -318,7 +329,7 @@ export default function Faculty() {
       <section
         id="faculty"
         aria-label="Faculty Mentorship"
-        className="w-full bg-[#070707] text-ivory pt-24 sm:pt-28 pb-16 px-4 sm:px-8 md:px-12 border-t border-b border-white/10"
+        className="w-full bg-[#070707] text-ivory pt-24 sm:pt-28 pb-16 px-4 sm:px-8 md:px-12 border-t border-white/10"
       >
         <div className="max-w-5xl mx-auto mb-6 sm:mb-8 text-center">
           <h2 className="font-display font-bold text-xs min-[360px]:text-sm sm:text-base md:text-lg lg:text-xl text-white/90 tracking-[0.2em] sm:tracking-[0.26em] uppercase">
@@ -414,7 +425,7 @@ export default function Faculty() {
             }}
             className="flex flex-row items-center justify-center gap-2.5 min-[360px]:gap-3.5 sm:gap-6 md:gap-8 lg:gap-10 w-full py-3 sm:py-5 overflow-visible"
           >
-            {facultyMembers.map((faculty, idx) => (
+            {(facultyList || []).map((faculty, idx) => (
               <FacultyCard
                 key={faculty.id}
                 faculty={faculty}
