@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import AdminLayout from '@/components/admin/AdminLayout'
 import { tournamentStore } from '@/lib/store/tournamentStore'
-import AdminLayout from '@/components/admin/AdminLayout'
 import QrScannerModal from '@/components/admin/QrScannerModal'
 import { Camera, CheckCircle, Clock, Users, ShieldCheck, QrCode } from 'lucide-react'
 
