@@ -31,7 +31,7 @@ export const events = [
     id: 2,
     code: '02',
     category: 'SEARCH & RESCUE ROBOTICS',
-    title: 'RESCUE OLYMPICS',
+    title: 'RESQlympic 4.0',
     tagline: 'SEARCH. RESCUE. SURVIVE.',
     description:
       'A high-intensity robotics challenge where teams navigate extraterrestrial environments, collect resources, construct structures and complete missions under pressure.',
